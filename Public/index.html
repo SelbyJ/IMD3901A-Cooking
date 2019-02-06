@@ -12,6 +12,7 @@
         <a-assets>
             <a-asset-item id="kitchen-obj" src="assets/models/kitchen.obj"></a-asset-item>
             <a-asset-item id="knife-obj" src="assets/models/knife.obj"></a-asset-item>
+            <a-asset-item id="mushroom-obj" src="assets/models/mushroom.obj"></a-asset-item>
             <a-entity id="left" sphere-collider="objects: a-box" super-hands hand-controls="left"></a-entity>
             <a-entity id="right" sphere-collider="objects: a-box" super-hands hand-controls="right"></a-entity>
         </a-assets>
@@ -19,6 +20,7 @@
         <a-sky color="	#000000"></a-sky>
         <a-entity obj-model="obj: #kitchen-obj;" scale ="0.01 0.01 0.01"></a-entity>
         <a-entity id="knife-entity" obj-model="obj: #knife-obj;" position="0 1.4 0.25" scale ="0.01 0.01 0.01" hoverable grabbable stretchable draggable dropppable color="blue" ></a-entity>
+        <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" position="-0.2 1.4 0.25" scale ="0.01 0.01 0.01" hoverable grabbable stretchable draggable dropppable color="red" ></a-entity>
 
     </a-scene>
   </body>
