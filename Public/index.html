@@ -1,20 +1,15 @@
-<DOCTYPE html>
 <html>
-    <head>
-        <script src="/js/aframe-v0.8.2.min.js"></script>
-        <script src="/js/spherical-env-map.js"></script>
-        <!--<script src="/js/test_ccomponent.js"></script>-->
-        <title>Cooking Game</title>
-    </head>
-    <body>
-        <a-scene>
-            <a-assets>
-                <img id="skymap" src="/assets/materials/CloudySky.jpg">
-                <a-asset-item id="kitchen-obj" src="/assets/models/Kitchen_3.ma"></a-asset-item>
-            </a-assets>
-            <a-entity id="sky" position="0 0 0" rotation="0 0 0" scale="1 1 1" geometry="primitive:sphere; radius:500;" material="shader:flat; src:#skymap; side:back;"></a-entity>
-            <a-obj-model id="kitchen" position="0,0,0" src="#kitchen-obj" shadow="case:true; recieve:true;" spherical-env-map="src:#skymap;"></a-obj-model>
-        </a-scene>
-        <h1>This is the main page</h1>
-    </body>
+  <head>
+    <script src="js/aframe-v0.8.2.min.js"></script>
+  </head>
+  <body>
+    
+    <a-scene>
+        <a-assets>
+            <a-asset-item id="kitchen-obj" src="assets/models/kitchen.obj"></a-asset-item>
+        </a-assets>
+        <a-sky color="#ECECEC"></a-sky>
+        <a-entity obj-model="obj: #kitchen-obj;" scale ="0.01 0.01 0.01"></a-entity>
+    </a-scene>
+  </body>
 </html>
