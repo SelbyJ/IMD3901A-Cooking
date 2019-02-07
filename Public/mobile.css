@@ -22,15 +22,36 @@
     background-size: cover;
     transform-origin: 0 0;
     transform-style: preserve-3d;
-    z-index: 2;
+    z-index: 3;
 }
 
-#recipeOne{
+.recipeOne{
     position: absolute;
     width: 100%;
     height: 100%;
     background-color: yellowgreen;
     background-size: cover;
     transform-origin: 0 0;
+    z-index: 2;
+}
+
+.recipeTwo{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(95, 62, 216);
+    background-size: cover;
+    transform-origin: 0 0;
     z-index: 1;
 }
+
+.recipeThree{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(160, 72, 45);
+    background-size: cover;
+    transform-origin: 0 0;
+    z-index: 0;
+}
+
