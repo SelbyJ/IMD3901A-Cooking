@@ -5,11 +5,13 @@ function openBook(){
     
     function frame(){
         if(degrees == -180){
-            clearInterval(degrees);
+            clearInterval(interval);
         }else{
             degrees+= -18;
-            cover.style.transform = "rotateY(" + degrees.toString() + ")";
+            cover.style.transform = "rotateY(" + degrees + "deg)";
         }
+        
+        
         
     }
 
