@@ -2,17 +2,32 @@
   <head>
     <!-- SCRIPTS -->
     <script src="js/aframe-v0.8.2.min.js"></script>
-    <script src="js/aframe-physics-system.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.3.0/dist/aframe-physics-system.min.js"></script>
     <script src="js/aframe-extras.min.js"></script>
     <script src="js/super-hands.min.js"></script>
     <script src="js/grabObj.js"></script>
+    <script>
+      AFRAME.registerComponent('phase-shift', {
+          init: function () {
+              var el = this.el
+              el.addEventListener('gripdown', function () {
+                  el.setAttribute('collision-filter', {collisionForces: true})
+                  console.log("button Press");
+              })
+              el.addEventListener('gripup', function () {
+                  el.setAttribute('collision-filter', {collisionForces: false})
+                  console.log("button let go");
+              })
+          }
+      })
+    </script>
   </head>
   <body>
     
-    <a-scene physics>
+    <a-scene physics="debug: true">
       <a-assets>
-          <a-asset-item id="kitchen-obj" src="assets/models/kitchen.obj"></a-asset-item>
-          <a-asset-item id="knife-obj" src="assets/models/knife.obj" hoverable grabbable stretchable draggable dropppable dynamic-body></a-asset-item>
+          <a-asset-item id="kitchenTop-obj" src="assets/models/kitchenTop.obj"></a-asset-item>
+          <a-asset-item id="knife-obj" src="assets/models/knife.obj"></a-asset-item>
           <a-asset-item id="mushroom-obj" src="assets/models/mushroom.obj"></a-asset-item>
           <a-mixin id="touch"
                     physics-collider phase-shift
@@ -37,9 +52,9 @@
           </a-entity>
       </a-entity>
       <a-sky color="	#000000"></a-sky>
-      <a-entity obj-model="obj: #kitchen-obj;" scale ="0.01 0.01 0.01"></a-entity>
-      <a-entity id="knife-entity" obj-model="obj: #knife-obj;" position="0 1.4 0.25" scale ="0.01 0.01 0.01" color="blue" ></a-entity>
-      <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" position="-0.2 1.4 0.25" scale ="0.01 0.01 0.01" hoverable grabbable stretchable draggable dropppable color="red" ></a-entity>
+      <a-entity static-body obj-model="obj: #kitchenTop-obj;" scale ="0.01 0.01 0.01"></a-entity>
+      <a-entity dynamic-body hoverable grabbable stretchable draggable id="knife-entity" obj-model="obj: #knife-obj;" position="0 1.4 -0.5" scale ="0.01 0.01 0.01" color="blue" ></a-entity>
+      <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" position="-0.2 1.4 0.25" scale ="0.01 0.01 0.01" color="red" ></a-entity>
       
     </a-scene>
   </body>

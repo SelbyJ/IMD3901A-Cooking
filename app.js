@@ -1,8 +1,5 @@
 //Setup for app
 const express = require('express');
-require('aframe');
-require('super-hands');
-require('aframe-physics-system');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
