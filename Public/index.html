@@ -2,26 +2,45 @@
   <head>
     <!-- SCRIPTS -->
     <script src="js/aframe-v0.8.2.min.js"></script>
+    <script src="js/aframe-physics-system.min.js"></script>
     <script src="js/aframe-extras.min.js"></script>
     <script src="js/super-hands.min.js"></script>
     <script src="js/grabObj.js"></script>
   </head>
   <body>
     
-    <a-scene>
-        <a-assets>
-            <a-asset-item id="kitchen-obj" src="assets/models/kitchen.obj"></a-asset-item>
-            <a-asset-item id="knife-obj" src="assets/models/knife.obj"></a-asset-item>
-            <a-asset-item id="mushroom-obj" src="assets/models/mushroom.obj"></a-asset-item>
-            <a-entity id="left" sphere-collider="objects: a-box" super-hands hand-controls="left"></a-entity>
-            <a-entity id="right" sphere-collider="objects: a-box" super-hands hand-controls="right"></a-entity>
-        </a-assets>
-        <a-entity position="0 1.6 0" camera look-controls></a-entity>
-        <a-sky color="	#000000"></a-sky>
-        <a-entity obj-model="obj: #kitchen-obj;" scale ="0.01 0.01 0.01"></a-entity>
-        <a-entity id="knife-entity" obj-model="obj: #knife-obj;" position="0 1.4 0.25" scale ="0.01 0.01 0.01" hoverable grabbable stretchable draggable dropppable color="blue" ></a-entity>
-        <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" position="-0.2 1.4 0.25" scale ="0.01 0.01 0.01" hoverable grabbable stretchable draggable dropppable color="red" ></a-entity>
-
+    <a-scene physics>
+      <a-assets>
+          <a-asset-item id="kitchen-obj" src="assets/models/kitchen.obj"></a-asset-item>
+          <a-asset-item id="knife-obj" src="assets/models/knife.obj" hoverable grabbable stretchable draggable dropppable dynamic-body></a-asset-item>
+          <a-asset-item id="mushroom-obj" src="assets/models/mushroom.obj"></a-asset-item>
+          <a-mixin id="touch"
+                    physics-collider phase-shift
+                    collision-filter="collisionForces: false"
+                    static-body="shape: sphere; sphereRadius: 0.02"
+                    super-hands="colliderEvent: collisions;
+                                  colliderEventProperty: els;
+                                  colliderEndEvent: collisions;
+                                  colliderEndEventProperty: clearedEls;">
+      </a-assets>
+      <a-entity>
+          <a-camera positon="0 1.6 0"></a-camera>
+          <a-entity id="rhand" mixin="touch"
+                    vive-controls="hand: right"
+                    oculus-touch-controls="hand: right"
+                    windows-motion-controls="hand: right">
+          </a-entity>
+          <a-entity id="lhand" mixin="touch"
+                    vive-controls="hand: left"
+                    oculus-touch-controls="hand: left"
+                    windows-motion-controls="hand: left">
+          </a-entity>
+      </a-entity>
+      <a-sky color="	#000000"></a-sky>
+      <a-entity obj-model="obj: #kitchen-obj;" scale ="0.01 0.01 0.01"></a-entity>
+      <a-entity id="knife-entity" obj-model="obj: #knife-obj;" position="0 1.4 0.25" scale ="0.01 0.01 0.01" color="blue" ></a-entity>
+      <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" position="-0.2 1.4 0.25" scale ="0.01 0.01 0.01" hoverable grabbable stretchable draggable dropppable color="red" ></a-entity>
+      
     </a-scene>
   </body>
 </html>

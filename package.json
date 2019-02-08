@@ -18,6 +18,8 @@
   "homepage": "https://github.com/SelbyJ/IMD3901A-Cooking#readme",
   "dependencies": {
     "aframe": "^0.8.2",
+    "aframe-physics-system": "^3.3.0",
+    "browserify": "^16.2.3",
     "express": "^4.16.4",
     "super-hands": "^3.0.0"
   }
