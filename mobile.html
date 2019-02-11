@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>IMD3901 Assignment 2</title>
+        <!--loads in a-frame and the sperical-env-map provided to us by Anthony-->
+        <script src="/js/aframe.min.js"></script>
+        <script src="/js/spherical-env-map.js"></script>
+        <!--a-frame component used to do animations retrieved from https://github.com/supermedium/superframe/tree/master/components/animation/-->
+        <!--site was found from https://aframe.io/docs/0.8.0/core/animations.html-->
+        <script src="https://unpkg.com/aframe-animation-component@^4.1.2/dist/aframe-animation-component.min.js"></script> 
+        
+
+        <!--Component files loaded in-->
+        <script src="js/create_component.js"></script>
+        <script src="js/delete_component.js"></script>
+        <script src="js/object-clicked.js"></script>
+
+    </head>
+    <body>
+        <a-scene>
+            <a-assets>
+                <!--sound from http://soundbible.com/835-Pen-Clicking.html. Sounds are free to use underthe Creative Commons Attribution 3.0 https://creativecommons.org/licenses/by/3.0/-->
+                <a-audio crossorigin="anonymous" id="button-click" src="/assets/Pen Clicking-SoundBible.com-482574858.mp3"></a-audio>
+                <!--image free to use from https://pixabay.com/en/triangles-polygon-color-pink-1430105/. Image by DavidRockDesign-->
+                <img crossorigin="anonymous" id="backgroundImg" src="/assets/background.png">
+
+            </a-assets>
+
+            <!--loaded in camera manually and added wasd controls so you can move around the screen-->
+            <a-entity position="0 3 0" camera look-controls wasd-controls>
+                <!--decided to go with circle cursor as it allowed for more control-->
+                <a-entity   cursor="fuse:true; fuseTimeout:500; rayOrigin: mouse">
+                    </a-entity>
+            </a-entity>
+
+            <!--entites that hold the sound so that they can be called upon in the component that controls when the shapes are selected-->
+            <a-entity id="buttonSound" sound="src:#button-click"></a-entity>            
+
+            <!--loaded in a plane to give the objects a nice platform to contrast against. Code from Anthony's examples-->
+            <a-entity geometry="primitive:plane; width:15; height:10" material="color:#9ffffe" position="0 -1 -10" rotation="-90 0 0"></a-entity>
+            
+            <!--making a pretty background. Code from Anthony's examples-->
+            <a-entity id="background" geometry="primitive:sphere; radius:500" material="shader:flat; src:#backgroundImg; side:back; height:1078; width:1078"></a-entity>
+
+        </a-scene>
+    </body>
+
+<script></script>
+
+</html>
