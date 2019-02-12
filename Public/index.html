@@ -34,13 +34,21 @@
             <!--entites that hold the sound so that they can be called upon in the component that controls when the shapes are selected-->
             <a-entity id="buttonSound" sound="src:#button-click"></a-entity>            
 
-            <a-entity geometry="primitive: plane; width:14; height:10" position="0 5 -10" rotation="0 0 0" material="color:#ffffff; side:double; transparent: true; opacity:0.1">
-                <a-entity front-flip="pageNum: cover" id="cover" geometry="primitive:plane; width:7; height:10" material="color:#eddd9e; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>
-                <a-entity front-flip="pageNum: one" id="page-1" geometry="primitive:plane; width:7; height:10" material="color:#eddd9e; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>
-                <a-entity front-flip="pageNum: two" id="page-2" geometry="primitive:plane; width:7; height:10" material="color:#eddd9e; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>
-                <a-entity front-flip="pageNum: three" id="page-3" geometry="primitive:plane; width:7; height:10" material="color:#eddd9e; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>
+            <a-entity front-flip="pageNum: cover" id="cover" geometry="primitive: plane; width:14; height:10" position="0 5 -10" rotation="0 0 0" material="color:#ffffff; side:double; transparent: true; opacity:0.1">
+                <a-entity geometry="primitive:plane; width:7; height:10" material="color:#eddd9e; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>
             </a-entity>
-            
+
+            <a-entity front-flip="pageNum: one" id="one" geometry="primitive: plane; width:14; height:10" position="0 5 -10" rotation="0 0 0" material="color:#ffffff; side:double; transparent: true; opacity:0.1">
+                <a-entity geometry="primitive:plane; width:7; height:10" material="color:#eddd9e; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>
+            </a-entity>
+
+            <a-entity front-flip="pageNum: two" id="two" geometry="primitive: plane; width:14; height:10" position="0 5 -10" rotation="0 0 0" material="color:#ffffff; side:double; transparent: true; opacity:0.1">
+                <a-entity geometry="primitive:plane; width:7; height:10" material="color:#eddd9e; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>
+            </a-entity>
+
+            <a-entity front-flip="pageNum: three" id="three" geometry="primitive: plane; width:14; height:10" position="0 5 -10" rotation="0 0 0" material="color:#ffffff; side:double; transparent: true; opacity:0.1">
+                <a-entity geometry="primitive:plane; width:7; height:10" material="color:#eddd9e; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>
+            </a-entity> 
 
             <!--loaded in a plane to give the objects a nice platform to contrast against. Code from Anthony's examples-->
             <!--<a-entity geometry="primitive:plane; width:15; height:10" material="color:#9ffffe" position="0 -1 -10" rotation="-90 0 0"></a-entity>-->
