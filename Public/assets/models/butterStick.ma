@@ -1,6 +1,6 @@
 //Maya ASCII 2018ff08 scene
 //Name: butterStick.ma
-//Last modified: Fri, Feb 15, 2019 01:31:13 PM
+//Last modified: Fri, Feb 15, 2019 02:22:47 PM
 //Codeset: 1252
 requires maya "2018ff08";
 requires -nodeType "aiOptions" -nodeType "aiAOVDriver" -nodeType "aiAOVFilter" "mtoa" "3.0.0.2";
@@ -14,13 +14,13 @@ fileInfo "license" "education";
 createNode transform -s -n "persp";
 	rename -uid "28226B10-4163-A4F6-7D2C-B09657DBD310";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" -13.259217269883216 -5.8905179233106324 -18.990302981052441 ;
-	setAttr ".r" -type "double3" 169.46164727096397 -1050.1999999999264 9.163059756291235e-16 ;
+	setAttr ".t" -type "double3" 30.580950476939808 -9.7945192118581961 -18.17821468242763 ;
+	setAttr ".r" -type "double3" 167.66164727093476 -1138.9999999996637 1.5438444439218861e-15 ;
 createNode camera -s -n "perspShape" -p "persp";
 	rename -uid "5FDEA713-45FD-BFF3-03C5-7198FCC12EAF";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999993;
-	setAttr ".coi" 23.679974120963479;
+	setAttr ".coi" 38.537769277189312;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -94,7 +94,8 @@ createNode mesh -n "pCubeShape1" -p "pCube1";
 	setAttr ".dcc" -type "string" "Ambient+Diffuse";
 	setAttr ".covm[0]"  0 1 1;
 	setAttr ".cdvm[0]"  0 1 1;
-	setAttr ".dr" 1;
+	setAttr ".dr" 3;
+	setAttr ".dsm" 2;
 	setAttr ".ai_translator" -type "string" "polymesh";
 createNode lightLinker -s -n "lightLinker1";
 	rename -uid "1C775A24-44A8-064C-568B-F6AD7BBAB29A";
