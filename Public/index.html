@@ -10,19 +10,72 @@
     <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
     <script src="js/grabObj.js"></script>
     <script>
-      AFRAME.registerComponent('phase-shift', {
-          init: function () {
-              var el = this.el
-              el.addEventListener('gripdown', function () {
-                  el.setAttribute('collision-filter', {collisionForces: true})
-                  console.log("button Press");
-              })
-              el.addEventListener('gripup', function () {
-                  el.setAttribute('collision-filter', {collisionForces: false})
-                  console.log("button let go");
-              })
-          }
-      })
+        AFRAME.registerComponent('collision-detection', {
+            schema:{},
+
+            init: function(){
+                var obj = this.el;
+                obj.addEventListener('collide', function (e) {
+                    console.log(e.detail.body.id);
+                    if(e.detail.body.id === 4){
+                        let cubeObj = document.createElement('a-entity');
+
+                        let cubeObjPos = e.detail.body.el.getAttribute('position');
+                        //let spawnPos = obj.getAttribute('position');
+                        //let cubeObjScale = e.detail.body.el.getAttribute('scale');
+                        let cubeObjScale = e.detail.body.el.getAttribute('scale'); //document.querySelector('#cube-entity').getAttribute('scale');
+
+                        cubeObj.setAttribute('position', {x: cubeObjPos.x, y: cubeObjPos.y, z: cubeObjPos.z});
+                        cubeObj.setAttribute('mixin', "cube");
+                        cubeObj.setAttribute('scale', {x: cubeObjScale.x /2, y: cubeObjScale.y / 2, z: cubeObjScale.z / 2});
+
+                        let scene = document.querySelector('a-scene');
+                        scene.appendChild(cubeObj);
+                        e.detail.body.el.setAttribute('delete-self', {delete: true});
+                    }
+                    /*
+                    e.detail.target.el;  // Original entity (knife).
+                    e.detail.body.el;    // Other entity, which playerEl touched.
+                    e.detail.contact;    // Stats about the collision (CANNON.ContactEquation).
+                    e.detail.contact.ni; // Normal (direction) of the collision (CANNON.Vec3).*/
+                });
+            }
+        });
+        AFRAME.registerComponent('phase-shift', {
+            init: function () {
+                var el = this.el
+                el.addEventListener('gripdown', function () {
+                    el.setAttribute('collision-filter', {collisionForces: true})
+                    console.log("button Press");
+                })
+                el.addEventListener('gripup', function () {
+                    el.setAttribute('collision-filter', {collisionForces: false})
+                    console.log("button let go");
+                })
+            }
+        });
+        
+        AFRAME.registerComponent('delete-self', {
+                schema:{
+                    delete: {default: false}
+                },
+                init: function(){
+
+                },
+
+                tick: function(){
+                    const Context_AF = this;
+                    var el = this.el;
+                    if(this.data.delete === true) {
+                        Context_AF.deleteMyself();
+                    }
+                },
+
+                deleteMyself: function(){
+                    const Context_AF = this;
+                    Context_AF.el.parentNode.removeChild(Context_AF.el); 
+                }
+            });
     </script>
   </head>
   <body>
@@ -37,11 +90,11 @@
                 event-set__hoveroff="_event: hover-end; material.opacity: 1; transparent: false"
                 dynamic-body shadow></a-mixin>
                 
-          <a-mixin id="cube" geometry="primitive: box; width: 0.33; height: 0.33; depth: 0.33"
+          <a-mixin id="cube" geometry="primitive: box;"
                  hoverable grabbable stretchable draggable
                  event-set__hoveron="_event: hover-start; material.opacity: 0.7; transparent: true"
                  event-set__hoveroff="_event: hover-end; material.opacity: 1; transparent: false"
-                 dynamic-body shadow></a-mixin>
+                 dynamic-body shadow delete-self="delete: false;"></a-mixin>
           <a-mixin id="touch"
                     physics-collider phase-shift
                     collision-filter="collisionForces: false"
@@ -67,8 +120,12 @@
       <a-sky color="#1e559e"></a-sky>
       <!--<a-entity class="cube" mixin="cube" position="0 1.4 -0.5" material="color: red"></a-entity>-->
       <a-entity static-body obj-model="obj: #kitchenTop-obj;" scale ="0.01 0.01 0.01"></a-entity>
-      <a-entity id="knife-entity" mixin="object" position="0 1.4 -0.5" material="color: black" scale ="0.02 0.02 0.02"></a-entity>
+      <a-entity  id="knife-entity" mixin="object" position="0 1.4 -0.5" material="color: black" scale ="0.02 0.02 0.02" collision-detection></a-entity>
+      
       <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" position="-0.2 1.4 0.25" scale ="0.01 0.01 0.01" color="red" ></a-entity>
+
+      <a-entity id="cube-entity" mixin="cube" position="0 1.1 -0.5" scale ="0.2 0.2 0.2" material="color: red" ></a-entity>
+
       <a-plane id="plane" static-body position="0 0 0" scale="10 10 10" rotation="-90 0 0" color="#8E8E8E"></a-plane>
       
     </a-scene>
