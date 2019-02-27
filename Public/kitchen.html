@@ -88,11 +88,14 @@
   </head>
   <body>
     
-    <a-scene physics="debug: false">
+    <a-scene physics="debug: true">
       <a-assets>
           <a-asset-item id="kitchenTop-obj" src="assets/models/kitchenTop.obj"></a-asset-item>
           <a-asset-item id="knife-obj" src="assets/models/knife.obj"></a-asset-item>
           <a-asset-item id="mushroom-obj" src="assets/models/mushroom.obj"></a-asset-item>
+          <a-asset-item id="potBase-obj" src="assets/models/potBase.obj"></a-asset-item>
+          <a-asset-item id="potContainer-obj" src="assets/models/potContainer.obj"></a-asset-item>
+          <a-asset-item id="pan-obj" src="assets/models/pan.obj"></a-asset-item>
 
           <a-mixin id="objectGrab" hoverable grabbable stretchable draggable
                 event-set__hoveron="_event: hover-start; material.opacity: 0.7; transparent: true"
@@ -132,8 +135,10 @@
 
       <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" mixin="objectGrab" position="0.5 1.4 -0.5" material="color: black" scale ="0.02 0.02 0.02" knife-detection></a-entity>
 
-      <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" mixin="objectGrab" position="-0.2 1.4 -0.5" scale ="0.01 0.01 0.01" material="color: red"></a-entity>
+      <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" mixin="objectGrab" position="-0.4 4.4 -0.5" scale ="0.01 0.01 0.01" material="color: red"></a-entity>
 
+      <a-entity id="pan-entity" obj-model="obj: #pan-obj;" static-body="shape: hull;" position="-0.4 1.2 -0.5" scale ="0.1 0.1 0.1" material="color: black"></a-entity>
+      
       <a-entity id="cube-entity" mixin="cube" position="0 1.1 -0.5" scale ="0.2 0.2 0.2" material="color: red"></a-entity>
 
       <a-plane id="plane" static-body position="0 0 0" scale="10 10 10" rotation="-90 0 0" color="#8E8E8E"></a-plane>
