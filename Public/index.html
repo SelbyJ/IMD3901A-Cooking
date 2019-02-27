@@ -9,56 +9,70 @@
         <!--site was found from https://aframe.io/docs/0.8.0/core/animations.html-->
         <script src="https://unpkg.com/aframe-animation-component@^4.1.2/dist/aframe-animation-component.min.js"></script> 
         
-
         <!--Component files loaded in-->
-        <script src="js/create_component.js"></script>
-        <script src="js/delete_component.js"></script>
-        <script src="js/object-clicked.js"></script>
-
+        <script src="js/page-flip.js"></script> 
     </head>
     <body>
         <a-scene>
             <a-assets>
                 <!--sound from http://soundbible.com/835-Pen-Clicking.html. Sounds are free to use underthe Creative Commons Attribution 3.0 https://creativecommons.org/licenses/by/3.0/-->
                 <a-audio crossorigin="anonymous" id="button-click" src="/assets/Pen Clicking-SoundBible.com-482574858.mp3(1)"></a-audio>
-
+                <a-asset-item id="cover-page" src="assets/cover.obj"></a-asset-item>
+                <a-asset-item id="page1" src="assets/pageOne.obj"></a-asset-item>
+                <a-asset-item id="page2" src="assets/pageTwo.obj"></a-asset-item>
+                <a-asset-item id="page3" src="assets/pageThree.obj"></a-asset-item>
+                <a-asset-item id="recipeOne" src="assets/recipeOne.obj"></a-asset-item>                
+                <img id="cover-texture" src="assets/coverColorMap.png">
+                <img id="cover-pic" src="assets/cover.png">
+                <img id="page1-pic" src="assets/pageOneColorMap.png">
+                <img id="page2-pic" src="assets/pageTwoColorMap.png">
+                <img id="page3-pic" src="assets/pageThreeColorMap.png">
+                <img id="recipeOne-pic" src="assets/recipeOneColourMap.png">                
             </a-assets>
 
             <!--loaded in camera manually and added wasd controls so you can move around the screen-->
             <a-entity position="0 3 0" camera look-controls wasd-controls>
-                <!--decided to go with circle cursor as it allowed for more control-->
-                <a-entity cursor="fuse:true; fuseTimeout:500; rayOrigin: mouse">
-                    </a-entity>
+                <a-entity cursor="fuse:true; fuseTimeout:500; rayOrigin: mouse"></a-entity>
             </a-entity>
-
+            
             <!--entites that hold the sound so that they can be called upon in the component that controls when the shapes are selected-->
             <a-entity id="buttonSound" sound="src:#button-click"></a-entity>            
 
-            <a-entity front-flip="pageNum: cover" id="cover" geometry="primitive: plane; width:14; height:10" position="0 5 -10" rotation="0 0 0" material="color:#ffffff; side:double; transparent: true; opacity:0.1">
-                <a-entity geometry="primitive:plane; width:7; height:10" material="color:#eddd9e; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>
+            <a-entity geometry="primitive:plane; width:14; height:1" material="opacity:0" id="front" position="0 0 -10.01">
+                <a-entity obj-model="obj: #cover-page" id="childcover" material="src: #cover-texture" position="3.5 0 0"></a-entity>
+                <!--<a-entity id="childcover" geometry="primitive:plane; width:7; height:10" text="value: Cover Page; color: black" material="src:#cover-pic; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>-->
             </a-entity>
 
-            <a-entity front-flip="pageNum: one" id="one" geometry="primitive: plane; width:14; height:10" position="0 5 -10" rotation="0 0 0" material="color:#ffffff; side:double; transparent: true; opacity:0.1">
-                <a-entity geometry="primitive:plane; width:7; height:10" material="color:#eddd9e; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>
+            <a-entity geometry="primitive:plane; width:14; height:1" material="opacity:0" id="pageone" position="0 0 -10.02">
+                <a-entity obj-model="obj: #page1" id="childone" material="src: #page1-pic" position="3.5 0 0"></a-entity>
+                <!--<a-entity id="childone" geometry="primitive:plane; width:7; height:10" text="value: Page One; color: black" material="color:#a0f2ff; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>-->
             </a-entity>
 
-            <a-entity front-flip="pageNum: two" id="two" geometry="primitive: plane; width:14; height:10" position="0 5 -10" rotation="0 0 0" material="color:#ffffff; side:double; transparent: true; opacity:0.1">
-                <a-entity geometry="primitive:plane; width:7; height:10" material="color:#eddd9e; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>
+            <a-entity geometry="primitive:plane; width:14; height:1" material="opacity:0" id="pagetwo" position="0 0 -10.03">
+                <a-entity obj-model="obj: #page2" id="childtwo" material="src: #page2-pic" position="3.5 0 0"></a-entity>
+                <!--<a-entity id="childtwo" geometry="primitive:plane; width:7; height:10" text="value: Page Two; color: black" material="color:#a0f2ff; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>-->
             </a-entity>
 
-            <a-entity front-flip="pageNum: three" id="three" geometry="primitive: plane; width:14; height:10" position="0 5 -10" rotation="0 0 0" material="color:#ffffff; side:double; transparent: true; opacity:0.1">
-                <a-entity geometry="primitive:plane; width:7; height:10" material="color:#eddd9e; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>
+            <a-entity geometry="primitive:plane; width:14; height:1" material="opacity:0" id="pagethree" position="0 0 -10.04">
+                <a-entity obj-model="obj: #page3" id="childthree" material="src: #page3-pic" position="3.5 0 0"></a-entity>                
+                <!--<a-entity id="childthree" geometry="primitive:plane; width:7; height:10" text="value: Page Three; color: black" material="color:#a0f2ff; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>-->
             </a-entity> 
-
-            <!--loaded in a plane to give the objects a nice platform to contrast against. Code from Anthony's examples-->
-            <!--<a-entity geometry="primitive:plane; width:15; height:10" material="color:#9ffffe" position="0 -1 -10" rotation="-90 0 0"></a-entity>-->
             
             <!--making a pretty background. Code from Anthony's examples-->
             <a-entity id="background" geometry="primitive:sphere; radius:500" material="shader:flat; src:#backgroundImg; side:back; height:1078; width:1078"></a-entity>
 
+            <a-entity page-flip="button: forward" geometry="primitive: box; width: 1; height:1; depth:0.01" position="-9 5 -10" material="color: #ff8c66">
+                <a-text value="Forward" color="black" position="-2 2 0" width="20" height="20"></a-text>
+            </a-entity>
+            <a-entity page-flip="button: backward" geometry="primitive: box; width: 1; height:1; depth:0.01" position="8 5 -10" material="color: #ff8c66">
+                <a-text value="Backward" color="black" position="-0.5 2 0" width="20" height="20"></a-text>
+            </a-entity>
+            <a-entity page-flip="button: open" geometry="primitive: box; width: 1; height:1; depth:0.01" position="-4 -3 -10" material="color: #ff8c66">
+                <a-text value="Open Recipe" color="black" position="-2.5 1 0" width="20" height="20"></a-text>
+            </a-entity>
+            <a-entity page-flip="button: close" geometry="primitive: box; width: 1; height:1; depth:0.01" position="4 -3 -10" material="color: #ff8c66">
+                <a-text value="Close Recipe" color="black" position="-2.5 1 0" width="20" height="20"></a-text>
+            </a-entity>
         </a-scene>
     </body>
-
-<script></script>
-
 </html>
