@@ -12,7 +12,7 @@ app.use(express.static(__dirname + '/public'));
 
 //set a route
 app.get('/', function(req, res){
-    res.sendFile(__dirname + 'public/kitchen.html');
+    res.sendFile(__dirname + '/Public/vr.html');
 });
 
 server.listen(LISTEN_PORT);
