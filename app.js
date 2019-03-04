@@ -24,7 +24,7 @@ app.get('/kitchen', function(req, res) {
 
 /*
 app.get('/desktop', function(req, res) {
-    app.use(express.static('Public/assets'));
+    app.use(express.static(__dirname + '/public'));;
     res.sendFile(__dirname + '/public/desktop.html');
 });
 */
