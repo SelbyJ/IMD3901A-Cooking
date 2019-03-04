@@ -17,6 +17,12 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + '/Public/kitchen.html');
 });
 */
+
+app.get('/start_page', function(req, res) {
+    app.use(express.static(__dirname + '/public'));
+    res.sendFile(__dirname + '/Public/start_page.html');
+});
+
 app.get('/kitchen', function(req, res) {
     app.use(express.static(__dirname + '/public'));
     res.sendFile(__dirname + '/Public/kitchen.html');
