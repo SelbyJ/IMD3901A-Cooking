@@ -21,6 +21,7 @@
     "aframe-physics-system": "^3.3.0",
     "browserify": "^16.2.3",
     "express": "^4.16.4",
+    "socket.io": "^2.2.0",
     "super-hands": "^3.0.0"
   }
 }
