@@ -22,12 +22,11 @@ app.get('/kitchen', function(req, res) {
     res.sendFile(__dirname + '/Public/kitchen.html');
 });
 
-/*
-app.get('/desktop', function(req, res) {
+app.get('/mobile', function(req, res) {
     app.use(express.static(__dirname + '/public'));;
-    res.sendFile(__dirname + '/public/desktop.html');
+    res.sendFile(__dirname + '/public/mobile.html');
 });
-*/
+
 
 socketIO.on('connection', function(socket){
     console.log(socket.id + " has connected!");
