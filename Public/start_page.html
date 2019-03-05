@@ -12,25 +12,6 @@
         <!--Component files loaded in-->
         <script src="/socket.io/socket.io.js"></script> 
 
-        <script>
-            let socket = io();
-
-            socket.on('connect', function(){
-                console.log('Start Page Loaded');
-            });
-
-            document.querySelector('#vrUser').addEventListener('click', function(){
-                console.log('VR User Selected');
-                socket.emit('vr-clicked')
-            });
-
-            document.querySelector('#mobileUser').addEventListener('click', function(){
-                console.log('Mobile User Selected');
-                socket.emit('mobile-clicked')
-            });
-            
-        </script>
-
     </head>
     <body>
         <a-scene>
@@ -56,5 +37,24 @@
                 <a-text value="Mobile User" color="black" position="-1.8 0 0.2" width="15" height="20"></a-text>
             </a-entity>
         </a-scene>
+
+        <script>
+                let socket = io();
+    
+                socket.on('connect', function(){
+                    console.log('Start Page Loaded');
+                });
+    
+                document.querySelector('#vrUser').addEventListener('click', function(){
+                    console.log('VR User Selected');
+                    socket.emit('vr-clicked')
+                });
+    
+                document.querySelector('#mobileUser').addEventListener('click', function(){
+                    console.log('Mobile User Selected');
+                    socket.emit('mobile-clicked')
+                });
+                
+            </script>
     </body>
 </html>
