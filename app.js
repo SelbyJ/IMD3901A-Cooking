@@ -40,6 +40,8 @@ socketIO.on('connection', function(socket){
     socket.on('disconnect', function(data){
         console.log(socket.id + " has disconnected");
     });
+
+    socket.on('')
 });
 
 server.listen(LISTEN_PORT);

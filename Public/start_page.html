@@ -10,7 +10,27 @@
         <script src="https://unpkg.com/aframe-animation-component@^4.1.2/dist/aframe-animation-component.min.js"></script> 
         
         <!--Component files loaded in-->
-        <script src="js/page-flip.js"></script> 
+        <script src="/socket.io/socket.io.js"></script> 
+
+        <script>
+            let socket = io();
+
+            socket.on('connect', function(){
+                console.log('Start Page Loaded');
+            });
+
+            document.querySelector('#vrUser').addEventListener('click', function(){
+                console.log('VR User Selected');
+                socket.emit('vr-clicked')
+            });
+
+            document.querySelector('#mobileUser').addEventListener('click', function(){
+                console.log('Mobile User Selected');
+                socket.emit('mobile-clicked')
+            });
+            
+        </script>
+
     </head>
     <body>
         <a-scene>
@@ -29,10 +49,10 @@
             <!--making a pretty background. Code from Anthony's examples-->
             <a-entity id="background" geometry="primitive:sphere; radius:500" material="shader:flat; src:#backgroundImg; side:back; height:1078; width:1078"></a-entity>
 
-            <a-entity page-flip="button: forward" geometry="primitive: box; width: 4; height:2; depth:0.01" position="0 0.3 -10" material="color: #ff8c66">
+            <a-entity id="vrUser" geometry="primitive: box; width: 4; height:2; depth:0.01" position="0 0.3 -10" material="color: #ff8c66">
                 <a-text value="VR User" color="black" position="-1.6 0 0.2" width="20" height="20"></a-text>
             </a-entity>
-            <a-entity page-flip="button: backward" geometry="primitive: box; width: 4; height:2; depth:0.01" position="0 -3 -10" material="color: #ff8c66">
+            <a-entity id="mobileUser" geometry="primitive: box; width: 4; height:2; depth:0.01" position="0 -3 -10" material="color: #ff8c66">
                 <a-text value="Mobile User" color="black" position="-1.8 0 0.2" width="15" height="20"></a-text>
             </a-entity>
         </a-scene>
