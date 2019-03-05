@@ -15,7 +15,7 @@
     <body>
         <a-scene>
             <a-assets>
-                <img id="cover-texture" src="assets/coverColorMap.png">
+                <img id="start-texture" src="assets/materials/startPage.png">
             </a-assets>
 
             <!--loaded in camera manually and added wasd controls so you can move around the screen-->
@@ -23,40 +23,17 @@
                 <a-entity cursor="fuse:true; fuseTimeout:500; rayOrigin: mouse"></a-entity>
             </a-entity>        
 
-            <a-entity geometry="primitive:plane; width:14; height:1" material="opacity:0" id="front" position="0 0 -10.01">
-                <a-entity obj-model="obj: #cover-page" id="childcover" material="src: #cover-texture" position="3.5 0 0"></a-entity>
-                <!--<a-entity id="childcover" geometry="primitive:plane; width:7; height:10" text="value: Cover Page; color: black" material="src:#cover-pic; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>-->
+            <a-entity geometry="primitive:plane; width:13.5; height:16" material="src: #start-texture" id="front" position="0 3 -10">
             </a-entity>
-
-            <a-entity geometry="primitive:plane; width:14; height:1" material="opacity:0" id="pageone" position="0 0 -10.02">
-                <a-entity obj-model="obj: #page1" id="childone" material="src: #page1-pic" position="3.5 0 0"></a-entity>
-                <!--<a-entity id="childone" geometry="primitive:plane; width:7; height:10" text="value: Page One; color: black" material="color:#a0f2ff; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>-->
-            </a-entity>
-
-            <a-entity geometry="primitive:plane; width:14; height:1" material="opacity:0" id="pagetwo" position="0 0 -10.03">
-                <a-entity obj-model="obj: #page2" id="childtwo" material="src: #page2-pic" position="3.5 0 0"></a-entity>
-                <!--<a-entity id="childtwo" geometry="primitive:plane; width:7; height:10" text="value: Page Two; color: black" material="color:#a0f2ff; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>-->
-            </a-entity>
-
-            <a-entity geometry="primitive:plane; width:14; height:1" material="opacity:0" id="pagethree" position="0 0 -10.04">
-                <a-entity obj-model="obj: #page3" id="childthree" material="src: #page3-pic" position="3.5 0 0"></a-entity>                
-                <!--<a-entity id="childthree" geometry="primitive:plane; width:7; height:10" text="value: Page Three; color: black" material="color:#a0f2ff; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>-->
-            </a-entity> 
             
             <!--making a pretty background. Code from Anthony's examples-->
             <a-entity id="background" geometry="primitive:sphere; radius:500" material="shader:flat; src:#backgroundImg; side:back; height:1078; width:1078"></a-entity>
 
-            <a-entity page-flip="button: forward" geometry="primitive: box; width: 1; height:1; depth:0.01" position="-9 5 -10" material="color: #ff8c66">
-                <a-text value="Forward" color="black" position="-2 2 0" width="20" height="20"></a-text>
+            <a-entity page-flip="button: forward" geometry="primitive: box; width: 4; height:2; depth:0.01" position="0 0.3 -10" material="color: #ff8c66">
+                <a-text value="VR User" color="black" position="-1.6 0 0.2" width="20" height="20"></a-text>
             </a-entity>
-            <a-entity page-flip="button: backward" geometry="primitive: box; width: 1; height:1; depth:0.01" position="8 5 -10" material="color: #ff8c66">
-                <a-text value="Backward" color="black" position="-0.5 2 0" width="20" height="20"></a-text>
-            </a-entity>
-            <a-entity page-flip="button: open" geometry="primitive: box; width: 1; height:1; depth:0.01" position="-4 -3 -10" material="color: #ff8c66">
-                <a-text value="Open Recipe" color="black" position="-2.5 1 0" width="20" height="20"></a-text>
-            </a-entity>
-            <a-entity page-flip="button: close" geometry="primitive: box; width: 1; height:1; depth:0.01" position="4 -3 -10" material="color: #ff8c66">
-                <a-text value="Close Recipe" color="black" position="-2.5 1 0" width="20" height="20"></a-text>
+            <a-entity page-flip="button: backward" geometry="primitive: box; width: 4; height:2; depth:0.01" position="0 -3 -10" material="color: #ff8c66">
+                <a-text value="Mobile User" color="black" position="-1.8 0 0.2" width="15" height="20"></a-text>
             </a-entity>
         </a-scene>
     </body>
