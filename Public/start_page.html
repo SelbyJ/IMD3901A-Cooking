@@ -21,22 +21,23 @@
 
             <!--loaded in camera manually and added wasd controls so you can move around the screen-->
             <a-entity position="0 3 0" camera look-controls wasd-controls>
-                <a-entity cursor="fuse:true; fuseTimeout:500; rayOrigin: mouse"></a-entity>
+                <a-entity cursor="fuse:false; fuseTimeout:500; rayOrigin: mouse" raycaster="far:20; interval:500; objects:.clickable"></a-entity>
             </a-entity>        
 
             <a-entity geometry="primitive:plane; width:13.5; height:16" material="src: #start-texture" id="front" position="0 3 -10">
             </a-entity>
             
             <!--making a pretty background. Code from Anthony's examples-->
-            <a-entity id="background" geometry="primitive:sphere; radius:500" material="shader:flat; src:#backgroundImg; side:back; height:1078; width:1078"></a-entity>
+            <a-entity id="background"  geometry="primitive:sphere; radius:500" material="shader:flat; src:#backgroundImg; side:back; height:1078; width:1078"></a-entity>
 
-            <a-entity id="vrUser" geometry="primitive: box; width: 4; height:2; depth:0.01" position="0 0.3 -10" material="color: #ff8c66">
+            <a-entity id="vrUser" class="clickable" geometry="primitive: box; width: 4; height:2; depth:0.01" position="0 0.3 -10" material="color: #ff8c66">
                 <a-text value="VR User" color="black" position="-1.6 0 0.2" width="20" height="20"></a-text>
             </a-entity>
-            <a-entity id="mobileUser" geometry="primitive: box; width: 4; height:2; depth:0.01" position="0 -3 -10" material="color: #ff8c66">
+            <a-entity id="mobileUser" class="clickable" geometry="primitive: box; width: 4; height:2; depth:0.01" position="0 -3 -10" material="color: #ff8c66">
                 <a-text value="Mobile User" color="black" position="-1.8 0 0.2" width="15" height="20"></a-text>
             </a-entity>
         </a-scene>
+<<<<<<< HEAD
 
         <script>
                 let socket = io();
@@ -51,5 +52,7 @@
                 });
                 
             </script>
+=======
+>>>>>>> 6b3d400442123f640f53cb772ad382e53877b945
     </body>
 </html>
