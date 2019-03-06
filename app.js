@@ -18,9 +18,6 @@ app.get('/', function(req, res){
 });
 */
 
-var vr = false;
-var mobile = false;
-
 app.get('/start_page', function(req, res) {
     app.use(express.static(__dirname + '/public'));
     res.sendFile(__dirname + '/Public/start_page.html');
@@ -44,16 +41,16 @@ socketIO.on('connection', function(socket){
         console.log(socket.id + " has disconnected");
     });
 
-    socket.on('vrclicked', function(data){
+    socket.on('vrclicked', function(data, res){
         console.log("VR user window will appear");
-        vr = true;
-        window.location.href = '/Public/kitchen.html';
+        //vr = true;
+        //res.redirect(__dirname + '/Public/kitchen.html');        
     });
 
-    socket.on('mobileclicked', function(data){
+    socket.on('mobileclicked', function(data, res){
         console.log("Mobile user window will appear");
-        vr = true;
-        window.location.href = '/Public/mobile.html';
+        //vr = true;
+        //res.redirect(__dirname + '/Public/mobile.html');
     });
 });
 
