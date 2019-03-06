@@ -39,6 +39,10 @@
         </a-scene>
 
         <script>
+
+                var vr = false;
+                var mobile = false;
+
                 let socket = io();
     
                 socket.on('connect', function(){
@@ -47,13 +51,23 @@
     
                 document.querySelector('#vrUser').addEventListener('click', function(){
                     console.log('VR User Selected');
-                    socket.emit('vrclicked')
+                    socket.emit('vrclicked');
+                    vr = true;
                 });
     
                 document.querySelector('#mobileUser').addEventListener('click', function(){
                     console.log('Mobile User Selected');
-                    socket.emit('mobileclicked')
+                    socket.emit('mobileclicked');
+                    mobile = true;
                 });
+
+                if(vr == true){
+                    window.location.href('/Public/kitchen.html');
+                }
+
+                if(mobile == true){
+                    window.location.href('/Public/mobile.html');
+                }
                 
             </script>
     </body>
