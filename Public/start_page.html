@@ -47,12 +47,12 @@
     
                 document.querySelector('#vrUser').addEventListener('click', function(){
                     console.log('VR User Selected');
-                    socket.emit('vr-clicked')
+                    socket.emit('vrclicked')
                 });
     
                 document.querySelector('#mobileUser').addEventListener('click', function(){
                     console.log('Mobile User Selected');
-                    socket.emit('mobile-clicked')
+                    socket.emit('mobileclicked')
                 });
                 
             </script>
