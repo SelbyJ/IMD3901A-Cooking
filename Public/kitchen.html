@@ -12,45 +12,105 @@
     <script src="/socket.io/socket.io.js"></script>
     <title>Kitchen</title>
     <script>
+        AFRAME.registerComponent('cookingImplement', {
+            /*
+                currentHeat: represents the current heat of the element
+                maxHeat: represents the maximum heat the element can reach
+                recieveHeat: 
+                    if true then the element can't set it's own heat and needs to be placed on an element that can
+                    if false then the element can set it's own heat and sends its current heat to the sendHeat object
+                sendHeat: if recieveHeat is false then this value represents an object id that needs this elements heat 
+            */
+            schema:{
+                currentHeat: {default: 0},
+                maxHeat: {default: 100},
+                recieveHeat: {default: false},
+                sendHeat: {default: "null"}
+            },
+
+            init: function(){
+                var obj = this.el;
+
+                //if true then it is an element like the burner or pan and it's heat is regulated by what it is on
+                //if false then it is an elment like the burner knobs or oven gauge that sets the temerature for an element like the burner
+                if(this.data.recieveHeat){
+                    obj.addEventListener('collide', function(e){
+                        console.log(e.detail.body.el.getAttribute('id'));
+                    });
+                }
+                else{
+                    obj.addEventListener('collide', function(e){
+                        console.log("knob" + e.detail.body.el.getAttribute('id'));
+                    });
+                    document.getElementById(sendHeat).getAttribute("cookingImplement").currentHeat = this.data.currentHeat;
+                }
+            }
+        }),
+
+        AFRAME.registerComponent('ingredient', {
+            /*
+                heatTransfer: represents the heat needed to cook, once the value reaches 0 the ingredient is cooked if it goes below then it is overcooked 
+                size: represents the size the recipe specifies the ingredient needs to be
+                cookingImplementID
+            */
+            schema: {
+                heatTransfer: {default: 0},
+                size: {default: 1},
+                cookingImplementID: {default: "NULL"}
+            },
+
+            init: function(){
+                var obj = this.el;
+                var objData = this.data;
+                //Collision events
+                obj.addEventListener('collide', function(e){
+                    //Cutting events
+                    if(objData.size < 1){
+                        //if the cube collides with the knife
+                        if(e.detail.body.el.getAttribute('id') === 'knife-entity'){
+                            objData.size = objData.size / 2;
+                            let cubeObj1 = document.createElement('a-entity');
+                            let cubeObj2 = document.createElement('a-entity');
+
+                            let cubeObjPos = obj.getAttribute('position');
+                            let cubeObjScale = obj.getAttribute('scale');
+
+                            cubeObj1.setAttribute('position', {x: cubeObjPos.x - cubeObjScale.x /2, y: cubeObjPos.y, z: cubeObjPos.z});
+                            cubeObj1.setAttribute('mixin', "cube");
+                            cubeObj1.setAttribute('scale', {x: cubeObjScale.x /2, y: cubeObjScale.y / 2, z: cubeObjScale.z / 2});
+
+                            cubeObj2.setAttribute('position', {x: cubeObjPos.x + cubeObjScale.x /2, y: cubeObjPos.y, z: cubeObjPos.z});
+                            cubeObj2.setAttribute('mixin', "cube");
+                            cubeObj2.setAttribute('scale', {x: cubeObjScale.x /2, y: cubeObjScale.y / 2, z: cubeObjScale.z / 2});
+
+                            let scene = document.querySelector('a-scene');
+                            scene.appendChild(cubeObj1);
+                            scene.appendChild(cubeObj2);
+
+                            obj.setAttribute('delete-self', {delete: true});
+                        }
+                    }
+
+                    //Cooking events 
+                    if(objData.heatTransfer > 0){
+                        if(e.detail.body.el.getAttribute('id') === objData.cookingImplementID){
+                            //heatTransferFunction
+                            heatObj(e);
+                        }
+                    }
+                });
+            },
+
+            heatObj: function(e){
+                console.log("ON Hot element");
+            }
+        }), 
+
         AFRAME.registerComponent('collision',{
             schema: {
                 collision: {default: false}
             }
         }),
-
-        AFRAME.registerComponent('knife-detection', {
-            schema:{},
-
-            init: function(){
-                var obj = this.el;
-                obj.addEventListener('collide', function (e) {
-                    if(e.detail.body.el.getAttribute('id') === 'cube-entity' && e.detail.body.el.getAttribute('collision').collision === false){
-                        e.detail.body.el.setAttribute('collision', {collision: true});
-
-                        let cubeObj1 = document.createElement('a-entity');
-                        let cubeObj2 = document.createElement('a-entity');
-
-                        let cubeObjPos = e.detail.body.el.getAttribute('position');
-                        let cubeObjScale = e.detail.body.el.getAttribute('scale');
-
-                        cubeObj1.setAttribute('position', {x: cubeObjPos.x - cubeObjScale.x /2, y: cubeObjPos.y, z: cubeObjPos.z});
-                        cubeObj1.setAttribute('mixin', "cube");
-                        cubeObj1.setAttribute('scale', {x: cubeObjScale.x /2, y: cubeObjScale.y / 2, z: cubeObjScale.z / 2});
-
-                        cubeObj2.setAttribute('position', {x: cubeObjPos.x + cubeObjScale.x /2, y: cubeObjPos.y, z: cubeObjPos.z});
-                        cubeObj2.setAttribute('mixin', "cube");
-                        cubeObj2.setAttribute('scale', {x: cubeObjScale.x /2, y: cubeObjScale.y / 2, z: cubeObjScale.z / 2});
-                        
-                        e.detail.body.el.setAttribute('delete-self', {delete: true});
-
-                        let scene = document.querySelector('a-scene');
-                        scene.appendChild(cubeObj1);
-                        scene.appendChild(cubeObj2);
-                    }
-                });
-            }
-        });
-
 
         AFRAME.registerComponent('phase-shift', {
             init: function () {
@@ -92,32 +152,47 @@
     
     <a-scene physics="debug: true">
       <a-assets>
-          <a-asset-item id="kitchenTop-obj" src="assets/models/kitchenTop.obj"></a-asset-item>
-          <a-asset-item id="knife-obj" src="assets/models/knife.obj"></a-asset-item>
-          <a-asset-item id="mushroom-obj" src="assets/models/mushroom.obj"></a-asset-item>
-          <a-asset-item id="potBase-obj" src="assets/models/potBase.obj"></a-asset-item>
-          <a-asset-item id="potContainer-obj" src="assets/models/potContainer.obj"></a-asset-item>
-          <a-asset-item id="pan-obj" src="assets/models/pan.obj"></a-asset-item>
+        <a-asset-item id="kitchenTop-obj" src="assets/models/kitchenTop.obj"></a-asset-item>
+        <a-asset-item id="knife-obj" src="assets/models/knife.obj"></a-asset-item>
+        <a-asset-item id="mushroom-obj" src="assets/models/mushroom.obj"></a-asset-item>
 
-          <a-mixin id="objectGrab" hoverable grabbable stretchable draggable
+        <!--STOVE ELEMENTS-->
+        <a-asset-item id="stoveBase-obj" src="assets/models/stoveBase.obj"></a-asset-item>
+        <a-asset-item id="frontRightBurner-obj" src="assets/models/frontRightBurner.obj"></a-asset-item>
+        <a-asset-item id="frontRightBurnerKnob-obj" src="assets/models/frontRightBurnerKnob.obj"></a-asset-item>
+        <a-asset-item id="frontLeftBurner-obj" src="assets/models/frontLeftBurner.obj"></a-asset-item>
+        <a-asset-item id="frontLeftBurnerKnob-obj" src="assets/models/frontLeftBurnerKnob.obj"></a-asset-item>
+        <a-asset-item id="backRightBurner-obj" src="assets/models/backRightBurner.obj"></a-asset-item>
+        <a-asset-item id="backRightBurnerKnob-obj" src="assets/models/backRightBurnerKnob.obj"></a-asset-item>
+        <a-asset-item id="backLeftBurner-obj" src="assets/models/backLeftBurner.obj"></a-asset-item>
+        <a-asset-item id="backLeftBurnerKnob-obj" src="assets/models/backLeftBurnerKnob.obj"></a-asset-item>
+
+        <!--MIXIN-->
+        <a-mixin id="objectGrab" hoverable grabbable
+            event-set__hoveron="_event: hover-start; material.opacity: 0.7; transparent: true"
+            event-set__hoveroff="_event: hover-end; material.opacity: 1; transparent: false"
+            shadow delete-self="delete: false;" collision></a-mixin>
+
+        <a-mixin id="objectHold" hoverable grabbable stretchable draggable
+            event-set__hoveron="_event: hover-start; material.opacity: 0.7; transparent: true"
+            event-set__hoveroff="_event: hover-end; material.opacity: 1; transparent: false"
+            shadow delete-self="delete: false;" collision></a-mixin>
+            
+        <a-mixin id="cube" geometry="primitive: box;"
+                hoverable grabbable stretchable draggable
                 event-set__hoveron="_event: hover-start; material.opacity: 0.7; transparent: true"
                 event-set__hoveroff="_event: hover-end; material.opacity: 1; transparent: false"
                 dynamic-body shadow delete-self="delete: false;" collision></a-mixin>
-                
-          <a-mixin id="cube" geometry="primitive: box;"
-                 hoverable grabbable stretchable draggable
-                 event-set__hoveron="_event: hover-start; material.opacity: 0.7; transparent: true"
-                 event-set__hoveroff="_event: hover-end; material.opacity: 1; transparent: false"
-                 dynamic-body shadow delete-self="delete: false;" collision></a-mixin>
-          <a-mixin id="touch"
-                    physics-collider phase-shift
-                    collision-filter="collisionForces: false"
-                    static-body="shape: sphere; sphereRadius: 0.02"
-                    super-hands="colliderEvent: collisions;
-                                  colliderEventProperty: els;
-                                  colliderEndEvent: collisions;
-                                  colliderEndEventProperty: clearedEls;">
+        <a-mixin id="touch"
+                physics-collider phase-shift
+                collision-filter="collisionForces: false"
+                static-body="shape: sphere; sphereRadius: 0.02"
+                super-hands="colliderEvent: collisions;
+                                colliderEventProperty: els;
+                                colliderEndEvent: collisions;
+                                colliderEndEventProperty: clearedEls;">
       </a-assets>
+      <!--PLAYER -->
       <a-entity>
           <a-camera positon="0 1.6 0"></a-camera>
           <a-entity id="rhand" mixin="touch"
@@ -132,19 +207,36 @@
           </a-entity>
       </a-entity>
       <a-sky color="#1e559e"></a-sky>
-      <!--<a-entity class="cube" mixin="cube" position="0 1.4 -0.5" material="color: red"></a-entity>-->
+
       <a-entity static-body obj-model="obj: #kitchenTop-obj;" scale ="0.01 0.01 0.01"></a-entity>
 
-      <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" mixin="objectGrab" position="0.5 1.4 -0.5" material="color: black" scale ="0.02 0.02 0.02" knife-detection></a-entity>
+      <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="0.5 1.4 -0.5" material="color: black" scale ="0.02 0.02 0.02"></a-entity>
 
-      <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" mixin="objectGrab" position="-0.4 4.4 -0.5" scale ="0.01 0.01 0.01" material="color: red"></a-entity>
-
-      <a-entity id="pan-entity" obj-model="obj: #pan-obj;" static-body="shape: hull;" position="-0.4 1.2 -0.5" scale ="0.1 0.1 0.1" material="color: black"></a-entity>
+      <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" dynamic-body mixin="objectHold" position="-0.4 4.4 -0.5" scale ="0.01 0.01 0.01" material="color: red" ></a-entity>
       
-      <a-entity id="cube-entity" mixin="cube" position="0 1.1 -0.5" scale ="0.2 0.2 0.2" material="color: red"></a-entity>
-
+      <a-entity id="cube-entity" mixin="cube" position="0 1.1 -0.5" scale ="0.2 0.2 0.2" material="color: red" ingredient="heatTransfer: 100; size: 0.5; cookingImplementID: pan;"></a-entity>
+      
+      <!--STOVE ENTITY-->
+      <a-entity id="stoveBase-entity" static-body obj-model="obj: #stoveBase-obj;" position="1 0 0.2" scale ="0.009 0.009 0.009" rotation="0 -90 0" material="color: white"></a-entity>
+      <a-entity id="frontRightBurner-entity" obj-model="obj: #frontRightBurner-obj;" static-body position="1 0 0.2" scale ="0.009 0.009 0.009" rotation="0 -90 0" material="color: purple"></a-entity>
+      <a-entity id="frontRightBurnerKnob-entity" obj-model="obj: #frontRightBurnerKnob-obj;" static-body mixin="objectGrab" position="1 0 0.2" scale ="0.009 0.009 0.009" rotation="0 -90 0" material="color: red"  ></a-entity>
+      <a-entity id="frontLeftBurner-entity" obj-model="obj: #frontLeftBurner-obj;" static-body position="1 0 0.2" scale ="0.009 0.009 0.009" rotation="0 -90 0" material="color: purple"></a-entity>
+      <a-entity id="frontLeftBurnerKnob-entity" obj-model="obj: #frontLeftBurnerKnob-obj;" static-body mixin="objectGrab" position="1 0 0.2" scale ="0.009 0.009 0.009" rotation="0 -90 0" material="color: red"></a-entity>
+      <a-entity id="backRightBurner-entity" obj-model="obj: #backRightBurner-obj;" static-body position="1 0 0.2" scale ="0.009 0.009 0.009" rotation="0 -90 0" material="color: purple"></a-entity>
+      <a-entity id="backRightBurnerKnob-entity" obj-model="obj: #backRightBurnerKnob-obj;" static-body mixin="objectGrab" position="1 0 0.2" scale ="0.009 0.009 0.009" rotation="0 -90 0" material="color: red"></a-entity>
+      <a-entity id="backLeftBurner-entity" obj-model="obj: #backLeftBurner-obj;" static-body position="1 0 0.2" scale ="0.009 0.009 0.009" rotation="0 -90 0" material="color: purple"></a-entity>
+      <a-entity id="backLeftBurnerKnob-entity" obj-model="obj: #backLeftBurnerKnob-obj;" static-body mixin="objectGrab" position="1 0 0.2" scale ="0.009 0.009 0.009" rotation="0 -90 0" material="color: red"></a-entity>
+      
       <a-plane id="plane" static-body position="0 0 0" scale="10 10 10" rotation="-90 0 0" color="#8E8E8E"></a-plane>
       
     </a-scene>
   </body>
+  <script>
+        let socket = io();
+    
+        socket.on('connect', function(){
+            console.log('VR user selected');
+        });
+    
+  </script>
 </html>

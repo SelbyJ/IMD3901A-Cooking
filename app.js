@@ -50,6 +50,7 @@ socketIO.on('connection', function(socket){
     socket.on('mobileclicked', function(data, res){
         console.log("Mobile user window will appear");
         //vr = true;
+        //app.use(express.static(__dirname + '/public'));
         //res.redirect(__dirname + '/Public/mobile.html');
     });
 });

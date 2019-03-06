@@ -44,15 +44,10 @@
                 socket.on('connect', function(){
                     console.log('Start Page Loaded');
                 });
-    
-                document.querySelector('#vrUser').addEventListener('click', function(){
-                    console.log('VR User Selected');
-                    socket.emit('vrclicked')
-                });
-    
+                
                 document.querySelector('#mobileUser').addEventListener('click', function(){
                     console.log('Mobile User Selected');
-                    socket.emit('mobileclicked')
+                    socket.emit('mobileclicked');
                 });
                 
             </script>
