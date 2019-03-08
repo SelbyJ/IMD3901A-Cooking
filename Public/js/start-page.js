@@ -23,7 +23,7 @@ socket.on('VR_in_use', function(data){
     let scene = document.querySelector('a-scene');
     let VR = document.querySelector('#vrUser');
 
-    scene.removeChild(VR);
+    VR.parentNode.removeChild(VR);
 });
 
 socket.on('mobile_in_use', function(data){
@@ -31,6 +31,6 @@ socket.on('mobile_in_use', function(data){
     let scene = document.querySelector('a-scene');
     let mobileBook = document.querySelector('#mobileUser');
 
-    scene.parentNode.removeChild(mobileBook);
+    mobileBook.parentNode.removeChild(mobileBook);
 });
 
