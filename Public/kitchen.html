@@ -12,6 +12,25 @@
     <script src="/socket.io/socket.io.js"></script>
     <title>Kitchen</title>
     <script>
+        var cutEvent = new Event('cut');
+
+        AFRAME.registerComponent('recipe', {
+            schema: {
+                recipeIngridients: []
+            },
+
+            init: function(){
+                var obj = this.el;
+                recipeIngridients = ["mushroom-entity", "bellPepper-entity", "egg-entity", "butter-entity"];
+                for(i = 0; i < recipeIngridients.length; i++){
+                    
+                    document.getElementById(recipeIngridients[i]).addEventListener('cut', function(e){
+                        console.log("cutting");
+                    }, false);
+                }
+            }
+        }),
+
         AFRAME.registerComponent('cookingimplement', {
             /*
                 currentHeat: represents the current heat of the element
@@ -103,10 +122,12 @@
                 const Context_AF = this;
                 var obj = this.el;
                 var objData = this.data;
+                
+                obj.dispatchEvent(cutEvent);
                 //Collision events
                 obj.addEventListener('collide', function(e){
                     //Cutting events
-                    if(objData.size < 1){
+                    if(objData.size < 1 ){
                         //if the cube collides with the knife
                         if(e.detail.body.el.getAttribute('id') === 'knife-entity'){
                             objData.size = objData.size / 2;
@@ -264,15 +285,16 @@
           </a-entity>
       </a-entity>
       <a-sky color="#1e559e"></a-sky>
-
+      
+      <a-entity id="recipe" recipe></a-entity>
       <a-entity static-body obj-model="obj: #kitchenTop-obj;" scale ="0.01 0.01 0.01"></a-entity>
 
-      <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="0.5 1.4 -0.5" material="color: black" scale ="0.02 0.02 0.02"></a-entity>
+      <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="-0.7 3 -0.4" material="color: black" scale ="0.02 0.02 0.02"></a-entity><!--"0.5 1.4 -0.5"-->
 
-      <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" dynamic-body mixin="objectHold" position="-0.7 2 -0.4" scale ="0.01 0.01 0.01" material="color: black" ingredient="size: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-      <a-entity id="bellPepper-entity" obj-model="obj: #bellPepper-obj;" dynamic-body mixin="objectHold" position="-0.8 2 -0.4" scale ="0.01 0.01 0.01" material="color: red" ingredient="size: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-      <a-entity id="egg-entity" obj-model="obj: #egg-obj;" dynamic-body mixin="objectHold" position="-0.9 2 -0.4" scale ="0.01 0.01 0.01" material="color: white" ingredient="size: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-      <a-entity id="butter-entity" obj-model="obj: #butter-obj;" dynamic-body mixin="objectHold" position="-1 2 -0.4" scale ="0.01 0.01 0.01" material="color: yellow" ingredient="size: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+      <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" dynamic-body mixin="objectHold" position="-0.7 2 -0.4" scale ="0.01 0.01 0.01" material="color: black" ingredient="size: 0.5; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+      <a-entity id="bellPepper-entity" obj-model="obj: #bellPepper-obj;" dynamic-body mixin="objectHold" position="-0.8 2 -0.4" scale ="0.01 0.01 0.01" material="color: red" ingredient="size: 0.5; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+      <a-entity id="egg-entity" obj-model="obj: #egg-obj;" dynamic-body mixin="objectHold" position="-0.9 2 -0.4" scale ="0.01 0.01 0.01" material="color: white" ingredient="size: 0.5; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+      <a-entity id="butter-entity" obj-model="obj: #butter-obj;" dynamic-body mixin="objectHold" position="-1 2 -0.4" scale ="0.01 0.01 0.01" material="color: yellow" ingredient="size: 0.5; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
       
       <a-entity id="cube-entity" mixin="cube" position="-0.5 1.4 -0.4" scale ="0.2 0.2 0.2" material="color: red"></a-entity>
       
@@ -291,7 +313,6 @@
       </a-entity>
 
       <a-entity id="pan-entity" obj-model="obj: #pan-obj;" dynamic-body="shape: hull" mixin="objectHold" position="-0.2 1.4 -0.4" scale ="0.2 0.2 0.2" material="color: orange" cookingimplement="currentHeat: 0; maxHeat: 360; recieveHeat: true;"></a-entity>
-
       <a-plane id="plane" static-body position="0 0 0" scale="10 10 10" rotation="-90 0 0" color="#8E8E8E"></a-plane>
       
     </a-scene>
