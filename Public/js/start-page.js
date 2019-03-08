@@ -24,9 +24,9 @@ document.querySelector('#mobileUser').addEventListener('click', function(){
 });
 
 if(vr == true){
-    window.location.href = '/Public/start_page.html';
+    window.location.href = '/start_page.html';
 }
 
 if(mobile == true){
-    window.location.href('/Public/start_page.html');
+    window.location.href('/start_page.html');
 }
