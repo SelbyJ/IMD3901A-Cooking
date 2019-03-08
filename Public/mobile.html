@@ -74,5 +74,19 @@
                 <a-text value="Close Recipe" color="black" position="-2.5 1 0" width="20" height="20"></a-text>
             </a-entity>
         </a-scene>
+
+        <script>
+            let socket = io();
+        
+            socket.on('connect', function(){
+                console.log('Mobile user selected');
+            });
+    
+            if(window.onload){
+                socket.emit("Mobile Loaded");
+            }
+        
+      </script>
+
     </body>
 </html>

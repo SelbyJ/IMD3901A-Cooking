@@ -251,6 +251,10 @@
         socket.on('connect', function(){
             console.log('VR user selected');
         });
+
+        if(window.onload){
+            socket.emit("Kitchen Loaded");
+        }
     
   </script>
 </html>

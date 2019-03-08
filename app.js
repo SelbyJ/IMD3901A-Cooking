@@ -41,13 +41,13 @@ socketIO.on('connection', function(socket){
         console.log(socket.id + " has disconnected");
     });
 
-    socket.on('vrclicked', function(data, res){
+    socket.on('vrclicked', function(data){
         console.log("VR user window will appear");
         //vr = true;
         //res.redirect(__dirname + '/Public/kitchen.html');        
     });
 
-    socket.on('mobileclicked', function(data, res){
+    socket.on('mobileclicked', function(data){
         console.log("Mobile user window will appear");
         //vr = true;
         //app.use(express.static(__dirname + '/public'));
