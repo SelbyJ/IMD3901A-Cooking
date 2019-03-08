@@ -31,6 +31,6 @@ socket.on('mobile_in_use', function(data){
     let scene = document.querySelector('a-scene');
     let mobileBook = document.querySelector('#mobileUser');
 
-    scene.removeChild(mobileBook);
+    scene.parentNode.removeChild(mobileBook);
 });
 
