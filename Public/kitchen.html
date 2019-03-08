@@ -37,8 +37,7 @@
                 if(this.data.recieveHeat){
                     obj.addEventListener('collide', function(e){
                         if(e.detail.body.el.getAttribute('cookingimplement') !== null){
-                            //objData.currentHeat = ;
-                            console.log(e.detail.body.el.getAttribute('cookingimplement'));
+                            objData.currentHeat = e.detail.body.el.getAttribute('cookingimplement').currentHeat;
                             switch(objData.currentHeat){
                                 case 90:
                                     obj.setAttribute("material", {color: "green"});    
@@ -58,7 +57,7 @@
                 }
                 else{
                     obj.addEventListener('collide', function(e){
-                        if(e.detail.body.el.getAttribute('id') === "lhand" || e.detail.body.el.getAttribute('id') === "rhand"){
+                        if(e.detail.body.el.getAttribute('id') === "cube-entity" || e.detail.body.el.getAttribute('id') === "rhand"){
                             if(objData.currentHeat < 360){
                                 objData.currentHeat += 90;
                                 document.getElementById(objData.sendHeat).setAttribute("cookingimplement", {currentHeat: objData.currentHeat});
@@ -139,8 +138,21 @@
             },
 
             heatObj: function(e){
-                var heat = e.detail.body.el.getAttribute('cookingImplement').currentHeat;
-                console.log(heat);
+                this.data.heatTransfer = e.detail.body.el.getAttribute('cookingimplement').currentHeat;
+                switch(this.data.heatTransfer){
+                    case 90:
+                        this.el.setAttribute("material", {color: "green"});    
+                        break;
+                    case 180:
+                        this.el.setAttribute("material", {color: "yellow"});    
+                        break;
+                    case 270:
+                        this.el.setAttribute("material", {color: "orange"});    
+                        break;
+                    case 360:
+                        this.el.setAttribute("material", {color: "red"});  
+                        break;
+                }
             }
         }), 
 
@@ -192,8 +204,13 @@
       <a-assets>
         <a-asset-item id="kitchenTop-obj" src="assets/models/kitchenTop.obj"></a-asset-item>
         <a-asset-item id="knife-obj" src="assets/models/knife.obj"></a-asset-item>
-        <a-asset-item id="mushroom-obj" src="assets/models/mushroom.obj"></a-asset-item>
         <a-asset-item id="pan-obj" src="assets/models/pan.obj"></a-asset-item>
+        <!--RECIPE ELEMENTS-->
+        <a-asset-item id="mushroom-obj" src="assets/models/mushroom.obj"></a-asset-item>
+        <a-asset-item id="bellPepper-obj" src="assets/models/bellPepper.obj"></a-asset-item>
+        <a-asset-item id="egg-obj" src="assets/models/egg.obj"></a-asset-item>
+        <a-asset-item id="eggYolk-obj" src="assets/models/eggYolk.obj"></a-asset-item>
+        <a-asset-item id="butter-obj" src="assets/models/butterStick.obj"></a-asset-item>
 
         <!--STOVE ELEMENTS-->
         <a-asset-item id="stoveBase-obj" src="assets/models/stoveBase.obj"></a-asset-item>
@@ -252,9 +269,12 @@
 
       <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="0.5 1.4 -0.5" material="color: black" scale ="0.02 0.02 0.02"></a-entity>
 
-      <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" dynamic-body mixin="objectHold" position="1.2 1.9 -0.1" scale ="0.01 0.01 0.01" material="color: black" ingredient="size: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+      <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" dynamic-body mixin="objectHold" position="-0.7 2 -0.4" scale ="0.01 0.01 0.01" material="color: black" ingredient="size: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+      <a-entity id="bellPepper-entity" obj-model="obj: #bellPepper-obj;" dynamic-body mixin="objectHold" position="-0.8 2 -0.4" scale ="0.01 0.01 0.01" material="color: red" ingredient="size: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+      <a-entity id="egg-entity" obj-model="obj: #egg-obj;" dynamic-body mixin="objectHold" position="-0.9 2 -0.4" scale ="0.01 0.01 0.01" material="color: white" ingredient="size: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+      <a-entity id="butter-entity" obj-model="obj: #butter-obj;" dynamic-body mixin="objectHold" position="-1 2 -0.4" scale ="0.01 0.01 0.01" material="color: yellow" ingredient="size: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
       
-      <a-entity id="cube-entity" mixin="cube" position="0.4 1.4 -0.1" scale ="0.2 0.2 0.2" material="color: red"></a-entity>
+      <a-entity id="cube-entity" mixin="cube" position="-0.5 1.4 -0.4" scale ="0.2 0.2 0.2" material="color: red"></a-entity>
       
       <!--STOVE ENTITY-->
       <a-entity position="1 0 0.2" scale ="0.009 0.009 0.009">
@@ -270,7 +290,7 @@
         <a-entity id="frontRightBurnerKnob-entity" obj-model="obj: #frontRightBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: frontRightBurner-entity;"></a-entity>
       </a-entity>
 
-      <a-entity id="pan-entity" obj-model="obj: #pan-obj;" dynamic-body mixin="objectHold" position="1.2 1.6 -0.1" scale ="0.2 0.2 0.2" material="color: orange" cookingimplement="currentHeat: 0; maxHeat: 360; recieveHeat: true;"></a-entity>
+      <a-entity id="pan-entity" obj-model="obj: #pan-obj;" dynamic-body="shape: hull" mixin="objectHold" position="-0.2 1.4 -0.4" scale ="0.2 0.2 0.2" material="color: orange" cookingimplement="currentHeat: 0; maxHeat: 360; recieveHeat: true;"></a-entity>
 
       <a-plane id="plane" static-body position="0 0 0" scale="10 10 10" rotation="-90 0 0" color="#8E8E8E"></a-plane>
       
