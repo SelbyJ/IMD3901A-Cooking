@@ -43,12 +43,14 @@ socketIO.on('connection', function(socket){
 
     socket.on('vrclicked', function(data){
         console.log("VR user window will appear");
+        socketIO.sockets.emit('VR_in_use');
         //vr = true;
         //res.redirect(__dirname + '/Public/kitchen.html');        
     });
 
     socket.on('mobileclicked', function(data){
         console.log("Mobile user window will appear");
+        socketIO.sockets.emit('mobile_in_use');
         //vr = true;
         //app.use(express.static(__dirname + '/public'));
         //res.redirect(__dirname + '/Public/mobile.html');

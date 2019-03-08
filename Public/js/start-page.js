@@ -18,3 +18,19 @@ document.querySelector('#mobileUser').addEventListener('click', function(){
     window.location.href = '/mobile';
 });
 
+socket.on('VR_in_use', function(data){
+
+    let scene = document.querySelector('a-scene');
+    let VR = document.querySelector('#vrUser');
+
+    scene.removeChild(VR);
+});
+
+socket.on('mobile_in_use', function(data){
+
+    let scene = document.querySelector('a-scene');
+    let mobileBook = document.querySelector('#mobileUser');
+
+    scene.removeChild(mobileBook);
+});
+
