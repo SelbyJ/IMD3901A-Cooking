@@ -1,6 +1,3 @@
-var vr = false;
-var mobile = false;
-
 let socket = io();
 
 console.log('Script has run');
@@ -12,21 +9,28 @@ socket.on('connect', function(){
 document.querySelector('#vrUser').addEventListener('click', function(){
     console.log('VR User Selected');
     socket.emit('vrclicked');
-    vr = true;
     window.location.href = '/kitchen';
 });
     
 document.querySelector('#mobileUser').addEventListener('click', function(){
     console.log('Mobile User Selected');
     socket.emit('mobileclicked');
-    mobile = true;
     window.location.href = '/mobile';
 });
 
-if(vr == true){
-    window.location.href = '/start_page';
-}
+socket.on('VR_in_use', function(data){
 
-if(mobile == true){
-    window.location.href = '/start_page';
-}
+    let scene = document.querySelector('a-scene');
+    let VR = document.querySelector('#vrUser');
+
+    VR.parentNode.removeChild(VR);
+});
+
+socket.on('mobile_in_use', function(data){
+
+    let scene = document.querySelector('a-scene');
+    let mobileBook = document.querySelector('#mobileUser');
+
+    mobileBook.parentNode.removeChild(mobileBook);
+});
+
