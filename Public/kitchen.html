@@ -30,24 +30,58 @@
 
             init: function(){
                 var obj = this.el;
+                const Context_AF = this;
                 var objData = this.data;
                 //if true then it is an element like the burner or pan and it's heat is regulated by what it is on
                 //if false then it is an elment like the burner knobs or oven gauge that sets the temerature for an element like the burner
                 if(this.data.recieveHeat){
                     obj.addEventListener('collide', function(e){
                         if(e.detail.body.el.getAttribute('cookingimplement') !== null){
-                            objData.currentHeat = e.detail.body.el.getAttribute('cookingimplement').currentHeat;
-                            console.log(objData.currentHeat);
+                            //objData.currentHeat = ;
+                            console.log(e.detail.body.el.getAttribute('cookingimplement'));
+                            switch(objData.currentHeat){
+                                case 90:
+                                    obj.setAttribute("material", {color: "green"});    
+                                    break;
+                                case 180:
+                                    obj.setAttribute("material", {color: "yellow"});    
+                                    break;
+                                case 270:
+                                    obj.setAttribute("material", {color: "orange"});    
+                                    break;
+                                case 360:
+                                    obj.setAttribute("material", {color: "red"});  
+                                    break;
+                            }
                         }
                     });
                 }
                 else{
                     obj.addEventListener('collide', function(e){
-                        if(e.detail.body.el.getAttribute('id') === "cube-entity" || e.detail.body.el.getAttribute('id') == "rhand"){
+                        if(e.detail.body.el.getAttribute('id') === "lhand" || e.detail.body.el.getAttribute('id') === "rhand"){
                             if(objData.currentHeat < 360){
                                 objData.currentHeat += 90;
+                                document.getElementById(objData.sendHeat).setAttribute("cookingimplement", {currentHeat: objData.currentHeat});
+                                switch(objData.currentHeat){
+                                    case 90:
+                                        document.getElementById(objData.sendHeat).setAttribute("material", {color: "green"});    
+                                        break;
+                                    case 180:
+                                        document.getElementById(objData.sendHeat).setAttribute("material", {color: "yellow"});    
+                                        break;
+                                    case 270:
+                                        document.getElementById(objData.sendHeat).setAttribute("material", {color: "orange"});    
+                                        break;
+                                    case 360:
+                                        document.getElementById(objData.sendHeat).setAttribute("material", {color: "red"});  
+                                        break;
+                                }
                             }
-                            document.getElementById(objData.sendHeat).setAttribute("cookingimplement", {currentHeat: objData.currentHeat});
+                            else{
+                                objData.currentHeat = 0;
+                                document.getElementById(objData.sendHeat).setAttribute("cookingimplement", {currentHeat: objData.currentHeat});
+                                document.getElementById(objData.sendHeat).setAttribute("material", {color: "purple"});   
+                            }
                         }
                     });
                 }
@@ -67,6 +101,7 @@
             },
 
             init: function(){
+                const Context_AF = this;
                 var obj = this.el;
                 var objData = this.data;
                 //Collision events
@@ -97,19 +132,15 @@
                             obj.setAttribute('delete-self', {delete: true});
                         }
                     }
-
-                    //Cooking events 
-                    if(objData.heatTransfer > 0){
-                        if(e.detail.body.el.getAttribute('id') === objData.cookingImplementID){
-                            //heatTransferFunction
-                            heatObj(e);
-                        }
+                    if(e.detail.body.el.getAttribute('id') === objData.cookingImplementID){
+                        Context_AF.heatObj(e);
                     }
                 });
             },
 
             heatObj: function(e){
-                console.log("ON Hot element");
+                var heat = e.detail.body.el.getAttribute('cookingImplement').currentHeat;
+                console.log(heat);
             }
         }), 
 
@@ -221,11 +252,9 @@
 
       <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="0.5 1.4 -0.5" material="color: black" scale ="0.02 0.02 0.02"></a-entity>
 
-      <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" dynamic-body mixin="objectHold" position="-0.4 4.4 -0.5" scale ="0.01 0.01 0.01" material="color: red" ></a-entity>
-
-      <a-entity id="pan-entity" obj-model="obj: #pan-obj;" dynamic-body mixin="objectHold" position="1.2 1.4 -0.1" scale ="0.2 0.2 0.2" material="color: orange" cookingimplement="currentHeat: 0; maxHeat: 360; recieveHeat: true;"></a-entity>
+      <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" dynamic-body mixin="objectHold" position="1.2 1.9 -0.1" scale ="0.01 0.01 0.01" material="color: black" ingredient="size: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
       
-      <a-entity id="cube-entity" mixin="cube" position="0.5 4.5 -0.4" scale ="0.2 0.2 0.2" material="color: red"></a-entity>
+      <a-entity id="cube-entity" mixin="cube" position="0.4 1.4 -0.1" scale ="0.2 0.2 0.2" material="color: red"></a-entity>
       
       <!--STOVE ENTITY-->
       <a-entity position="1 0 0.2" scale ="0.009 0.009 0.009">
@@ -235,11 +264,13 @@
         <a-entity static-body id="backRightBurner-entity" obj-model="obj: #backRightBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
         <a-entity static-body id="backLeftBurner-entity" obj-model="obj: #backLeftBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
 
-        <a-entity id="backLeftBurnerKnob-entity" obj-model="obj: #backLeftBurnerKnob-obj;" static-body mixin="objectGrab" material="color: red" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: backLeftBurner-entity;"></a-entity>
-        <a-entity id="backRightBurnerKnob-entity" obj-model="obj: #backRightBurnerKnob-obj;" static-body mixin="objectGrab" material="color: red" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: backRightBurner-entity;"></a-entity>
-        <a-entity id="frontLeftBurnerKnob-entity" obj-model="obj: #frontLeftBurnerKnob-obj;" static-body mixin="objectGrab" material="color: red" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: frontLeftBurner-entity;"></a-entity>
-        <a-entity id="frontRightBurnerKnob-entity" obj-model="obj: #frontRightBurnerKnob-obj;" static-body mixin="objectGrab" material="color: red" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: frontRightBurner-entity;"></a-entity>
+        <a-entity id="backLeftBurnerKnob-entity" obj-model="obj: #backLeftBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: backLeftBurner-entity;"></a-entity>
+        <a-entity id="backRightBurnerKnob-entity" obj-model="obj: #backRightBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: backRightBurner-entity;"></a-entity>
+        <a-entity id="frontLeftBurnerKnob-entity" obj-model="obj: #frontLeftBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: frontLeftBurner-entity;"></a-entity>
+        <a-entity id="frontRightBurnerKnob-entity" obj-model="obj: #frontRightBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: frontRightBurner-entity;"></a-entity>
       </a-entity>
+
+      <a-entity id="pan-entity" obj-model="obj: #pan-obj;" dynamic-body mixin="objectHold" position="1.2 1.6 -0.1" scale ="0.2 0.2 0.2" material="color: orange" cookingimplement="currentHeat: 0; maxHeat: 360; recieveHeat: true;"></a-entity>
 
       <a-plane id="plane" static-body position="0 0 0" scale="10 10 10" rotation="-90 0 0" color="#8E8E8E"></a-plane>
       
