@@ -23,10 +23,10 @@ document.querySelector('#mobileUser').addEventListener('click', function(){
     window.location.href = '/mobile.html';
 });
 
-/*if(vr == true){
-    window.location.href('/Public/kitchen.html');
+if(vr == true){
+    window.location.href = '/Public/start_page.html';
 }
 
 if(mobile == true){
-    window.location.href('/Public/mobile.html');
-}*/
+    window.location.href('/Public/start_page.html');
+}
