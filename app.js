@@ -70,9 +70,11 @@ socketIO.on('connection', function(socket){
     });
 });
 
-if(mobile == true && kitchen == true){
-    console.log("Timer started")
-}
+setInterval(function(){ 
+    if(mobile == true && kitchen == true){
+        console.log("Timer started");
+    }
+}, 3000);
 
 server.listen(LISTEN_PORT);
 console.log("listening on port: " + LISTEN_PORT);

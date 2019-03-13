@@ -7,8 +7,8 @@ AFRAME.registerComponent('page-flip', {
         
         if(object.data.gamePart === "mobile"){
             socket.emit('mobileLoaded');
-            
-        }else if(object.data.gamePart === "mobile"){
+
+        }else if(object.data.gamePart === "kitchen"){
             socket.emit('VRLoaded');
         }
 
