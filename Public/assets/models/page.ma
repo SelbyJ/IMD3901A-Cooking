@@ -1,6 +1,6 @@
 //Maya ASCII 2018ff08 scene
 //Name: page.ma
-//Last modified: Wed, Mar 13, 2019 09:16:32 AM
+//Last modified: Wed, Mar 13, 2019 11:42:50 AM
 //Codeset: 1252
 requires maya "2018ff08";
 requires -nodeType "aiOptions" -nodeType "aiAOVDriver" -nodeType "aiAOVFilter" -nodeType "aiImage"
@@ -15,8 +15,8 @@ fileInfo "license" "student";
 createNode transform -s -n "persp";
 	rename -uid "3967969C-4650-7695-3014-66B9193FDCBF";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" -7.4226736389854722 14.576560673389743 43.573634933748529 ;
-	setAttr ".r" -type "double3" 348.86164726971106 1071.7999999996086 -1.004189944071232e-16 ;
+	setAttr ".t" -type "double3" -7.5484293889083691 5.8025104944707309 44.446319380500022 ;
+	setAttr ".r" -type "double3" 359.6616472696661 1071.7999999995284 -3.1380935752232317e-18 ;
 createNode camera -s -n "perspShape" -p "persp";
 	rename -uid "E03B0778-42D4-1792-CDFA-E6A1676F5DEC";
 	setAttr -k off ".v" no;
