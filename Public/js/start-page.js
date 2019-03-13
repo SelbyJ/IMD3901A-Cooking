@@ -1,4 +1,7 @@
-window.socket = io();
+if(window.socket == null){
+    console.log("No socket.io");
+    window.socket = io();
+}
 
 console.log('Script has run');
     

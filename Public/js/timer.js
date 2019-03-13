@@ -4,6 +4,11 @@ AFRAME.registerComponent('timer', {
     },
     init: function(){
         const object = this;
+
+        if(window.socket == null){
+            console.log("No socket.io");
+            window.socket = io();
+        }
         
         if(object.data.gamePart === "mobile"){
             window.socket.emit('mobileLoaded');
