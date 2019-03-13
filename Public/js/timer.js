@@ -1,4 +1,4 @@
-AFRAME.registerComponent('page-flip', {
+AFRAME.registerComponent('timer', {
     schema:{
         gamePart: {type:'string'}
     },
