@@ -10,24 +10,58 @@
     <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
     <script src="js/grabObj.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="js/timer.js"></script>
     <title>Kitchen</title>
     <script>
         var cutEvent = new Event('cut');
+        var cookingEvent = new Event('cook');
+        var pointsEvent = new Event('point');
 
         AFRAME.registerComponent('recipe', {
             schema: {
-                recipeIngridients: []
+                cuttingIngredient: [],
+                cookingIngredient: [],
+                points: {default: 100},
+                myInterval: {default: null}
             },
 
             init: function(){
                 var obj = this.el;
-                recipeIngridients = ["mushroom-entity", "bellPepper-entity", "egg-entity", "butter-entity"];
-                for(i = 0; i < recipeIngridients.length; i++){
-                    
-                    document.getElementById(recipeIngridients[i]).addEventListener('cut', function(e){
+                var objData = this.data;
+                var myVar;//= setInterval(myTimer, 1000);
+
+                cuttingIngredient = ["mushroom-entity", "bellPepper-entity", "egg-entity"];
+                cookingIngredient = ["pan-entity", "mushroom-entity", "bellPepper-entity", "butter-entity", "egg-entity"]
+                for(i = 0; i < cuttingIngredient.length; i++){
+                    document.getElementById(cuttingIngredient[i]).addEventListener('cut', function(e){
                         console.log("cutting");
+                        //
                     }, false);
                 }
+
+                for(i = 0; i < cookingIngredient.length; i++){
+                    document.getElementById(cookingIngredient[i]).addEventListener('cook', function(e){
+                        console.log("cooking");
+                        myVar = setInterval(myTimer, 1000);
+                    }, false);
+                }
+
+                this.el.addEventListener("point", function(e){
+                    objData.points -= 10;
+                    console.log("POINTS = " + objData.points);
+                    if(objData.points === 0){
+                        console.log("FAILED");
+                    }
+                });
+            },
+
+            myTimer: function(){
+                console.log(t);
+            },
+
+            myStopFunction:function(){
+                var objData = this.data;
+                clearInterval(objData.myVar);
             }
         }),
 
@@ -57,6 +91,7 @@
                     obj.addEventListener('collide', function(e){
                         if(e.detail.body.el.getAttribute('cookingimplement') !== null){
                             objData.currentHeat = e.detail.body.el.getAttribute('cookingimplement').currentHeat;
+
                             switch(objData.currentHeat){
                                 case 90:
                                     obj.setAttribute("material", {color: "green"});    
@@ -75,31 +110,29 @@
                     });
                 }
                 else{
-                    obj.addEventListener('collide', function(e){
-                        if(e.detail.body.el.getAttribute('id') === "cube-entity" || e.detail.body.el.getAttribute('id') === "rhand"){
-                            if(objData.currentHeat < 360){
-                                objData.currentHeat += 90;
-                                document.getElementById(objData.sendHeat).setAttribute("cookingimplement", {currentHeat: objData.currentHeat});
-                                switch(objData.currentHeat){
-                                    case 90:
-                                        document.getElementById(objData.sendHeat).setAttribute("material", {color: "green"});    
-                                        break;
-                                    case 180:
-                                        document.getElementById(objData.sendHeat).setAttribute("material", {color: "yellow"});    
-                                        break;
-                                    case 270:
-                                        document.getElementById(objData.sendHeat).setAttribute("material", {color: "orange"});    
-                                        break;
-                                    case 360:
-                                        document.getElementById(objData.sendHeat).setAttribute("material", {color: "red"});  
-                                        break;
-                                }
+                    obj.addEventListener('grab-start', function(e){
+                        if(objData.currentHeat < 360){
+                            objData.currentHeat += 90;
+                            document.getElementById(objData.sendHeat).setAttribute("cookingimplement", {currentHeat: objData.currentHeat});
+                            switch(objData.currentHeat){
+                                case 90:
+                                    document.getElementById(objData.sendHeat).setAttribute("material", {color: "green"});    
+                                    break;
+                                case 180:
+                                    document.getElementById(objData.sendHeat).setAttribute("material", {color: "yellow"});    
+                                    break;
+                                case 270:
+                                    document.getElementById(objData.sendHeat).setAttribute("material", {color: "orange"});    
+                                    break;
+                                case 360:
+                                    document.getElementById(objData.sendHeat).setAttribute("material", {color: "red"});  
+                                    break;
                             }
-                            else{
-                                objData.currentHeat = 0;
-                                document.getElementById(objData.sendHeat).setAttribute("cookingimplement", {currentHeat: objData.currentHeat});
-                                document.getElementById(objData.sendHeat).setAttribute("material", {color: "purple"});   
-                            }
+                        }
+                        else{
+                            objData.currentHeat = 0;
+                            document.getElementById(objData.sendHeat).setAttribute("cookingimplement", {currentHeat: objData.currentHeat});
+                            document.getElementById(objData.sendHeat).setAttribute("material", {color: "purple"});   
                         }
                     });
                 }
@@ -114,7 +147,11 @@
             */
             schema: {
                 heatTransfer: {default: 0},
-                size: {default: 1},
+                cookingTemp: {default: 0},
+                cookingTime: {default: 0},
+                cookintStartTime: {default: 0},
+                sizeMin: {default: 1},
+                sizeStart: {default: 1},
                 cookingImplementID: {default: "NULL"}
             },
 
@@ -123,14 +160,18 @@
                 var obj = this.el;
                 var objData = this.data;
                 
-                obj.dispatchEvent(cutEvent);
+                var d = new Date();
+                var t= d.getTime();
+
                 //Collision events
                 obj.addEventListener('collide', function(e){
                     //Cutting events
-                    if(objData.size < 1 ){
+                    if(objData.sizeStart > objData.sizeMin ){
                         //if the cube collides with the knife
                         if(e.detail.body.el.getAttribute('id') === 'knife-entity'){
-                            objData.size = objData.size / 2;
+                            
+                            obj.dispatchEvent(cutEvent);
+                            objData.sizeStart = objData.sizeStart / 2;
                             let cubeObj1 = document.createElement('a-entity');
                             let cubeObj2 = document.createElement('a-entity');
 
@@ -154,12 +195,40 @@
                     }
                     if(e.detail.body.el.getAttribute('id') === objData.cookingImplementID){
                         Context_AF.heatObj(e);
+                        if(objData.heatTransfer !== cookingTemp){
+                            obj.dispatchEvent(pointsEvent);
+                        }
+                    }
+                    else{
+                        //No heat
+                        if(objData.cookingTemp > 0 && objData.heatTransfer > 0){
+                            if(objData.cookingTime > 0){
+                                console.log("underCooked");
+                                obj.dispatchEvent(pointsEvent);
+                            }
+                            if(objData.cookingTime < 0){
+                                console.log("overCooked");
+                                obj.dispatchEvent(pointsEvent);
+                            }
+                        }
+                        objData.heatTransfer = 0;
                     }
                 });
             },
 
+            tick: function(){
+                var objData = this.data;
+                if(objData.heatTransfer > 0){
+                    console.log("Cooking");
+                }
+            },
+
             heatObj: function(e){
                 this.data.heatTransfer = e.detail.body.el.getAttribute('cookingimplement').currentHeat;
+                obj.dispatchEvent(cookingEvent);
+                var d = new Date();
+                var t = d.getSeconds();
+                this.data.cookintStartTime = t;
                 switch(this.data.heatTransfer){
                     case 90:
                         this.el.setAttribute("material", {color: "green"});    
@@ -186,9 +255,8 @@
         AFRAME.registerComponent('phase-shift', {
             init: function () {
                 var el = this.el
-                el.addEventListener('gripdown', function () {
-                    el.setAttribute('collision-filter', {collisionForces: true})
-                    console.log("button Press");
+                el.addEventListener('gripdown', function (e) {
+                    el.setAttribute('collision-filter', {collisionForces: true});
                 })
                 el.addEventListener('gripup', function () {
                     el.setAttribute('collision-filter', {collisionForces: false})
@@ -201,7 +269,9 @@
                 schema:{
                     delete: {default: false}
                 },
+
                 init: function(){
+
                 },
 
                 tick: function(){
@@ -221,8 +291,12 @@
   </head>
   <body>
     
-    <a-scene physics="debug: true">
+    <a-scene id="scene" physics="debug: true" timer = "gamePart: kitchen"><!---->
       <a-assets>
+        <!--TEXTURES-->
+        <img id="bellPepper-img" src="assets/materials/bellPepper_base.png">
+        <img id="mushroom-img" src="assets/materials/mushroom_baseColor.png">
+
         <a-asset-item id="kitchenTop-obj" src="assets/models/kitchenTop.obj"></a-asset-item>
         <a-asset-item id="knife-obj" src="assets/models/knife.obj"></a-asset-item>
         <a-asset-item id="pan-obj" src="assets/models/pan.obj"></a-asset-item>
@@ -245,7 +319,7 @@
         <a-asset-item id="backLeftBurnerKnob-obj" src="assets/models/backLeftBurnerKnob.obj"></a-asset-item>
 
         <!--MIXIN-->
-        <a-mixin id="objectGrab" hoverable grabbable
+        <a-mixin id="objectGrab" hoverable grabbable 
             event-set__hoveron="_event: hover-start; material.opacity: 0.7; transparent: true"
             event-set__hoveroff="_event: hover-end; material.opacity: 1; transparent: false"
             shadow collision></a-mixin>
@@ -289,14 +363,14 @@
       <a-entity id="recipe" recipe></a-entity>
       <a-entity static-body obj-model="obj: #kitchenTop-obj;" scale ="0.01 0.01 0.01"></a-entity>
 
-      <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="-0.7 3 -0.4" material="color: black" scale ="0.02 0.02 0.02"></a-entity><!--"0.5 1.4 -0.5"-->
+      <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="-0.8 3 -0.4" material="color: black" scale ="0.02 0.02 0.02"></a-entity><!--"0.5 1.4 -0.5"-->
 
-      <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" dynamic-body mixin="objectHold" position="-0.7 2 -0.4" scale ="0.01 0.01 0.01" material="color: black" ingredient="size: 0.5; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-      <a-entity id="bellPepper-entity" obj-model="obj: #bellPepper-obj;" dynamic-body mixin="objectHold" position="-0.8 2 -0.4" scale ="0.01 0.01 0.01" material="color: red" ingredient="size: 0.5; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-      <a-entity id="egg-entity" obj-model="obj: #egg-obj;" dynamic-body mixin="objectHold" position="-0.9 2 -0.4" scale ="0.01 0.01 0.01" material="color: white" ingredient="size: 0.5; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-      <a-entity id="butter-entity" obj-model="obj: #butter-obj;" dynamic-body mixin="objectHold" position="-1 2 -0.4" scale ="0.01 0.01 0.01" material="color: yellow" ingredient="size: 0.5; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+      <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" dynamic-body mixin="objectHold" position="-0.3 2 -0.4" scale ="0.01 0.01 0.01" material="src: #mushroom-img" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+      <a-entity id="bellPepper-entity" obj-model="obj: #bellPepper-obj;" dynamic-body mixin="objectHold" position="-0.4 2 -0.4" scale ="0.01 0.01 0.01" material="src: #bellPepper-img" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+      <a-entity id="egg-entity" obj-model="obj: #egg-obj;" dynamic-body mixin="objectHold" position="-0.5 2 -0.4" scale ="0.01 0.01 0.01" material="color: white" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+      <a-entity id="butter-entity" obj-model="obj: #butter-obj;" dynamic-body mixin="objectHold" position="-0.6 2 -0.4" scale ="0.01 0.01 0.01" material="color: yellow" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 1; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
       
-      <a-entity id="cube-entity" mixin="cube" position="-0.5 1.4 -0.4" scale ="0.2 0.2 0.2" material="color: red"></a-entity>
+      <a-entity id="cube-entity" mixin="cube" position="0 1.4 -0.4" scale ="0.2 0.2 0.2" material="color: red"></a-entity>
       
       <!--STOVE ENTITY-->
       <a-entity position="1 0 0.2" scale ="0.009 0.009 0.009">
@@ -312,8 +386,8 @@
         <a-entity id="frontRightBurnerKnob-entity" obj-model="obj: #frontRightBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: frontRightBurner-entity;"></a-entity>
       </a-entity>
 
-      <a-entity id="pan-entity" obj-model="obj: #pan-obj;" dynamic-body="shape: hull" mixin="objectHold" position="-0.2 1.4 -0.4" scale ="0.2 0.2 0.2" material="color: orange" cookingimplement="currentHeat: 0; maxHeat: 360; recieveHeat: true;"></a-entity>
-      <a-plane id="plane" static-body position="0 0 0" scale="10 10 10" rotation="-90 0 0" color="#8E8E8E"></a-plane>
+      <a-entity id="pan-entity" obj-model="obj: #pan-obj;" dynamic-body="shape: hull" mixin="objectHold" position="0.5 1.4 -0.4" scale ="0.2 0.2 0.2" material="color: orange" cookingimplement="currentHeat: 0; maxHeat: 360; recieveHeat: true;"></a-entity>
+      <a-plane id="plane" static-body position="0 0 0" scale="10 10 10" rotation="-90 0 0" color="#8E8E8E"></a-plane><!---0.2 1.4 -0.4-->
       
     </a-scene>
   </body>
