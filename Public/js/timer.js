@@ -6,10 +6,10 @@ AFRAME.registerComponent('timer', {
         const object = this;
         
         if(object.data.gamePart === "mobile"){
-            socket.emit('mobileLoaded');
+            window.socket.emit('mobileLoaded');
 
         }else if(object.data.gamePart === "kitchen"){
-            socket.emit('VRLoaded');
+            window.socket.emit('VRLoaded');
         }
 
     }
