@@ -1,0 +1,16 @@
+AFRAME.registerComponent('page-flip', {
+    schema:{
+        gamePart: {type:'string'}
+    },
+    init: function(){
+        const object = this;
+        
+        if(object.data.gamePart === "mobile"){
+            socket.emit('mobileLoaded');
+            
+        }else if(object.data.gamePart === "mobile"){
+            socket.emit('VRLoaded');
+        }
+
+    }
+});

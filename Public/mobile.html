@@ -12,9 +12,10 @@
         <!--Component files loaded in-->
         <script src="js/page-flip.js"></script> 
         <script src="/socket.io/socket.io.js"></script>
+        <script src="js/timer.js"></script>
     </head>
     <body>
-        <a-scene>
+        <a-scene timer = "gamePart: mobile">
             <a-assets>
                 <!--sound from http://soundbible.com/835-Pen-Clicking.html. Sounds are free to use underthe Creative Commons Attribution 3.0 https://creativecommons.org/licenses/by/3.0/-->
                 <a-audio crossorigin="anonymous" id="button-click" src="/assets/Pen Clicking-SoundBible.com-482574858.mp3(1)"></a-audio>
@@ -26,8 +27,8 @@
                 <img id="cover-texture" src="assets/materials/coverPageMaterial.png">
                 <img id="cover-pic" src="assets/cover.png">
                 <img id="page1-pic" src="assets/materials/pageOneMaterial.png">
-                <img id="page2-pic" src="assets/materials/pageOneMaterial.png">
-                <img id="page3-pic" src="assets/materials/pageOneMaterial.png">
+                <img id="page2-pic" src="assets/materials/recipeTwoList_Material.png">
+                <img id="page3-pic" src="assets/materials/recipeThreeList_Material.png">
                 <img id="recipeOne-pic" src="assets/recipeOneColourMap.png">                
             </a-assets>
 
@@ -68,11 +69,8 @@
             <a-entity page-flip="button: backward" geometry="primitive: box; width: 1; height:1; depth:0.01" position="8 5 -10" material="color: #ff8c66">
                 <a-text value="Backward" color="black" position="-0.5 2 0" width="20" height="20"></a-text>
             </a-entity>
-            <a-entity page-flip="button: open" geometry="primitive: box; width: 1; height:1; depth:0.01" position="-4 -3 -10" material="color: #ff8c66">
-                <a-text value="Open Recipe" color="black" position="-2.5 1 0" width="20" height="20"></a-text>
-            </a-entity>
-            <a-entity page-flip="button: close" geometry="primitive: box; width: 1; height:1; depth:0.01" position="4 -3 -10" material="color: #ff8c66">
-                <a-text value="Close Recipe" color="black" position="-2.5 1 0" width="20" height="20"></a-text>
+            <a-entity page-flip="button: openClose" geometry="primitive: box; width: 1; height:1; depth:0.01" position="-4 -3 -10" material="color: #ff8c66">
+                <a-text value="Open/Close Recipe" color="black" position="0 1 0" width="20" height="20"></a-text>
             </a-entity>
         </a-scene>
     </body>

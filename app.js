@@ -18,6 +18,9 @@ app.get('/', function(req, res){
 });
 */
 
+var mobile = false;
+var kitchen = false;
+
 app.get('/start_page', function(req, res) {
     app.use(express.static(__dirname + '/public'));
     res.sendFile(__dirname + '/Public/start_page.html');
@@ -55,7 +58,21 @@ socketIO.on('connection', function(socket){
         //app.use(express.static(__dirname + '/public'));
         //res.redirect(__dirname + '/Public/mobile.html');
     });
+
+    socket.on('mobileLoaded', function(data){
+        mobile = true;
+        //socketIO.sockets.emit('mobileTrue');
+    });
+
+    socket.on('VRLoaded', function(data){
+        kitchen = true;
+        //socketIO.sockets.emit('kitchenTrue');
+    });
 });
+
+if(mobile == true && kitchen == true){
+    console.log("Timer started")
+}
 
 server.listen(LISTEN_PORT);
 console.log("listening on port: " + LISTEN_PORT);

@@ -5,6 +5,10 @@ AFRAME.registerComponent('page-flip', {
     init: function(){
         const object = this;
         window.counter = 0;
+        window.selectionState = false;
+
+        //this.selectionState = false;
+        //document.querySelector("#someEntity").components['page-flip'].selectionState = true;
 
         object.el.addEventListener('mousedown', function(event){
             if(object.data.button === 'forward'){
@@ -87,65 +91,66 @@ AFRAME.registerComponent('page-flip', {
                     page3.setAttribute('position', {x:0, y:0, z:-10.04});
                 }
 
-            }else if (object.data.button === 'open'){
-                
-                if (window.counter == 1){
-                    console.log("Recipe One");
-                    let scene = document.querySelector('a-scene');
-                    let recipe = document.createElement('a-entity');
-                    recipe.setAttribute('geometry', {primitive:'plane', width:8.5, height:11});
-                    recipe.setAttribute('material', {src:'assets/recipeOneInstructions.png'});
-                    recipe.setAttribute('position', {x: 0, y:5, z:-9});     
-                    recipe.setAttribute('id', 'instOne');
-                    
-                    scene.appendChild(recipe);
-
-                }else if (window.counter == 2){
-                    console.log("Recipe Two");  
-                    
-                    let scene = document.querySelector('a-scene');
-                    let recipe = document.createElement('a-entity');
-                    recipe.setAttribute('geometry', {primitive:'plane', width:8.5, height:11});
-                    recipe.setAttribute('material', {src:'assets/recipeOneInstructions.png'});
-                    recipe.setAttribute('position', {x: 0, y:5, z:-9});                              
-                    recipe.setAttribute('id', 'instTwo');                    
-                    
-                    scene.appendChild(recipe);
-
-                }else if (window.counter == 3){
-                    console.log("Recipe Three");   
-                    
-                    let scene = document.querySelector('a-scene');
-                    let recipe = document.createElement('a-entity');
-                    recipe.setAttribute('geometry', {primitive:'plane', width:8.5, height:11});
-                    recipe.setAttribute('material', {src:'assets/recipeOneInstructions.png'});
-                    recipe.setAttribute('position', {x: 0, y:5, z:-9});                         
-                    recipe.setAttribute('id', 'instThree');                    
-                    
-                    scene.appendChild(recipe);
-                }
-            }else if (object.data.button === 'close'){
-                
-                if (window.counter == 1){
-                    console.log("Close One");
-                    let scene = document.querySelector('a-scene');
-                    let recipe = document.querySelector('#instOne');
-
-                    scene.removeChild(recipe);
-
-                }else if (window.counter == 2){
-                    console.log("Close Two");
-                    let scene = document.querySelector('a-scene');
-                    let recipe = document.querySelector('#instTwo');
-
-                    scene.removeChild(recipe);
-
-                }else if (window.counter == 3){
-                    console.log("Close Three");
-                    let scene = document.querySelector('a-scene');
-                    let recipe = document.querySelector('#instThree');
-
-                    scene.removeChild(recipe);
+            }else if (object.data.button === 'openClose'){
+                window.selectionState = !window.selectionState;
+                if(window.selectionState == true){
+                    if (window.counter == 1){
+                        console.log("Recipe One");
+                        let scene = document.querySelector('a-scene');
+                        let recipe = document.createElement('a-entity');
+                        recipe.setAttribute('geometry', {primitive:'plane', width:8.5, height:11});
+                        recipe.setAttribute('material', {src:'assets/recipeOneInstructions.png'});
+                        recipe.setAttribute('position', {x: 0, y:5, z:-9});     
+                        recipe.setAttribute('id', 'instOne');
+                        
+                        scene.appendChild(recipe);
+    
+                    }else if (window.counter == 2){
+                        console.log("Recipe Two");  
+                        
+                        let scene = document.querySelector('a-scene');
+                        let recipe = document.createElement('a-entity');
+                        recipe.setAttribute('geometry', {primitive:'plane', width:8.5, height:11});
+                        recipe.setAttribute('material', {src:'assets/recipeOneInstructions.png'});
+                        recipe.setAttribute('position', {x: 0, y:5, z:-9});                              
+                        recipe.setAttribute('id', 'instTwo');                    
+                        
+                        scene.appendChild(recipe);
+    
+                    }else if (window.counter == 3){
+                        console.log("Recipe Three");   
+                        
+                        let scene = document.querySelector('a-scene');
+                        let recipe = document.createElement('a-entity');
+                        recipe.setAttribute('geometry', {primitive:'plane', width:8.5, height:11});
+                        recipe.setAttribute('material', {src:'assets/recipeOneInstructions.png'});
+                        recipe.setAttribute('position', {x: 0, y:5, z:-9});                         
+                        recipe.setAttribute('id', 'instThree');                    
+                        
+                        scene.appendChild(recipe);
+                    }
+                }else if(window.selectionState == false){
+                    if (window.counter == 1){
+                        console.log("Close One");
+                        let scene = document.querySelector('a-scene');
+                        let recipe = document.querySelector('#instOne');
+    
+                        scene.removeChild(recipe);
+    
+                    }else if (window.counter == 2){
+                        console.log("Close Two");
+                        let scene = document.querySelector('a-scene');
+                        let recipe = document.querySelector('#instTwo');
+    
+                        scene.removeChild(recipe);
+    
+                    }else if (window.counter == 3){
+                        console.log("Close Three");
+                        let scene = document.querySelector('a-scene');
+                        let recipe = document.querySelector('#instThree');
+    
+                        scene.removeChild(recipe);
+                    }
                 }
             }
         });
