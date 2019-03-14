@@ -20,6 +20,7 @@ app.get('/', function(req, res){
 
 var mobile = false;
 var kitchen = false;
+var timerCounter = 120;
 
 app.get('/start_page', function(req, res) {
     app.use(express.static(__dirname + '/public'));
@@ -72,7 +73,20 @@ socketIO.on('connection', function(socket){
 
 setInterval(function(){ 
     if(mobile == true && kitchen == true){
-        console.log("Timer started");
+        if(timerCounter == 120){
+            console.log("Timer started");
+        }
+        timerCounter--;
+        console.log("Time Left: " + String(timerCounter) + " seconds");   
+    }
+
+    if(timerCounter == 0){
+        console.log("Time is up! Game Over!");
+        mobile = false;
+        kitchen = false;
+        socketIO.emit('gameOver');
+        timerCounter = 120;
+        socketIO.emit('gameOver');
     }
 }, 1000);
 
