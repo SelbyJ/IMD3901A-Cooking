@@ -99,7 +99,7 @@ AFRAME.registerComponent('page-flip', {
                         let scene = document.querySelector('a-scene');
                         let recipe = document.createElement('a-entity');
                         recipe.setAttribute('geometry', {primitive:'plane', width:8.5, height:11});
-                        recipe.setAttribute('material', {src:'assets/recipeOneInstructions.png'});
+                        recipe.setAttribute('material', {src:'assets/materials/recipeOne_FULL.png'});
                         recipe.setAttribute('position', {x: 0, y:5, z:-9});     
                         recipe.setAttribute('id', 'instOne');
                         
@@ -111,7 +111,7 @@ AFRAME.registerComponent('page-flip', {
                         let scene = document.querySelector('a-scene');
                         let recipe = document.createElement('a-entity');
                         recipe.setAttribute('geometry', {primitive:'plane', width:8.5, height:11});
-                        recipe.setAttribute('material', {src:'assets/recipeOneInstructions.png'});
+                        recipe.setAttribute('material', {src:'assets/materials/recipeOne_FULL.png'});                        
                         recipe.setAttribute('position', {x: 0, y:5, z:-9});                              
                         recipe.setAttribute('id', 'instTwo');                    
                         
@@ -123,7 +123,7 @@ AFRAME.registerComponent('page-flip', {
                         let scene = document.querySelector('a-scene');
                         let recipe = document.createElement('a-entity');
                         recipe.setAttribute('geometry', {primitive:'plane', width:8.5, height:11});
-                        recipe.setAttribute('material', {src:'assets/recipeOneInstructions.png'});
+                        recipe.setAttribute('material', {src:'assets/materials/recipeOne_FULL.png'});                       
                         recipe.setAttribute('position', {x: 0, y:5, z:-9});                         
                         recipe.setAttribute('id', 'instThree');                    
                         
