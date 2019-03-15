@@ -23,13 +23,17 @@
                 <a-asset-item id="page1" src="assets/pageOne.obj"></a-asset-item>
                 <a-asset-item id="page2" src="assets/pageTwo.obj"></a-asset-item>
                 <a-asset-item id="page3" src="assets/pageThree.obj"></a-asset-item>
-                <a-asset-item id="recipeOne" src="assets/models/instructionsOne.obj"></a-asset-item>                
+                <a-asset-item id="recipeOne" src="assets/models/instructionsOne.obj"></a-asset-item>    
+                <asset-item id="frontButton" src="assets/models/frontButton.obj"></asset-item>
+                <asset-item id="backButton" src="assets/models/backButton.obj"></asset-item>            
                 <img id="cover-texture" src="assets/materials/coverPageMaterial.png">
                 <img id="cover-pic" src="assets/cover.png">
                 <img id="page1-pic" src="assets/materials/pageOneMaterial.png">
                 <img id="page2-pic" src="assets/materials/recipeTwoList_Material.png">
                 <img id="page3-pic" src="assets/materials/recipeThreeList_Material.png">
-                <img id="recipeOne-pic" src="assets/materials/instructionOne_Material.png">                
+                <img id="recipeOne-pic" src="assets/materials/instructionOne_Material.png">
+                <img id="buttonMat" src="assets/materials/buttonMaterial.png">                
+
             </a-assets>
 
             <!--loaded in camera manually and added wasd controls so you can move around the screen-->
@@ -63,14 +67,14 @@
             <!--making a pretty background. Code from Anthony's examples-->
             <a-entity id="background" geometry="primitive:sphere; radius:500" material="shader:flat; src:#backgroundImg; side:back; height:1078; width:1078"></a-entity>
 
-            <a-entity page-flip="button: forward" geometry="primitive: box; width: 1; height:1; depth:0.01" position="-9 5 -10" material="color: #ff8c66">
-                <a-text value="Forward" color="black" position="-2 2 0" width="20" height="20"></a-text>
+            <a-entity page-flip="button: backward" obj-model="obj: #frontButton" position="-9 5 -10" material="src: #buttonMat">
+                <!--<a-text value="Forward" color="black" position="-2 2 0" width="20" height="20"></a-text>-->
             </a-entity>
-            <a-entity page-flip="button: backward" geometry="primitive: box; width: 1; height:1; depth:0.01" position="8 5 -10" material="color: #ff8c66">
-                <a-text value="Backward" color="black" position="-0.5 2 0" width="20" height="20"></a-text>
+            <a-entity page-flip="button: forward" obj-model="obj: #backButton" position="8 5 -10" material="src: #buttonMat">
+                <!--<a-text value="Backward" color="black" position="-0.5 2 0" width="20" height="20"></a-text>-->
             </a-entity>
-            <a-entity page-flip="button: openClose" geometry="primitive: box; width: 1; height:1; depth:0.01" position="-4 -3 -10" material="color: #ff8c66">
-                <a-text value="Open/Close Recipe" color="black" position="0 1 0" width="20" height="20"></a-text>
+            <a-entity page-flip="button: openClose" geometry="primitive: box; width: 1; height:1; depth:0.01" position="0 -3 -10" material="color: #740a0a">
+                <a-text value="Open/Close Instructions" color="black" position="-4.6 1 0" width="20" height="20"></a-text>
             </a-entity>
         </a-scene>
     </body>
