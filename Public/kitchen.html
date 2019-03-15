@@ -296,8 +296,11 @@
         <!--TEXTURES-->
         <img id="bellPepper-img" src="assets/materials/bellPepper_base.png">
         <img id="mushroom-img" src="assets/materials/mushroom_baseColor.png">
+        <img id="counter-img" src="assets/materials/CounterTopTexture.png">
+        <img id="stove-img" src="assets/materials/CounterTopStoveTexture.png">
 
-        <a-asset-item id="kitchenTop-obj" src="assets/models/kitchenTop.obj"></a-asset-item>
+        <a-asset-item id="kitchenTop-obj" src="assets/models/kitchenTopFinal.obj"></a-asset-item>
+        <a-asset-item id="kitchenWalls-obj" src="assets/models/kitchenWALLS.obj"></a-asset-item>
         <a-asset-item id="knife-obj" src="assets/models/knife.obj"></a-asset-item>
         <a-asset-item id="pan-obj" src="assets/models/pan.obj"></a-asset-item>
         <!--RECIPE ELEMENTS-->
@@ -361,8 +364,9 @@
       <a-sky color="#1e559e"></a-sky>
       
       <a-entity id="recipe" recipe></a-entity>
-      <a-entity static-body obj-model="obj: #kitchenTop-obj;" scale ="0.01 0.01 0.01"></a-entity>
-
+      <a-entity static-body obj-model="obj: #kitchenTop-obj;" material="src: #counter-img" scale ="0.01 0.01 0.01"></a-entity>
+      <a-entity obj-model="obj: #kitchenWalls-obj;" material="color: white" scale ="0.01 0.01 0.01" position="0 0 -1"></a-entity>
+      <a-entity id="stoveBase-entity" obj-model="obj: #stoveBase-obj;" material="src: #stove-img" scale ="0.01 0.01 0.01"></a-entity>
       <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="-0.8 3 -0.4" material="color: black" scale ="0.02 0.02 0.02"></a-entity><!--"0.5 1.4 -0.5"-->
 
       <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" dynamic-body mixin="objectHold" position="-0.3 2 -0.4" scale ="0.01 0.01 0.01" material="src: #mushroom-img" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
@@ -373,8 +377,8 @@
       <a-entity id="cube-entity" mixin="cube" position="0 1.4 -0.4" scale ="0.2 0.2 0.2" material="color: red"></a-entity>
       
       <!--STOVE ENTITY-->
-      <a-entity position="1 0 0.2" scale ="0.009 0.009 0.009">
-        <a-entity id="stoveBase-entity" obj-model="obj: #stoveBase-obj;" material="color: white"></a-entity>
+      <a-entity scale ="0.01 0.01 0.01">
+        
         <a-entity static-body id="frontRightBurner-entity" obj-model="obj: #frontRightBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
         <a-entity static-body id="frontLeftBurner-entity" obj-model="obj: #frontLeftBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
         <a-entity static-body id="backRightBurner-entity" obj-model="obj: #backRightBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
