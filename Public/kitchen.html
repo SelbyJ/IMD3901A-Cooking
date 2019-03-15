@@ -359,6 +359,7 @@
         <img id="mushroom-img" src="assets/materials/mushroom_baseColor.png">
         <img id="counter-img" src="assets/materials/CounterTopTexture.png">
         <img id="stove-img" src="assets/materials/CounterTopStoveTexture.png">
+        <img id="kitchenWalls-img" src="assets/materials/kitchenWalls.png">
 
         <a-asset-item id="kitchenTop-obj" src="assets/models/kitchenTopFinal.obj"></a-asset-item>
         <a-asset-item id="kitchenWalls-obj" src="assets/models/kitchenWALLS.obj"></a-asset-item>
@@ -425,11 +426,11 @@
       <a-sky color="#1e559e"></a-sky>
       
       <a-entity id="recipe" recipe></a-entity>
-      <a-entity scale="0.5 0.5 0.5" position="0 0.7 0">
+      <a-entity  position="0 0 -0.2">
         <a-entity static-body obj-model="obj: #kitchenTop-obj;" material="src: #counter-img" scale ="0.01 0.01 0.01"></a-entity>
-        <a-entity obj-model="obj: #kitchenWalls-obj;" material="color: white" scale ="0.01 0.01 0.01" position="0 0 -1"></a-entity>
+        <a-entity obj-model="obj: #kitchenWalls-obj;" material="src: #kitchenWalls-img" scale ="0.01 0.01 0.01" position="0 0 -1"></a-entity>
         <a-entity id="stoveBase-entity" obj-model="obj: #stoveBase-obj;" material="src: #stove-img" scale ="0.01 0.01 0.01"></a-entity>
-        <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="-0.8 5 -0.4" material="color: black" scale ="0.02 0.02 0.02"></a-entity><!--"0.5 1.4 -0.5"-->
+        <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="0 5 -0.4" material="color: black" scale ="0.02 0.02 0.02"></a-entity><!--"0.5 1.4 -0.5"-->
 
         <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" dynamic-body mixin="objectHold" position="-0.3 2 -0.4" scale ="0.01 0.01 0.01" material="src: #mushroom-img" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
         <a-entity id="bellPepper-entity" obj-model="obj: #bellPepper-obj;" dynamic-body mixin="objectHold" position="-0.4 2 -0.4" scale ="0.01 0.01 0.01" material="src: #bellPepper-img" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
@@ -453,7 +454,7 @@
         </a-entity>
 
         <a-entity id="pan-entity" obj-model="obj: #pan-obj;" dynamic-body="shape: hull" mixin="objectHold" position="0.5 1.4 -0.4" scale ="0.2 0.2 0.2" material="color: orange" cookingimplement="currentHeat: 0; maxHeat: 360; recieveHeat: true;"></a-entity>
-      <a-plane id="plane" static-body position="0 0 0" scale="10 10 10" rotation="-90 0 0" color="#8E8E8E"></a-plane><!---0.2 1.4 -0.4-->
+        <a-plane id="plane" static-body position="0 0 0" scale="10 10 10" rotation="-90 0 0" color="#8E8E8E"></a-plane><!---0.2 1.4 -0.4-->
         </a-entity>
     </a-scene>
     <script>
