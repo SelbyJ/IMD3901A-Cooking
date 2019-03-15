@@ -16,11 +16,13 @@
         var cutEvent = new Event('cut');
         var cookingEvent = new Event('cook');
         var pointsEvent = new Event('point');
+        var gameOverEvent = new Event('gameOver');
 
         AFRAME.registerComponent('recipe', {
             schema: {
                 cuttingIngredient: [],
                 cookingIngredient: [],
+                steps: {default: 9},
                 points: {default: 100},
                 myInterval: {default: null}
             },
@@ -30,18 +32,19 @@
                 var objData = this.data;
                 var myVar;//= setInterval(myTimer, 1000);
 
-                cuttingIngredient = ["mushroom-entity", "bellPepper-entity", "egg-entity"];
+                cuttingIngredient = ["mushroom-entity", "bellPepper-entity", "egg-entity", "cube-entity"];
                 cookingIngredient = ["pan-entity", "mushroom-entity", "bellPepper-entity", "butter-entity", "egg-entity"]
                 for(i = 0; i < cuttingIngredient.length; i++){
                     document.getElementById(cuttingIngredient[i]).addEventListener('cut', function(e){
                         console.log("cutting");
-                        //
+                        objData.steps -= 1;
                     }, false);
                 }
 
                 for(i = 0; i < cookingIngredient.length; i++){
                     document.getElementById(cookingIngredient[i]).addEventListener('cook', function(e){
                         console.log("cooking");
+                        objData.steps -= 1;
                         myVar = setInterval(myTimer, 1000);
                     }, false);
                 }
@@ -53,6 +56,11 @@
                         console.log("FAILED");
                     }
                 });
+
+                this.el.addEventListener("gameOver", function(){
+                    objData.points -= objData.steps * 10;
+                    printGrade();
+                });
             },
 
             myTimer: function(){
@@ -62,6 +70,49 @@
             myStopFunction:function(){
                 var objData = this.data;
                 clearInterval(objData.myVar);
+            },
+
+            printGrade:function(){
+                var objData = this.data;
+                if(objData.points < 50){
+                    console.log("F");
+                }
+                if(objData.points >= 50 && objData.points <= 52){
+                    console.log("D-");
+                }
+                if(objData.points >= 53 && objData.points <= 56){
+                    console.log("D");
+                }
+                if(objData.points >= 57 && objData.points <= 59){
+                    console.log("D+");
+                }
+                if(objData.points >= 60 && objData.points <= 62){
+                    console.log("C-");
+                }
+                if(objData.points >= 63 && objData.points <= 66){
+                    console.log("C");
+                }
+                if(objData.points >= 67 && objData.points <= 69){
+                    console.log("C+");
+                }
+                if(objData.points >= 70 && objData.points <= 72){
+                    console.log("B-");
+                }
+                if(objData.points >= 73 && objData.points <= 76){
+                    console.log("B");
+                }
+                if(objData.points >= 77 && objData.points <= 79){
+                    console.log("B+");
+                }
+                if(objData.points >= 80 && objData.points <= 84){
+                    console.log("A-");
+                }
+                if(objData.points >= 85 && objData.points <= 89){
+                    console.log("A");
+                }
+                if(objData.points >= 90 && objData.points <= 100){
+                    console.log("A+");
+                }
             }
         }),
 
@@ -91,7 +142,7 @@
                     obj.addEventListener('collide', function(e){
                         if(e.detail.body.el.getAttribute('cookingimplement') !== null){
                             objData.currentHeat = e.detail.body.el.getAttribute('cookingimplement').currentHeat;
-
+                            console.log("HEATING");
                             switch(objData.currentHeat){
                                 case 90:
                                     obj.setAttribute("material", {color: "green"});    
@@ -180,11 +231,11 @@
 
                             cubeObj1.setAttribute('position', {x: cubeObjPos.x - cubeObjScale.x /2, y: cubeObjPos.y, z: cubeObjPos.z});
                             cubeObj1.setAttribute('mixin', "cube");
-                            cubeObj1.setAttribute('scale', {x: cubeObjScale.x /2, y: cubeObjScale.y / 2, z: cubeObjScale.z / 2});
+                            cubeObj1.setAttribute('scale', {x: cubeObjScale.x / 1.25, y: cubeObjScale.y / 1.25, z: cubeObjScale.z / 1.25});
 
                             cubeObj2.setAttribute('position', {x: cubeObjPos.x + cubeObjScale.x /2, y: cubeObjPos.y, z: cubeObjPos.z});
                             cubeObj2.setAttribute('mixin', "cube");
-                            cubeObj2.setAttribute('scale', {x: cubeObjScale.x /2, y: cubeObjScale.y / 2, z: cubeObjScale.z / 2});
+                            cubeObj2.setAttribute('scale', {x: cubeObjScale.x / 1.25, y: cubeObjScale.y / 1.25, z: cubeObjScale.z / 1.25});
 
                             let scene = document.querySelector('a-scene');
                             scene.appendChild(cubeObj1);
@@ -224,6 +275,7 @@
             },
 
             heatObj: function(e){
+                var obj = this.el;
                 this.data.heatTransfer = e.detail.body.el.getAttribute('cookingimplement').currentHeat;
                 obj.dispatchEvent(cookingEvent);
                 var d = new Date();
@@ -287,6 +339,15 @@
                     Context_AF.el.parentNode.removeChild(Context_AF.el); 
                 }
             });
+
+            
+        
+        let socket = io();
+
+        socket.on('gameOver', function(){
+            obj = document.getElementById('recipe');
+            obj.dispatchEvent(gameOverEvent);
+        });
     </script>
   </head>
   <body>
@@ -349,7 +410,7 @@
       </a-assets>
       <!--PLAYER -->
       <a-entity>
-          <a-camera positon="0 1.6 0"></a-camera>
+          <a-camera positon="0 -10 0"></a-camera>
           <a-entity id="rhand" mixin="touch"
                     vive-controls="hand: right"
                     oculus-touch-controls="hand: right"
@@ -364,35 +425,38 @@
       <a-sky color="#1e559e"></a-sky>
       
       <a-entity id="recipe" recipe></a-entity>
-      <a-entity static-body obj-model="obj: #kitchenTop-obj;" material="src: #counter-img" scale ="0.01 0.01 0.01"></a-entity>
-      <a-entity obj-model="obj: #kitchenWalls-obj;" material="color: white" scale ="0.01 0.01 0.01" position="0 0 -1"></a-entity>
-      <a-entity id="stoveBase-entity" obj-model="obj: #stoveBase-obj;" material="src: #stove-img" scale ="0.01 0.01 0.01"></a-entity>
-      <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="-0.8 3 -0.4" material="color: black" scale ="0.02 0.02 0.02"></a-entity><!--"0.5 1.4 -0.5"-->
+      <a-entity scale="0.5 0.5 0.5" position="0 0.7 0">
+        <a-entity static-body obj-model="obj: #kitchenTop-obj;" material="src: #counter-img" scale ="0.01 0.01 0.01"></a-entity>
+        <a-entity obj-model="obj: #kitchenWalls-obj;" material="color: white" scale ="0.01 0.01 0.01" position="0 0 -1"></a-entity>
+        <a-entity id="stoveBase-entity" obj-model="obj: #stoveBase-obj;" material="src: #stove-img" scale ="0.01 0.01 0.01"></a-entity>
+        <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="-0.8 5 -0.4" material="color: black" scale ="0.02 0.02 0.02"></a-entity><!--"0.5 1.4 -0.5"-->
 
-      <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" dynamic-body mixin="objectHold" position="-0.3 2 -0.4" scale ="0.01 0.01 0.01" material="src: #mushroom-img" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-      <a-entity id="bellPepper-entity" obj-model="obj: #bellPepper-obj;" dynamic-body mixin="objectHold" position="-0.4 2 -0.4" scale ="0.01 0.01 0.01" material="src: #bellPepper-img" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-      <a-entity id="egg-entity" obj-model="obj: #egg-obj;" dynamic-body mixin="objectHold" position="-0.5 2 -0.4" scale ="0.01 0.01 0.01" material="color: white" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-      <a-entity id="butter-entity" obj-model="obj: #butter-obj;" dynamic-body mixin="objectHold" position="-0.6 2 -0.4" scale ="0.01 0.01 0.01" material="color: yellow" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 1; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-      
-      <a-entity id="cube-entity" mixin="cube" position="0 1.4 -0.4" scale ="0.2 0.2 0.2" material="color: red"></a-entity>
-      
-      <!--STOVE ENTITY-->
-      <a-entity scale ="0.01 0.01 0.01">
+        <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" dynamic-body mixin="objectHold" position="-0.3 2 -0.4" scale ="0.01 0.01 0.01" material="src: #mushroom-img" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+        <a-entity id="bellPepper-entity" obj-model="obj: #bellPepper-obj;" dynamic-body mixin="objectHold" position="-0.4 2 -0.4" scale ="0.01 0.01 0.01" material="src: #bellPepper-img" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+        <a-entity id="egg-entity" obj-model="obj: #egg-obj;" dynamic-body mixin="objectHold" position="-0.5 2 -0.4" scale ="0.01 0.01 0.01" material="color: white" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+        <a-entity id="butter-entity" obj-model="obj: #butter-obj;" dynamic-body mixin="objectHold" position="-0.6 2 -0.4" scale ="0.01 0.01 0.01" material="color: yellow" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 1; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
         
-        <a-entity static-body id="frontRightBurner-entity" obj-model="obj: #frontRightBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
-        <a-entity static-body id="frontLeftBurner-entity" obj-model="obj: #frontLeftBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
-        <a-entity static-body id="backRightBurner-entity" obj-model="obj: #backRightBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
-        <a-entity static-body id="backLeftBurner-entity" obj-model="obj: #backLeftBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
+        <a-entity id="cube-entity" mixin="cube" position="-0.9 1.4 -0.4" scale ="0.2 0.2 0.2" material="color: red" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+        
+        <!--STOVE ENTITY-->
+        <a-entity scale ="0.01 0.01 0.01">
+            
+            <a-entity static-body id="frontRightBurner-entity" obj-model="obj: #frontRightBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
+            <a-entity static-body id="frontLeftBurner-entity" obj-model="obj: #frontLeftBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
+            <a-entity static-body id="backRightBurner-entity" obj-model="obj: #backRightBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
+            <a-entity static-body id="backLeftBurner-entity" obj-model="obj: #backLeftBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
 
-        <a-entity id="backLeftBurnerKnob-entity" obj-model="obj: #backLeftBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: backLeftBurner-entity;"></a-entity>
-        <a-entity id="backRightBurnerKnob-entity" obj-model="obj: #backRightBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: backRightBurner-entity;"></a-entity>
-        <a-entity id="frontLeftBurnerKnob-entity" obj-model="obj: #frontLeftBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: frontLeftBurner-entity;"></a-entity>
-        <a-entity id="frontRightBurnerKnob-entity" obj-model="obj: #frontRightBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: frontRightBurner-entity;"></a-entity>
-      </a-entity>
+            <a-entity id="backLeftBurnerKnob-entity" obj-model="obj: #backLeftBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: backLeftBurner-entity;"></a-entity>
+            <a-entity id="backRightBurnerKnob-entity" obj-model="obj: #backRightBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: backRightBurner-entity;"></a-entity>
+            <a-entity id="frontLeftBurnerKnob-entity" obj-model="obj: #frontLeftBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: frontLeftBurner-entity;"></a-entity>
+            <a-entity id="frontRightBurnerKnob-entity" obj-model="obj: #frontRightBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: frontRightBurner-entity;"></a-entity>
+        </a-entity>
 
-      <a-entity id="pan-entity" obj-model="obj: #pan-obj;" dynamic-body="shape: hull" mixin="objectHold" position="0.5 1.4 -0.4" scale ="0.2 0.2 0.2" material="color: orange" cookingimplement="currentHeat: 0; maxHeat: 360; recieveHeat: true;"></a-entity>
+        <a-entity id="pan-entity" obj-model="obj: #pan-obj;" dynamic-body="shape: hull" mixin="objectHold" position="0.5 1.4 -0.4" scale ="0.2 0.2 0.2" material="color: orange" cookingimplement="currentHeat: 0; maxHeat: 360; recieveHeat: true;"></a-entity>
       <a-plane id="plane" static-body position="0 0 0" scale="10 10 10" rotation="-90 0 0" color="#8E8E8E"></a-plane><!---0.2 1.4 -0.4-->
-      
+        </a-entity>
     </a-scene>
+    <script>
+    </script>
   </body>
 </html>
