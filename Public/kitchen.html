@@ -408,16 +408,19 @@
   </head>
   <body>
     
-    <a-scene id="scene" physics="debug: true" timer = "gamePart: kitchen"><!---->
+    <a-scene id="scene" physics="debug: true" timer = "gamePart: kitchen" light="defaultLightsEnabled: false"><!---->
       <a-assets>
         <!--TEXTURES-->
+        
+        <img id="skymap" src="assets/materials/sunset_fairway_4k.jpg">
         <img id="bellPepper-img" src="assets/materials/bellPepper_base.png">
         <img id="mushroom-img" src="assets/materials/mushroom_baseColor.png">
         <img id="counter-img" src="assets/materials/CounterTopTexture.png">
         <img id="stove-img" src="assets/materials/CounterTopStoveTexture.png">
-        <img id="kitchenWalls-img" src="assets/materials/kitchenWalls.png">
+        <!--<img id="kitchenWalls-img" src="assets/materials/kitchenWalls.png">-->
 
-        <a-asset-item id="kitchenTop-obj" src="assets/models/kitchenTopFinal.obj"></a-asset-item>
+        <a-asset-item id="kitchenTopFront-obj" src="assets/models/kitchenTopFront.obj"></a-asset-item>
+        <a-asset-item id="kitchenTopRight-obj" src="assets/models/kitchenTopRight.obj"></a-asset-item>
         <a-asset-item id="kitchenWalls-obj" src="assets/models/kitchenWALLS.obj"></a-asset-item>
         <a-asset-item id="knife-obj" src="assets/models/knife.obj"></a-asset-item>
         <a-asset-item id="pan-obj" src="assets/models/pan.obj"></a-asset-item>
@@ -465,53 +468,67 @@
                                 colliderEndEvent: collisions;
                                 colliderEndEventProperty: clearedEls;">
       </a-assets>
-      <!--PLAYER -->
-      <a-entity>
-        <a-camera positon="0 -10 0">
-        </a-camera>
-        <a-entity id="rhand" mixin="touch"
+        <!--PLAYER -->
+        <a-entity>
+            <a-camera positon="0 -10 0">
+            </a-camera>
+            <a-entity id="rhand" mixin="touch"
                 vive-controls="hand: right"
                 oculus-touch-controls="hand: right"
                 windows-motion-controls="hand: right">
-        </a-entity>
-        <a-entity id="lhand" mixin="touch"
+            </a-entity>
+            <a-entity id="lhand" mixin="touch"
                 vive-controls="hand: left"
                 oculus-touch-controls="hand: left"
                 windows-motion-controls="hand: left">
+            </a-entity>
         </a-entity>
-      </a-entity>
-      <a-sky color="#1e559e"></a-sky>
-      
-      <a-entity id="recipe" recipe></a-entity>
-      <a-entity  position="0 0 -0.2">
-        <a-entity static-body obj-model="obj: #kitchenTop-obj;" material="src: #counter-img" scale ="0.01 0.01 0.01"></a-entity>
-        <a-entity obj-model="obj: #kitchenWalls-obj;" material="src: #kitchenWalls-img" scale ="0.01 0.01 0.01" position="0 0 -1"></a-entity>
-        <a-entity id="stoveBase-entity" obj-model="obj: #stoveBase-obj;" material="src: #stove-img" scale ="0.01 0.01 0.01"></a-entity>
-        <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="-0.3 5 -0.4" material="color: black" scale ="0.02 0.02 0.02"></a-entity><!--"0.5 1.4 -0.5"-->
-
-        <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" dynamic-body mixin="objectHold" position="-0.5 2 -0.4" scale ="0.01 0.01 0.01" material="src: #mushroom-img" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-        <a-entity id="bellPepper-entity" obj-model="obj: #bellPepper-obj;" dynamic-body mixin="objectHold" position="-0.3 2 -0.4" scale ="0.01 0.01 0.01" material="src: #bellPepper-img" ingredient="cookingTemp: 270; cookingTime: 240.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 90; cookingImplementID: pan-entity;"></a-entity>
-        <a-entity id="egg-entity" obj-model="obj: #egg-obj;" dynamic-body mixin="objectHold" position="1.9 2.4 -0.5" scale ="0.02 0.02 0.02" material="color: white" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-        <a-entity id="butter-entity" obj-model="obj: #butter-obj;" dynamic-body mixin="objectHold" position="-0.6 2 -0.4" scale ="0.01 0.01 0.01" material="color: yellow" ingredient="cookingTemp: 270; cookingTime: 240.0; sizeMin: 1; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
         
-        <a-entity id="cube-entity" mixin="cube" position="-0.9 1.4 -0.4" scale ="0.2 0.2 0.2" material="color: red" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-        
-        <!--STOVE ENTITY-->
-        <a-entity scale ="0.01 0.01 0.01">
-            
-            <a-entity static-body id="frontRightBurner-entity" obj-model="obj: #frontRightBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
-            <a-entity static-body id="frontLeftBurner-entity" obj-model="obj: #frontLeftBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
-            <a-entity static-body id="backRightBurner-entity" obj-model="obj: #backRightBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
-            <a-entity static-body id="backLeftBurner-entity" obj-model="obj: #backLeftBurner-obj;" material="color: purple" cookingimplement="currentHeat: 90;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
-
-            <a-entity id="backLeftBurnerKnob-entity" obj-model="obj: #backLeftBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 90;maxHeat: 360;recieveHeat: false;sendHeat: backLeftBurner-entity;"></a-entity>
-            <a-entity id="backRightBurnerKnob-entity" obj-model="obj: #backRightBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: backRightBurner-entity;"></a-entity>
-            <a-entity id="frontLeftBurnerKnob-entity" obj-model="obj: #frontLeftBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: frontLeftBurner-entity;"></a-entity>
-            <a-entity id="frontRightBurnerKnob-entity" obj-model="obj: #frontRightBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: frontRightBurner-entity;"></a-entity>
+        <a-entity id="sky" 
+            position="0 0 0" 
+            rotation="0 0 0" 
+            scale="1 1 1" 
+            geometry="primitive:sphere; radius:500;" 
+            material="shader:flat; src:#skymap; side:back;">
         </a-entity>
 
-        <a-entity id="pan-entity" obj-model="obj: #pan-obj;" dynamic-body="shape: hull" mixin="objectHold" position="1.9 2.0 -0.5" scale ="0.2 0.2 0.2" material="color: orange" cookingimplement="currentHeat: 0; maxHeat: 360; recieveHeat: true;"></a-entity>
-        <a-plane id="plane" static-body position="0 0 0" scale="10 10 10" rotation="-90 0 0" color="#8E8E8E"></a-plane><!---0.2 1.4 -0.4-->
+        <a-entity id="lighting">
+            <a-entity light="color: #f2cd84; intensity: 1.5" position="-39 88 680" castShadow="True"></a-entity>
+        </a-entity>
+
+        <a-entity id="recipe" recipe></a-entity>
+        <a-entity>
+            <a-entity id="kitchenTop">
+                <a-entity static-body obj-model="obj: #kitchenTopFront-obj;" scale ="0.01 0.01 0.01"></a-entity>
+                <a-entity static-body obj-model="obj: #kitchenTopRight-obj;" scale ="0.01 0.01 0.01"></a-entity>
+            </a-entity>
+            <a-entity obj-model="obj: #kitchenWalls-obj;" scale ="0.01 0.01 0.01"></a-entity>
+            <a-entity id="stoveBase-entity" obj-model="obj: #stoveBase-obj;" material="src: #stove-img" scale ="0.01 0.01 0.01"></a-entity>
+            <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="-0.3 5 -0.4" material="color: black" scale ="0.02 0.02 0.02"></a-entity><!--"0.5 1.4 -0.5"-->
+
+            <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" dynamic-body mixin="objectHold" position="-0.5 2 -0.4" scale ="0.01 0.01 0.01" material="src: #mushroom-img" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+            <a-entity id="bellPepper-entity" obj-model="obj: #bellPepper-obj;" dynamic-body mixin="objectHold" position="-0.3 2 -0.4" scale ="0.01 0.01 0.01" material="src: #bellPepper-img" ingredient="cookingTemp: 270; cookingTime: 240.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 90; cookingImplementID: pan-entity;"></a-entity>
+            <a-entity id="egg-entity" obj-model="obj: #egg-obj;" dynamic-body mixin="objectHold" position="1.9 2.4 -0.5" scale ="0.02 0.02 0.02" material="color: white" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+            <a-entity id="butter-entity" obj-model="obj: #butter-obj;" dynamic-body mixin="objectHold" position="-0.6 2 -0.4" scale ="0.01 0.01 0.01" material="color: yellow" ingredient="cookingTemp: 270; cookingTime: 240.0; sizeMin: 1; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+
+            <a-entity id="cube-entity" mixin="cube" position="-0.9 1.4 -0.4" scale ="0.2 0.2 0.2" material="color: red" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+
+            <!--STOVE ENTITY-->
+            <a-entity scale ="0.01 0.01 0.01">
+                
+                <a-entity static-body id="frontRightBurner-entity" obj-model="obj: #frontRightBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
+                <a-entity static-body id="frontLeftBurner-entity" obj-model="obj: #frontLeftBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
+                <a-entity static-body id="backRightBurner-entity" obj-model="obj: #backRightBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
+                <a-entity static-body id="backLeftBurner-entity" obj-model="obj: #backLeftBurner-obj;" material="color: purple" cookingimplement="currentHeat: 90;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
+
+                <a-entity id="backLeftBurnerKnob-entity" obj-model="obj: #backLeftBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 90;maxHeat: 360;recieveHeat: false;sendHeat: backLeftBurner-entity;"></a-entity>
+                <a-entity id="backRightBurnerKnob-entity" obj-model="obj: #backRightBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: backRightBurner-entity;"></a-entity>
+                <a-entity id="frontLeftBurnerKnob-entity" obj-model="obj: #frontLeftBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: frontLeftBurner-entity;"></a-entity>
+                <a-entity id="frontRightBurnerKnob-entity" obj-model="obj: #frontRightBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: frontRightBurner-entity;"></a-entity>
+            </a-entity>
+
+            <a-entity id="pan-entity" obj-model="obj: #pan-obj;" dynamic-body="shape: hull" mixin="objectHold" position="1.9 2.0 -0.5" scale ="0.2 0.2 0.2" material="color: orange" cookingimplement="currentHeat: 0; maxHeat: 360; recieveHeat: true;"></a-entity>
+            <a-plane id="plane" static-body position="0 0 0" scale="10 10 10" rotation="-90 0 0" color="#8E8E8E"></a-plane><!---0.2 1.4 -0.4-->
         </a-entity>
     </a-scene>
     <script>

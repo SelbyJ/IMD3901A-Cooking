@@ -317,8 +317,8 @@ vn 0.000000 -1.000000 0.000000
 vn 0.707107 0.000000 -0.707106
 vn 0.707107 0.000000 0.707106
 s 1
-g Stove_geo
-usemtl aiStandardSurface2SG
+g Stove_Base_geo Stove_geo group1
+usemtl CompleteWorkspace_aiStandardSurface2SG
 f 3/1/1 2/2/2 6/3/3 5/4/4
 s 2
 f 2/5/5 1/6/6 7/7/7 6/8/8
