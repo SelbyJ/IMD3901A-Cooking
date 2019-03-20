@@ -48,7 +48,7 @@ AFRAME.registerComponent('timer', {
                 var width = window.outerWidth-window.outerWidth;
                 var height = window.outerHeight-window.outerHeight;
     
-                if(data >= 119){
+                if(data >= 29){
                     let textEntity = document.createElement('a-entity');
     
                     textEntity.setAttribute('text', {value: "Time Left: " + data + " seconds", color: 'black', width: 10, height: 10});
@@ -57,7 +57,7 @@ AFRAME.registerComponent('timer', {
     
                     camera.appendChild(textEntity);
                     //camera.setAttribute('text', {value: "Time Left: " + data + " seconds", width: 40, height: 40});
-                }else if (data < 119){
+                }else if (data < 29){
                     let timerText = document.querySelector('#timerText');
                     console.log("Timer Text " + timerText);
     
