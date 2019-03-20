@@ -21,6 +21,7 @@ app.get('/', function(req, res){
 var mobile = false;
 var kitchen = false;
 var timerCounter = 30;
+var counterMax = 30;
 
 app.get('/start_page', function(req, res) {
     app.use(express.static(__dirname + '/public'));
@@ -78,7 +79,7 @@ setInterval(function(){
         }
         timerCounter--;
         console.log("Time Left: " + String(timerCounter) + " seconds");   
-        socketIO.emit('timerChanged', timerCounter);
+        socketIO.emit('timerChanged', timerCounter, counterMax);
     }
 
     if(timerCounter == 0){
