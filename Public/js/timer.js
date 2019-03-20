@@ -20,7 +20,29 @@ AFRAME.registerComponent('timer', {
         window.socket.on('gameOver', function(data){
             console.log("Game had ended!");
             window.location.href = '/start_page';
-        })
+        });
 
+        window.socket.on('timerChanged', function(data){
+            console.log("Time Left: " + data + " seconds");
+            let camera = document.querySelector('a-camera');
+            if(data == 120){
+                let textEntity = document.createElement('a-entity');
+
+                textEntity.setAttribute('text', {value: "Time Left: " + data + " seconds", color: 'black', width: 40, height: 40});
+                textEntity.setAttribute('position', {x:window.outerWidth-window.outerWidth, y:window.outerHeight-window.outerHeight, z:-10});
+                textEntity.setAttribute('id', '#timerText');
+
+                camera.appendChild(textEntity);
+                //camera.setAttribute('text', {value: "Time Left: " + data + " seconds", width: 40, height: 40});
+            }else{
+                let timerText = document.querySelector('#timerText');
+
+                timerText.removeAttribute('text');
+                timerText.setAttribute('text', {value: "Time Left: " + data + " seconds", color: 'black', width: 40, height: 40});
+
+            }
+            
+
+        });
     }
 });

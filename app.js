@@ -78,6 +78,7 @@ setInterval(function(){
         }
         timerCounter--;
         console.log("Time Left: " + String(timerCounter) + " seconds");   
+        socketIO.emit('timerChanged', timerCounter);
     }
 
     if(timerCounter == 0){
