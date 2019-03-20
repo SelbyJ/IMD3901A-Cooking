@@ -20,7 +20,7 @@ app.get('/', function(req, res){
 
 var mobile = false;
 var kitchen = false;
-var timerCounter = 120;
+var timerCounter = 30;
 
 app.get('/start_page', function(req, res) {
     app.use(express.static(__dirname + '/public'));
