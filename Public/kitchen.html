@@ -400,9 +400,11 @@
         
         let socket = io();
 
-        socket.on('gameOver', function(){
-            obj = document.getElementById('recipe');
-            obj.dispatchEvent(gameOverEvent);
+        socket.on('getPoints', function(){
+            let obj = document.getElementById('recipe');
+            var score = obj.getAttribute('recipe').points;
+            //console.log(obj.getAttribute('recipe').points);
+            socket.emit("test", score);
         });
     </script>
   </head>
@@ -493,7 +495,7 @@
         </a-entity>
 
         <a-entity id="lighting">
-            <a-entity light="color: #f2cd84; intensity: 1.5" position="-39 88 680" castShadow="True"></a-entity>
+            <a-entity light="color: #ffd6aa; intensity: 0.5" position="-39 88 680" castShadow="True"></a-entity>
         </a-entity>
 
         <a-entity id="recipe" recipe></a-entity>
@@ -532,6 +534,7 @@
         </a-entity>
     </a-scene>
     <script>
+        
     </script>
   </body>
 </html>

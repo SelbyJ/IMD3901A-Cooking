@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <script src="/socket.io/socket.io.js"></script>
+        <title>Grade Page</title>
+    </head>
+    <body>
+        <p>GRADE</p>
+        <script>
+            let socket = io();
+            socket.on('connect', function(){
+                console.log("Connected");
+                socket.emit('getGrade');
+            });
+            socket.on('recieveGrade', function(grade){
+                console.log("grade" + grade);
+                var para = document.createElement("p");
+                var node = document.createTextNode("Your Grade is: " + grade);
+                para.appendChild(node);
+            });
+        </script>
+    </body>
+</html>

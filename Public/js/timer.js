@@ -70,7 +70,7 @@ AFRAME.registerComponent('timer', {
 
         window.socket.on('gameOver', function(data){
             console.log("Game had ended!");
-            window.location.href = '/start_page';
+            window.location.href = '/grade';
         });
 
     }
