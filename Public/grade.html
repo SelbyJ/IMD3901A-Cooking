@@ -4,7 +4,10 @@
         <title>Grade Page</title>
     </head>
     <body>
-        <p>GRADE</p>
+        <div id="div1">
+            <p>GRADE</p>
+        </div>
+        <button onclick="myFunction()">Click me</button>
         <script>
             let socket = io();
             socket.on('connect', function(){
@@ -13,10 +16,71 @@
             });
             socket.on('recieveGrade', function(grade){
                 console.log("grade" + grade);
-                var para = document.createElement("p");
-                var node = document.createTextNode("Your Grade is: " + grade);
-                para.appendChild(node);
+                printGrade(grade);
             });
+
+            function printGrade(grade){
+                var letterGrade;
+                var objData = this.data;
+                if(grade < 50){
+                    console.log("F");
+                    letterGrade = "F";
+                }
+                if(grade >= 50 && grade <= 52){
+                    console.log("D-");
+                    letterGrade = "D-";
+                }
+                if(grade >= 53 && grade <= 56){
+                    console.log("D");
+                    letterGrade = "D";
+                }
+                if(grade >= 57 && grade <= 59){
+                    console.log("D+");
+                    letterGrade = "D+";
+                }
+                if(grade >= 60 && grade <= 62){
+                    console.log("C-");
+                    letterGrade = "C-";
+                }
+                if(grade >= 63 && grade <= 66){
+                    console.log("C");
+                    letterGrade = "C";
+                }
+                if(grade >= 67 && grade <= 69){
+                    console.log("C+");
+                    letterGrade = "C+";
+                }
+                if(grade >= 70 && grade <= 72){
+                    console.log("B-");
+                    letterGrade = "B-";
+                }
+                if(grade >= 73 && grade <= 76){
+                    console.log("B");
+                    letterGrade = "B";
+                }
+                if(grade >= 77 && grade <= 79){
+                    console.log("B+");
+                    letterGrade = "B+";
+                }
+                if(grade >= 80 && grade <= 84){
+                    console.log("A-");
+                    letterGrade = "A-";
+                }
+                if(grade >= 85 && grade <= 89){
+                    console.log("A");
+                    letterGrade = "A";
+                }
+                if(grade >= 90 && grade <= 100){
+                    console.log("A+");
+                    letterGrade = "A+";
+                }
+                console.log(letterGrade);
+                var para = document.createElement("p");
+                var node = document.createTextNode("Your Grade is: " + letterGrade);
+                para.appendChild(node);
+                var element = document.getElementById("div1");
+                element.appendChild(para);
+            }
         </script>
     </body>
 </html>
