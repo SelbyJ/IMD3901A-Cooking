@@ -91,7 +91,7 @@ socketIO.on('connection', function(socket){
 
 setInterval(function(){ 
     if(mobile == true && kitchen == true){
-        if(timerCounter == 120){
+        if(timerCounter == 30){
             console.log("Timer started");
         }
         timerCounter--;
