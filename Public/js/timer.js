@@ -15,7 +15,13 @@ AFRAME.registerComponent('timer', {
 
             window.socket.on('timerChanged', function(data){
                 console.log("Time Left: " + data + " seconds");
-                let camera = document.querySelector('a-camera');
+
+                let timer = document.querySelector('#timer');
+
+                timer.setAttribute('text', {value: "Time Left: " + data.toString() + " seconds", color: 'pink', width: 10, height: 10, align: 'center'});
+                timer.setAttribute('visible', 'true');
+                
+                /*let camera = document.querySelector('a-camera');
     
                 var width = window.outerWidth-window.outerWidth;
                 var height = window.outerHeight-window.outerHeight;
@@ -36,14 +42,21 @@ AFRAME.registerComponent('timer', {
                     timerText.removeAttribute('text');
                     timerText.setAttribute('text', {value: "Time Left: " + data + " seconds", color: 'black', width: 10, height: 10});
     
-                }
+                }*/
+
             });
 
         }else if(object.data.gamePart === "kitchen"){
             window.socket.emit('VRLoaded');
             window.socket.on('timerChanged', function(data){
                 console.log("Time Left: " + data + " seconds");
-                let camera = document.querySelector('a-camera');
+
+                let timer = document.querySelector('#timer');
+
+                timer.setAttribute('text', {value: "Time Left: " + data.toString() + " seconds", color: 'pink', width: 10, height: 10, align: 'center'});
+                timer.setAttribute('visible', 'true');
+                
+                /*let camera = document.querySelector('a-camera');
     
                 var width = window.outerWidth-window.outerWidth;
                 var height = window.outerHeight-window.outerHeight;
@@ -64,7 +77,7 @@ AFRAME.registerComponent('timer', {
                     timerText.removeAttribute('text');
                     timerText.setAttribute('text', {value: "Time Left: " + data + " seconds", color: 'black', width: 10, height: 10});
     
-                }
+                }*/
             });
         }
 
