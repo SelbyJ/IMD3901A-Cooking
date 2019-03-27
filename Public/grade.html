@@ -7,8 +7,18 @@
         <div id="div1">
             <p>GRADE</p>
         </div>
-        <button onclick="myFunction()">Click me</button>
+        <button onclick="redirect()">Go Back To Start</button>
         <script>
+            function redirect(){
+                
+                if(window.socket == null){
+                    console.log("No socket.io");
+                    window.socket = io();
+                }
+                
+                window.location.href = '/start_page';
+            }
+
             let socket = io();
             socket.on('connect', function(){
                 console.log("Connected");
