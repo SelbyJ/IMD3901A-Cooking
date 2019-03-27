@@ -22,6 +22,7 @@ var mobile = false;
 var kitchen = false;
 var timerCounter = 30;
 var counterMax = 30;
+var score = 0;
 
 app.get('/start_page', function(req, res) {
     app.use(express.static(__dirname + '/public'));
@@ -38,6 +39,10 @@ app.get('/mobile', function(req, res) {
     res.sendFile(__dirname + '/Public/mobile.html');
 });
 
+app.get('/grade', function(req, res) {
+    app.use(express.static(__dirname + '/public'));;
+    res.sendFile(__dirname + '/Public/grade.html');
+});
 
 socketIO.on('connection', function(socket){
     console.log(socket.id + " has connected!");
@@ -70,11 +75,23 @@ socketIO.on('connection', function(socket){
         kitchen = true;
         //socketIO.sockets.emit('kitchenTrue');
     });
+
+    socket.on('test', function(data){
+        console.log("TEST: " + data);
+        socketIO.emit('gameOver');
+        timerCounter = 120;
+        score = data;
+        //socketIO.emit('gameOver');
+    });
+
+    socket.on('getGrade', function(){
+        socket.emit('recieveGrade', score);
+    });
 });
 
 setInterval(function(){ 
     if(mobile == true && kitchen == true){
-        if(timerCounter == 120){
+        if(timerCounter == 30){
             console.log("Timer started");
         }
         timerCounter--;
@@ -86,9 +103,10 @@ setInterval(function(){
         console.log("Time is up! Game Over!");
         mobile = false;
         kitchen = false;
-        socketIO.emit('gameOver');
-        timerCounter = 120;
-        socketIO.emit('gameOver');
+        socketIO.emit('getPoints');
+        //socketIO.emit('gameOver');
+        //timerCounter = 120;
+        //socketIO.emit('gameOver');
     }
 }, 1000);
 

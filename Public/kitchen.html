@@ -25,7 +25,8 @@
                 cookingIngredient: [],
                 steps: {default: 0},
                 points: {default: 100},
-                myInterval: {default: null}
+                myInterval: {default: null},
+                gradeInfo: []
             },
 
             init: function(){
@@ -71,7 +72,7 @@
 
                     //steps not taken
                     objData.points -= objData.steps * 10;
-
+                    
                     for(i = 0; i < cuttingIngredient.length; i++){
                         cuttingIngredientObj = document.getElementById(cuttingIngredient[i]);
                         if(cuttingIngredientObj.getAttribute('ingredient').sizeStart != cuttingIngredientObj.getAttribute('ingredient').sizeMin){
@@ -94,7 +95,7 @@
                             objData.points -= 10;
                         }
                     }
-                    Context_AF.printGrade();
+                    //Context_AF.printGrade();
                 });
             },
 
@@ -111,50 +112,6 @@
             myStopFunction: function(){
                 var objData = this.data;
                 clearInterval(objData.myVar);
-            },
-
-            printGrade: function(){
-                console.log("print Grade");
-                var objData = this.data;
-                if(objData.points < 50){
-                    console.log("F");
-                }
-                if(objData.points >= 50 && objData.points <= 52){
-                    console.log("D-");
-                }
-                if(objData.points >= 53 && objData.points <= 56){
-                    console.log("D");
-                }
-                if(objData.points >= 57 && objData.points <= 59){
-                    console.log("D+");
-                }
-                if(objData.points >= 60 && objData.points <= 62){
-                    console.log("C-");
-                }
-                if(objData.points >= 63 && objData.points <= 66){
-                    console.log("C");
-                }
-                if(objData.points >= 67 && objData.points <= 69){
-                    console.log("C+");
-                }
-                if(objData.points >= 70 && objData.points <= 72){
-                    console.log("B-");
-                }
-                if(objData.points >= 73 && objData.points <= 76){
-                    console.log("B");
-                }
-                if(objData.points >= 77 && objData.points <= 79){
-                    console.log("B+");
-                }
-                if(objData.points >= 80 && objData.points <= 84){
-                    console.log("A-");
-                }
-                if(objData.points >= 85 && objData.points <= 89){
-                    console.log("A");
-                }
-                if(objData.points >= 90 && objData.points <= 100){
-                    console.log("A+");
-                }
             }
         }),
 
@@ -276,11 +233,16 @@
                             cutOne.setAttribute('obj-model', {obj: obj.getAttribute('obj-model').obj});
                             cutTwo.setAttribute('obj-model', {obj: obj.getAttribute('obj-model').obj});
 
+                            cutOne.setAttribute('id', this.getAttribute('id'));
+
+                            cutOne.setAttribute('ingredient', {heatTransfer: objData.heatTransfer, cookingTemp: objData.cookingTemp, cookingTime: objData.cookingTime, cookingStartTime: objData.cookingStartTime, sizeMin: objData.sizeMin, sizeStart: objData.sizeStart, cookingImplementID: objData.cookingImplementID});//
+                            cutTwo.setAttribute('ingredient', {heatTransfer: objData.heatTransfer, cookingTemp: objData.cookingTemp, cookingTime: objData.cookingTime, cookingStartTime: objData.cookingStartTime, sizeMin: objData.sizeMin, sizeStart: objData.sizeStart, cookingImplementID: objData.cookingImplementID});//
+
                             cutOne.setAttribute('position', {x: cutObjPos.x - cutObjPos.x /2, y: cutObjPos.y, z: cutObjPos.z});
                             cutTwo.setAttribute('position', {x: cutObjPos.x + cutObjPos.x /2, y: cutObjPos.y, z: cutObjPos.z});
 
-                            cutOne.setAttribute('mixin', "cube");
-                            cutTwo.setAttribute('mixin', "cube");
+                            cutOne.setAttribute('mixin', "objectHold");
+                            cutTwo.setAttribute('mixin', "objectHold");
 
                             cutOne.setAttribute('material', {src: obj.getAttribute('material').src});
                             cutTwo.setAttribute('material', {src: obj.getAttribute('material').src});
@@ -396,13 +358,30 @@
                 }
             });
 
-            
+        AFRAME.registerComponent('plate', {
+            init: function(){
+                var val = 4;
+                var obj = this.el;
+                obj.addEventListener('collide', function(e){
+                    if(e.detail.body.el.getAttribute('ingredient') !== null){
+                        e.detail.body.el.setAttribute('delete-self', {delete: true});
+                        val--;
+                    }
+                    //e.detail.body.el.setAttribute('delete-self', {delete: true});
+                    
+                });
+            }
+        });    
         
         let socket = io();
 
-        socket.on('gameOver', function(){
-            obj = document.getElementById('recipe');
+        socket.on('getPoints', function(){
+            
+            //var gameOverEvent = new Event('gameOver');
+            let obj = document.getElementById('recipe');
             obj.dispatchEvent(gameOverEvent);
+            var score = obj.getAttribute('recipe').points;
+            socket.emit("test", score);
         });
     </script>
   </head>
@@ -424,6 +403,7 @@
         <a-asset-item id="kitchenWalls-obj" src="assets/models/kitchenWALLS.obj"></a-asset-item>
         <a-asset-item id="knife-obj" src="assets/models/knife.obj"></a-asset-item>
         <a-asset-item id="pan-obj" src="assets/models/pan.obj"></a-asset-item>
+        <a-asset-item id="plate-obj" src="assets/models/plate.obj"></a-asset-item>
         <!--RECIPE ELEMENTS-->
         <a-asset-item id="mushroom-obj" src="assets/models/mushroom.obj"></a-asset-item>
         <a-asset-item id="bellPepper-obj" src="assets/models/bellPepper.obj"></a-asset-item>
@@ -448,7 +428,7 @@
             event-set__hoveroff="_event: hover-end; material.opacity: 1; transparent: false"
             shadow collision></a-mixin>
 
-        <a-mixin id="objectHold" hoverable grabbable stretchable draggable
+        <a-mixin id="objectHold" hoverable grabbable stretchable draggable dynamic-body
             event-set__hoveron="_event: hover-start; material.opacity: 0.7; transparent: true"
             event-set__hoveroff="_event: hover-end; material.opacity: 1; transparent: false"
             shadow delete-self="delete: false;" collision></a-mixin>
@@ -471,6 +451,7 @@
         <!--PLAYER -->
         <a-entity>
             <a-camera positon="0 -10 0">
+                    <a-entity id="timer" text="value: Time Left: ; align: center" position="0 0 -5" visible="false"></a-entity>                
             </a-camera>
             <a-entity id="rhand" mixin="touch"
                 vive-controls="hand: right"
@@ -493,7 +474,7 @@
         </a-entity>
 
         <a-entity id="lighting">
-            <a-entity light="color: #f2cd84; intensity: 1.5" position="-39 88 680" castShadow="True"></a-entity>
+            <a-entity light="color: #ffd6aa; intensity: 0.5" position="-39 88 680" castShadow="True"></a-entity>
         </a-entity>
 
         <a-entity id="recipe" recipe></a-entity>
@@ -528,10 +509,12 @@
             </a-entity>
 
             <a-entity id="pan-entity" obj-model="obj: #pan-obj;" dynamic-body="shape: hull" mixin="objectHold" position="1.9 2.0 -0.5" scale ="0.2 0.2 0.2" material="color: orange" cookingimplement="currentHeat: 0; maxHeat: 360; recieveHeat: true;"></a-entity>
+            <a-entity id="plate-entity" obj-model="obj: #plate-obj" static-body position ="0 1.1 -0.4" scale="0.2 0.2 0.2" plate></a-entity>
             <a-plane id="plane" static-body position="0 0 0" scale="10 10 10" rotation="-90 0 0" color="#8E8E8E"></a-plane><!---0.2 1.4 -0.4-->
         </a-entity>
     </a-scene>
     <script>
+        
     </script>
   </body>
 </html>
