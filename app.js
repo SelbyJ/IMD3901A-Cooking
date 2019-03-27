@@ -85,7 +85,7 @@ socketIO.on('connection', function(socket){
     });
 
     socket.on('getGrade', function(){
-        socketIO.emit('recieveGrade', score);
+        socket.emit('recieveGrade', score);
     });
 });
 
