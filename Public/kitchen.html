@@ -274,25 +274,10 @@
                             obj.setAttribute('delete-self', {delete: true});
                         }
                         Context_AF.heatObj(e);
-                        //wrong heat
-                        if(objData.heatTransfer !== objData.cookingTemp){
-                            obj.dispatchEvent(pointsEvent);
-                        }
                     }
                     else{
                         //No heat
                         obj.dispatchEvent(stopCookingEvent);
-                        /* OUTDATED
-                        if(objData.cookingTemp > 0 && objData.heatTransfer > 0){
-                            if(objData.cookingTime > 0){
-                                console.log("underCooked");
-                                obj.dispatchEvent(pointsEvent);
-                            }
-                            if(objData.cookingTime < 0){
-                                console.log("overCooked");
-                                obj.dispatchEvent(pointsEvent);
-                            }
-                        }*/
                         objData.heatTransfer = 0;
                     }
                     if(e.detail.body.el.getAttribute('id') === 'plate-entity'){
@@ -404,13 +389,12 @@
 
             init: function(){
                 var obj = this.el;
-                var objData = this.data;
+                var objData = obj.getAttribute('ingredient');
                 obj.addEventListener('grab-start', function(e){
                     let originalObjModel = obj.getAttribute('obj-model').obj;
 
                     let cutOne = document.createElement('a-entity');
 
-                    //let cutObjPos = "-0.3 1.5 -0.1";
                     let cutObjScale = obj.getAttribute('scale');
                     
                     cutOne.setAttribute('obj-model', {obj: obj.getAttribute('obj-model').obj});
@@ -431,7 +415,7 @@
                     let scene = document.getElementById("obj");//document.querySelector('a-scene');
                     scene.appendChild(cutOne);
 
-                    obj.setAttribute('delete-self', {delete: true});
+                    //obj.setAttribute('delete-self', {delete: true});
                 });
             }
         });
@@ -459,7 +443,8 @@
                             omlette.setAttribute('obj-model', {obj: "#omlette-obj"});
                             omlette.setAttribute('scale', {x: 0.01,y: 0.01, z:0.01});
                             omlette.setAttribute('position', obj.getAttribute('position'));
-                            
+                            omlette.setAttribute('material', {src: "#omlette-img"});
+
                             let scene = document.getElementById("obj");//document.querySelector('a-scene');
                             scene.appendChild(omlette);
 
@@ -473,14 +458,8 @@
         let socket = io();
 
         socket.on('getPoints', function(){
-            
-            //var gameOverEvent = new Event('gameOver');
             let obj = document.getElementById('recipe');
-            //obj.dispatchEvent(gameOverEvent);
-            //console.log(-10 * (obj.getAttribute('recipe').steps - document.getElementById('plate-entity').getAttribute('plate').ingerdients));
             obj.setAttribute('recipe', {points: obj.getAttribute('recipe').points + (-10 * (obj.getAttribute('recipe').steps - document.getElementById('plate-entity').getAttribute('plate').ingerdients))})
-            //obj.setAttribute('recipe', {points: obj.getAttribute('recipe') - (10 * (obj.getAttribute('recipe').steps - document.getElementById('plate-entity').getAttribute('plate').ingerdients))})
-            //objData.points -= 10 * (objData.steps - document.getElementById('plate-entity').getAttribute('plate').ingerdients);
             var score = obj.getAttribute('recipe').points;
             socket.emit("test", score);
         });
@@ -497,9 +476,8 @@
         <img id="mushroom-img" src="assets/materials/mushroom_baseColor.png">
         <img id="counter-img" src="assets/materials/CounterTopTexture.png">
         <img id="stove-img" src="assets/materials/CounterTopStoveTexture.png">
-        
-        <a-asset-item id="kitchen-mtl" src="assets/models/kitchenNEW.mtl"></a-asset-item>
-        <!--<img id="kitchenWalls-img" src="assets/materials/kitchenWalls.png">-->
+        <img id="kitchen-img" src="assets/materials/kitchenColor.png">
+        <img id="omlette-img" src="assets/materials/omlette_baseColor.png">
 
         <a-asset-item id="kitchenTopFront-obj" src="assets/models/kitchenTopFront.obj"></a-asset-item>
         <a-asset-item id="kitchenTopRight-obj" src="assets/models/kitchenTopRight.obj"></a-asset-item>
@@ -588,7 +566,7 @@
                 <a-entity static-body obj-model="obj: #kitchenTopFront-obj;" scale ="0.005 0.005 0.005"></a-entity>
                 <a-entity static-body obj-model="obj: #kitchenTopRight-obj;" scale ="0.005 0.005 0.005"></a-entity>
             </a-entity>
-            <a-obj-model  src="#kitchenWalls-obj"  scale ="0.005 0.005 0.005"></a-obj-model><!--mtl="#kitchen-mtl"-->
+            <a-entity id="kitchenWalls-entity" obj-model="obj: #kitchenWalls-obj;" material="src: #kitchen-img" scale ="0.005 0.005 0.005"></a-entity>
             <a-entity id="stoveBase-entity" obj-model="obj: #stoveBase-obj;" material="src: #stove-img" scale ="0.005 0.005 0.005"></a-entity>
             <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="0.8 1.2 -0.2" material="color: white" scale ="0.02 0.02 0.02"></a-entity><!--"0.5 1.4 -0.5"-->
 
@@ -615,8 +593,9 @@
             <a-entity id="plate-entity" obj-model="obj: #plate-obj" static-body position ="0 0.55 -0.2" scale="0.15 0.15 0.15" plate></a-entity>
             
         </a-entity>
-        <a-entity id="mushroomSpawn-entity" class="mushroom" spawn obj-model="obj: #mushroom-obj;" mixin="objectGrab" position="-0.1 1.5 -0.2" scale ="0.01 0.01 0.01" material="src: #mushroom-img" delete-self ingredient="cookingTemp: 270; cookingTime: 10.0; sizeMin: 1; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-        <a-entity id="bellPepperSpawn-entity" spawn class="bellPepper" mixin="objectGrab" obj-model="obj: #bellPepper-obj;" static-body position="0 1.5 -0.2" scale ="0.01 0.01 0.01" material="src: #bellPepper-img" delete-self ingredient="cookingTemp: 270; cookingTime: 10.0; sizeMin: 1; sizeStart: 1; heatTransfer: 90; cookingImplementID: pan-entity;"></a-entity>
+        
+        <a-entity id="mushroomSpawn-entity" spawn class="mushroom" mixin="objectGrab" obj-model="obj: #mushroom-obj;" static-body position="-0.1 1.5 -0.2" scale ="0.01 0.01 0.01" material="src: #mushroom-img" delete-self ingredient="cookingTemp: 270; cookingTime: 10.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 90; cookingImplementID: pan-entity;"></a-entity>
+        <a-entity id="bellPepperSpawn-entity" spawn class="bellPepper" mixin="objectGrab" obj-model="obj: #bellPepper-obj;" static-body position="0 1.5 -0.2" scale ="0.01 0.01 0.01" material="src: #bellPepper-img" delete-self ingredient="cookingTemp: 270; cookingTime: 10.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 90; cookingImplementID: pan-entity;"></a-entity>
         <a-entity id="timer" text="value: Time Left: ; align: center" scale="0.078 0.078 0.078" position="0 1.284 -0.695" visible="false"></a-entity>
     </a-scene>
     <script>
