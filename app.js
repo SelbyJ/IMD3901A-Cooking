@@ -20,8 +20,8 @@ app.get('/', function(req, res){
 
 var mobile = false;
 var kitchen = false;
-var timerCounter = 30;
-var counterMax = 30;
+var timerCounter = 180;
+var counterMax = 180;
 var score = 0;
 
 app.get('/start_page', function(req, res) {
