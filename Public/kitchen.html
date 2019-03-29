@@ -37,7 +37,7 @@
 
                 cuttingIngredient = ["mushroom-entity", "bellPepper-entity", "egg-entity"];//
 
-                cookingIngredient = ["mushroom-entity", "butter-entity", "egg-entity"];//
+                cookingIngredient = ["butter-entity", "egg-entity"];//
                 //objData.steps = cookingIngredient.length;
 
                 for(i = 0; i < cookingIngredient.length; i++){
@@ -419,7 +419,7 @@
 
                     cutOne.setAttribute('ingredient', {heatTransfer: objData.heatTransfer, cookingTemp: objData.cookingTemp, cookingTime: objData.cookingTime, cookingStartTime: objData.cookingStartTime, sizeMin: objData.sizeMin, sizeStart: objData.sizeStart, cookingImplementID: objData.cookingImplementID});//
 
-                    cutOne.setAttribute('position', {x: 0, y: 2, z: 0});
+                    cutOne.setAttribute('position', {x: -0.3, y: 1, z: -0.1});
 
                     cutOne.setAttribute('mixin', "objectHold");
 
@@ -592,7 +592,7 @@
             <a-entity id="stoveBase-entity" obj-model="obj: #stoveBase-obj;" material="src: #stove-img" scale ="0.005 0.005 0.005"></a-entity>
             <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="0.8 1.2 -0.2" material="color: white" scale ="0.02 0.02 0.02"></a-entity><!--"0.5 1.4 -0.5"-->
 
-            <a-entity id="mushroom-entity" class="mushroom" obj-model="obj: #mushroom-obj;" dynamic-body mixin="objectHold" position="-0.4 1.5 -0.1" scale ="0.01 0.01 0.01" material="src: #mushroom-img" ingredient="cookingTemp: 270; cookingTime: 10.0; sizeMin: 1; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+            
             <a-entity id="egg-entity" class="egg" obj-model="obj: #egg-obj;" dynamic-body mixin="objectHold" position="-0.5 1.5 -0.1" scale ="0.02 0.02 0.02" material="color: white" ingredient="cookingTemp: 270; cookingTime: 10.0; sizeMin: 1; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
             <a-entity id="butter-entity" class="butter" obj-model="obj: #butter-obj;" dynamic-body mixin="objectHold" position="-0.6 1.5 -0.2" scale ="0.01 0.01 0.01" material="color: yellow" ingredient="cookingTemp: 270; cookingTime: 10.0; sizeMin: 1; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
             <a-entity id="cuttingBoard-entity" obj-model="obj: #cuttingBoard-obj" scale="0.01 0.01 0.01" static-body position="-0.4 0.55 -0.1"  material="color: white"></a-entity>
@@ -615,6 +615,7 @@
             <a-entity id="plate-entity" obj-model="obj: #plate-obj" static-body position ="0 0.55 -0.2" scale="0.15 0.15 0.15" plate></a-entity>
             
         </a-entity>
+        <a-entity id="mushroomSpawn-entity" class="mushroom" spawn obj-model="obj: #mushroom-obj;" mixin="objectGrab" position="-0.1 1.5 -0.2" scale ="0.01 0.01 0.01" material="src: #mushroom-img" delete-self ingredient="cookingTemp: 270; cookingTime: 10.0; sizeMin: 1; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
         <a-entity id="bellPepperSpawn-entity" spawn class="bellPepper" mixin="objectGrab" obj-model="obj: #bellPepper-obj;" static-body position="0 1.5 -0.2" scale ="0.01 0.01 0.01" material="src: #bellPepper-img" delete-self ingredient="cookingTemp: 270; cookingTime: 10.0; sizeMin: 1; sizeStart: 1; heatTransfer: 90; cookingImplementID: pan-entity;"></a-entity>
         <a-entity id="timer" text="value: Time Left: ; align: center" scale="0.078 0.078 0.078" position="0 1.284 -0.695" visible="false"></a-entity>
     </a-scene>
