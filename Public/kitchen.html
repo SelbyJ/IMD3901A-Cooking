@@ -35,9 +35,10 @@
                 var objData = this.data;
                 var myVar;//= setInterval(myTimer, 1000);
 
-                cuttingIngredient = ["mushroom-entity", "bellPepper-entity", "egg-entity", "cube-entity"];//
+                cuttingIngredient = ["mushroom-entity", "bellPepper-entity", "egg-entity"];//
+
                 cookingIngredient = ["mushroom-entity", "bellPepper-entity", "butter-entity", "egg-entity"];//
-                objData.steps = cuttingIngredient.length + cookingIngredient.length;
+                objData.steps = cookingIngredient.length;
                 for(i = 0; i < cuttingIngredient.length; i++){
                     document.getElementById(cuttingIngredient[i]).addEventListener('cut', function(e){
                         //console.log("cutting");
@@ -69,10 +70,11 @@
 
                 this.el.addEventListener("gameOver", function(){
                     //Tally points
-
+                    //console.log(10 * (objData.steps - document.getElementById('plate-entity').getAttribute('plate').ingerdients));//.ingerdients
+                    //console.log(objData.points);
                     //steps not taken
+                    /*
                     objData.points -= objData.steps * 10;
-                    
                     for(i = 0; i < cuttingIngredient.length; i++){
                         cuttingIngredientObj = document.getElementById(cuttingIngredient[i]);
                         if(cuttingIngredientObj.getAttribute('ingredient').sizeStart != cuttingIngredientObj.getAttribute('ingredient').sizeMin){
@@ -95,7 +97,7 @@
                             objData.points -= 10;
                         }
                     }
-                    //Context_AF.printGrade();
+                    //Context_AF.printGrade();*/
                 });
             },
 
@@ -201,7 +203,8 @@
                 cookingStartTime: {default: -1},
                 sizeMin: {default: 1},
                 sizeStart: {default: 1},
-                cookingImplementID: {default: "NULL"}
+                cookingImplementID: {default: "NULL"},
+                plate: {default: false}
             },
 
             init: function(){
@@ -211,7 +214,8 @@
                 
                 var d = new Date();
                 var t= d.getTime();
-
+                document.getElementById("recipe").setAttribute('recipe', {steps: document.getElementById("recipe").getAttribute('recipe').steps + (objData.sizeStart/objData.sizeMin)});
+                console.log(document.getElementById("recipe").getAttribute('recipe').steps);//
                 //Collision events
                 obj.addEventListener('collide', function(e){
                     //Cutting events
@@ -233,7 +237,8 @@
                             cutOne.setAttribute('obj-model', {obj: obj.getAttribute('obj-model').obj});
                             cutTwo.setAttribute('obj-model', {obj: obj.getAttribute('obj-model').obj});
 
-                            cutOne.setAttribute('id', this.getAttribute('id'));
+                            cutOne.setAttribute('class', this.getAttribute('class'));
+                            cutTwo.setAttribute('class', this.getAttribute('class'));
 
                             cutOne.setAttribute('ingredient', {heatTransfer: objData.heatTransfer, cookingTemp: objData.cookingTemp, cookingTime: objData.cookingTime, cookingStartTime: objData.cookingStartTime, sizeMin: objData.sizeMin, sizeStart: objData.sizeStart, cookingImplementID: objData.cookingImplementID});//
                             cutTwo.setAttribute('ingredient', {heatTransfer: objData.heatTransfer, cookingTemp: objData.cookingTemp, cookingTime: objData.cookingTime, cookingStartTime: objData.cookingStartTime, sizeMin: objData.sizeMin, sizeStart: objData.sizeStart, cookingImplementID: objData.cookingImplementID});//
@@ -285,6 +290,10 @@
                         }*/
                         objData.heatTransfer = 0;
                     }
+                    if(e.detail.body.el.getAttribute('id') === 'plate-entity'){
+                        Context_AF.checkStats();
+                        obj.setAttribute('delete-self', {delete: true});
+                    }
                 });
             },
 
@@ -312,6 +321,31 @@
                     case 360:
                         this.el.setAttribute("material", {color: "red"});  
                         break;
+                }
+            },
+
+            checkStats: function(){
+                var objData = this.data;
+                if(!objData.plate){
+                    objData.plate = true;
+                    if(objData.cookingTime > 0){
+                        console.log("UNDERCOOKED");
+                        //remove points
+                        document.getElementById('recipe').setAttribute('recipe', {points: document.getElementById('recipe').getAttribute('recipe').points - 10})
+                        console.log(document.getElementById('recipe').getAttribute('recipe').points);
+                    }
+                    if(objData.cookingTime < 0){
+                        console.log("OVERCOOKED");
+                        //remove points
+                        document.getElementById('recipe').setAttribute('recipe', {points: document.getElementById('recipe').getAttribute('recipe').points - 10})
+                        console.log(document.getElementById('recipe').getAttribute('recipe').points);
+                    }
+                    if(objData.sizeStart !== objData.sizeMin){
+                        console.log("WRONG SIZE");
+                        //removePoints
+                        document.getElementById('recipe').setAttribute('recipe', {points: document.getElementById('recipe').getAttribute('recipe').points - 10})
+                        console.log(document.getElementById('recipe').getAttribute('recipe').points);
+                    }
                 }
             }
         }), 
@@ -359,15 +393,25 @@
             });
 
         AFRAME.registerComponent('plate', {
+            schema:{
+                ingerdients: {default: 0},
+                name: {default: ""}
+            },
+
             init: function(){
-                var val = 4;
                 var obj = this.el;
+                var objData = this.data;
                 obj.addEventListener('collide', function(e){
-                    if(e.detail.body.el.getAttribute('ingredient') !== null){
-                        e.detail.body.el.setAttribute('delete-self', {delete: true});
-                        val--;
+                    if(e.detail.body.el.getAttribute('ingredient') !== null && objData.name !== e.detail.body.el.getAttribute('class')){
+                        console.log(e.detail.body.el.getAttribute('class'));
+                        objData.name = e.detail.body.el.getAttribute('class');
+                        objData.ingerdients++;
+                        console.log(objData.ingerdients);
+                        if(objData.ingerdients === document.getElementById('recipe').getAttribute('recipe').steps){
+                            console.log("ALL STEPS DONE");
+                            //spawn omlette
+                        }
                     }
-                    //e.detail.body.el.setAttribute('delete-self', {delete: true});
                     
                 });
             }
@@ -379,7 +423,11 @@
             
             //var gameOverEvent = new Event('gameOver');
             let obj = document.getElementById('recipe');
-            obj.dispatchEvent(gameOverEvent);
+            //obj.dispatchEvent(gameOverEvent);
+            //console.log(-10 * (obj.getAttribute('recipe').steps - document.getElementById('plate-entity').getAttribute('plate').ingerdients));
+            obj.setAttribute('recipe', {points: obj.getAttribute('recipe').points + (-10 * (obj.getAttribute('recipe').steps - document.getElementById('plate-entity').getAttribute('plate').ingerdients))})
+            //obj.setAttribute('recipe', {points: obj.getAttribute('recipe') - (10 * (obj.getAttribute('recipe').steps - document.getElementById('plate-entity').getAttribute('plate').ingerdients))})
+            //objData.points -= 10 * (objData.steps - document.getElementById('plate-entity').getAttribute('plate').ingerdients);
             var score = obj.getAttribute('recipe').points;
             socket.emit("test", score);
         });
@@ -451,7 +499,7 @@
         <!--PLAYER -->
         <a-entity>
             <a-camera positon="0 -10 0">
-                    <a-entity id="timer" text="value: Time Left: ; align: center" position="0 0 -5" visible="false"></a-entity>                
+                                    
             </a-camera>
             <a-entity id="rhand" mixin="touch"
                 vive-controls="hand: right"
@@ -485,14 +533,14 @@
             </a-entity>
             <a-entity obj-model="obj: #kitchenWalls-obj;" scale ="0.01 0.01 0.01"></a-entity>
             <a-entity id="stoveBase-entity" obj-model="obj: #stoveBase-obj;" material="src: #stove-img" scale ="0.01 0.01 0.01"></a-entity>
-            <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="-0.3 5 -0.4" material="color: black" scale ="0.02 0.02 0.02"></a-entity><!--"0.5 1.4 -0.5"-->
+            <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="-3 5 -0.4" material="color: black" scale ="0.02 0.02 0.02"></a-entity><!--"0.5 1.4 -0.5"-->
 
-            <a-entity id="mushroom-entity" obj-model="obj: #mushroom-obj;" dynamic-body mixin="objectHold" position="-0.5 2 -0.4" scale ="0.01 0.01 0.01" material="src: #mushroom-img" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-            <a-entity id="bellPepper-entity" obj-model="obj: #bellPepper-obj;" dynamic-body mixin="objectHold" position="-0.3 2 -0.4" scale ="0.01 0.01 0.01" material="src: #bellPepper-img" ingredient="cookingTemp: 270; cookingTime: 240.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 90; cookingImplementID: pan-entity;"></a-entity>
-            <a-entity id="egg-entity" obj-model="obj: #egg-obj;" dynamic-body mixin="objectHold" position="1.9 2.4 -0.5" scale ="0.02 0.02 0.02" material="color: white" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-            <a-entity id="butter-entity" obj-model="obj: #butter-obj;" dynamic-body mixin="objectHold" position="-0.6 2 -0.4" scale ="0.01 0.01 0.01" material="color: yellow" ingredient="cookingTemp: 270; cookingTime: 240.0; sizeMin: 1; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+            <a-entity id="mushroom-entity" class="mushroom" obj-model="obj: #mushroom-obj;" dynamic-body mixin="objectHold" position="-0.5 2 -0.4" scale ="0.01 0.01 0.01" material="src: #mushroom-img" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+            <a-entity id="bellPepper-entity" class="bellPepper" obj-model="obj: #bellPepper-obj;" dynamic-body mixin="objectHold" position="0 2.1 -0.4" scale ="0.01 0.01 0.01" material="src: #bellPepper-img" ingredient="cookingTemp: 270; cookingTime: 240.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 90; cookingImplementID: pan-entity;"></a-entity>
+            <a-entity id="egg-entity" class="egg" obj-model="obj: #egg-obj;" dynamic-body mixin="objectHold" position="1.9 2.4 -0.5" scale ="0.02 0.02 0.02" material="color: white" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+            <a-entity id="butter-entity" class="butter" obj-model="obj: #butter-obj;" dynamic-body mixin="objectHold" position="-0.6 2 -0.4" scale ="0.01 0.01 0.01" material="color: yellow" ingredient="cookingTemp: 270; cookingTime: 240.0; sizeMin: 1; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
 
-            <a-entity id="cube-entity" mixin="cube" position="-0.9 1.4 -0.4" scale ="0.2 0.2 0.2" material="color: red" ingredient="cookingTemp: 270; cookingTime: 1.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+            
 
             <!--STOVE ENTITY-->
             <a-entity scale ="0.01 0.01 0.01">
@@ -500,9 +548,9 @@
                 <a-entity static-body id="frontRightBurner-entity" obj-model="obj: #frontRightBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
                 <a-entity static-body id="frontLeftBurner-entity" obj-model="obj: #frontLeftBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
                 <a-entity static-body id="backRightBurner-entity" obj-model="obj: #backRightBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
-                <a-entity static-body id="backLeftBurner-entity" obj-model="obj: #backLeftBurner-obj;" material="color: purple" cookingimplement="currentHeat: 90;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
+                <a-entity static-body id="backLeftBurner-entity" obj-model="obj: #backLeftBurner-obj;" material="color: purple" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: true; sendHeat: NULL"></a-entity>
 
-                <a-entity id="backLeftBurnerKnob-entity" obj-model="obj: #backLeftBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 90;maxHeat: 360;recieveHeat: false;sendHeat: backLeftBurner-entity;"></a-entity>
+                <a-entity id="backLeftBurnerKnob-entity" obj-model="obj: #backLeftBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: backLeftBurner-entity;"></a-entity>
                 <a-entity id="backRightBurnerKnob-entity" obj-model="obj: #backRightBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: backRightBurner-entity;"></a-entity>
                 <a-entity id="frontLeftBurnerKnob-entity" obj-model="obj: #frontLeftBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: frontLeftBurner-entity;"></a-entity>
                 <a-entity id="frontRightBurnerKnob-entity" obj-model="obj: #frontRightBurnerKnob-obj;" static-body mixin="objectGrab" material="color: black" cookingimplement="currentHeat: 0;maxHeat: 360;recieveHeat: false;sendHeat: frontRightBurner-entity;"></a-entity>
@@ -512,6 +560,7 @@
             <a-entity id="plate-entity" obj-model="obj: #plate-obj" static-body position ="0 1.1 -0.4" scale="0.2 0.2 0.2" plate></a-entity>
             <a-plane id="plane" static-body position="0 0 0" scale="10 10 10" rotation="-90 0 0" color="#8E8E8E"></a-plane><!---0.2 1.4 -0.4-->
         </a-entity>
+        <a-entity id="timer" text="value: Time Left: ; align: center" scale="0.168 0.168 0.168" position="0.836 1.1 -0.8" visible="false"></a-entity>
     </a-scene>
     <script>
         

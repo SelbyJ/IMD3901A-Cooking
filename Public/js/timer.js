@@ -49,7 +49,7 @@ AFRAME.registerComponent('timer', {
         }else if(object.data.gamePart === "kitchen"){
             window.socket.emit('VRLoaded');
             window.socket.on('timerChanged', function(data){
-                console.log("Time Left: " + data + " seconds");
+                //console.log("Time Left: " + data + " seconds");
 
                 let timer = document.querySelector('#timer');
 
