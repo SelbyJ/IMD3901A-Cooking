@@ -93,21 +93,21 @@ AFRAME.registerComponent('page-flip', {
 
             }else if (object.data.button === 'openClose'){
                 window.selectionState = !window.selectionState;
+
+                let forwardButton = document.querySelector('#forward');
+                let backButton = document.querySelector('#backward');
+                
                 if(window.selectionState == true){
+
+                    forwardButton.setAttribute('visible', 'false');    
+                    backButton.setAttribute('visible', 'false');                                        
+
                     if (window.counter == 1){
                         console.log("Recipe One");
                         let scene = document.querySelector('a-scene');
                         let instructionPage = document.querySelector('#step1');
 
                         instructionPage.setAttribute('visible', 'true');
-
-                        /*let recipe = document.createElement('a-entity');
-                        recipe.setAttribute('geometry', {primitive:'plane', width:8.5, height:11});
-                        recipe.setAttribute('material', {src:'assets/materials/recipeOne_FULL.png'});
-                        recipe.setAttribute('position', {x: 0, y:5, z:-9});     
-                        recipe.setAttribute('id', 'instOne');
-                        
-                        scene.appendChild(recipe);*/
     
                     }else if (window.counter == 2){
                         console.log("Recipe Two");  
@@ -116,14 +116,6 @@ AFRAME.registerComponent('page-flip', {
                         let instructionPage = document.querySelector('#step2');
 
                         instructionPage.setAttribute('visible', 'true');
-
-                        /*let recipe = document.createElement('a-entity');
-                        recipe.setAttribute('geometry', {primitive:'plane', width:8.5, height:11});
-                        recipe.setAttribute('material', {src:'assets/materials/recipeOne_FULL.png'});                        
-                        recipe.setAttribute('position', {x: 0, y:5, z:-9});                              
-                        recipe.setAttribute('id', 'instTwo');                    
-                        
-                        scene.appendChild(recipe);*/
     
                     }else if (window.counter == 3){
                         console.log("Recipe Three");   
@@ -133,25 +125,18 @@ AFRAME.registerComponent('page-flip', {
 
                         instructionPage.setAttribute('visible', 'true');
 
-                        /*let recipe = document.createElement('a-entity');
-                        recipe.setAttribute('geometry', {primitive:'plane', width:8.5, height:11});
-                        recipe.setAttribute('material', {src:'assets/materials/recipeOne_FULL.png'});                       
-                        recipe.setAttribute('position', {x: 0, y:5, z:-9});                         
-                        recipe.setAttribute('id', 'instThree');                    
-                        
-                        scene.appendChild(recipe);*/
                     }
                 }else if(window.selectionState == false){
+
+                    forwardButton.setAttribute('visible', 'true');     
+                    backButton.setAttribute('visible', 'true');                                                            
+
                     if (window.counter == 1){
                         console.log("Close One");
                         let scene = document.querySelector('a-scene');
                         let instructionPage = document.querySelector('#step1');
 
                         instructionPage.setAttribute('visible', 'false');
-
-                        //let recipe = document.querySelector('#instOne');
-    
-                        //scene.removeChild(recipe);
     
                     }else if (window.counter == 2){
                         console.log("Close Two");
@@ -159,10 +144,6 @@ AFRAME.registerComponent('page-flip', {
                         let instructionPage = document.querySelector('#step2');
 
                         instructionPage.setAttribute('visible', 'false');
-
-                        //let recipe = document.querySelector('#instTwo');
-    
-                        //scene.removeChild(recipe);
     
                     }else if (window.counter == 3){
                         console.log("Close Three");
@@ -171,9 +152,6 @@ AFRAME.registerComponent('page-flip', {
 
                         instructionPage.setAttribute('visible', 'false');
 
-                        //let recipe = document.querySelector('#instThree');
-    
-                        //scene.removeChild(recipe);
                     }
                 }
             }
