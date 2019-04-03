@@ -6,7 +6,7 @@ AFRAME.registerComponent('page-flip', {
         const object = this;
         window.counter = 0;
         window.selectionState = false;
-        window.instSelectionState = 0;
+        window.instCounter = 0;
 
         //this.selectionState = false;
         //document.querySelector("#someEntity").components['page-flip'].selectionState = true;
@@ -16,9 +16,10 @@ AFRAME.registerComponent('page-flip', {
                 window.counter++;
                 console.log(counter);
                 if (window.counter == 1){
-                    if(window.selectionState == true){
+                    /*if(window.selectionState == true){
                         window.selectionState = false;
-                    }
+                    }*/
+                    console.log("Selection State: " + window.selectionState.toString());
                     let pagecover = document.querySelector('#front');
                     let childCover = document.querySelector('#childcover');
                     console.log('clicked cover');
@@ -28,9 +29,10 @@ AFRAME.registerComponent('page-flip', {
                     pagecover.setAttribute('position', {x:0, y:0, z:-10.04});
 
                 }else if (window.counter == 2){
-                    if(window.selectionState == true){
+                    /*if(window.selectionState == true){
                         window.selectionState = false;
-                    }
+                    }*/
+                    console.log("Selection State: " + window.selectionState.toString());                    
                     console.log('clicked 1');
                     let page1 = document.querySelector('#pageone');
                     let childOne = document.querySelector('#childone');
@@ -40,10 +42,11 @@ AFRAME.registerComponent('page-flip', {
                     page1.setAttribute('position', {x:0, y:0, z:-10.03});
 
                 }else if (window.counter == 3){
-                    if(window.selectionState == true){
+                    /*if(window.selectionState == true){
                         window.selectionState = false;
-                    }
+                    }*/
                     console.log('clicked 2');
+                    console.log("Selection State: " + window.selectionState.toString());                    
                     let page2 = document.querySelector('#pagetwo');
                     let childTwo = document.querySelector('#childtwo');
                     page2.setAttribute('animation', {property: 'rotation', dir: 'alternate', dur: 1000, easing: 'easeInSine', loop: 'false', to: {x:0, y:-180, z:0}});
@@ -52,10 +55,11 @@ AFRAME.registerComponent('page-flip', {
                     page2.setAttribute('position', {x:0, y:0, z:-10.02});
 
                 }else if (window.counter == 4){
-                    if(window.selectionState == true){
+                    /*if(window.selectionState == true){
                         window.selectionState = false;
-                    }
+                    }*/
                     console.log('clicked 3');
+                    console.log("Selection State: " + window.selectionState.toString());                    
                     let page3 = document.querySelector('#pagethree');
                     let childThree = document.querySelector('#childthree');
                     page3.setAttribute('animation', {property: 'rotation', dir: 'alternate', dur: 1000, easing: 'easeInSine', loop: 'false', to: {x:0, y:-180, z:0}});
@@ -68,9 +72,11 @@ AFRAME.registerComponent('page-flip', {
                 window.counter--;
                 console.log(counter);
                 if(window.counter == 0){
-                    if(window.selectionState == true){
+                    /*if(window.selectionState == true){
                         window.selectionState = false;
-                    }
+                    }*/
+                    console.log("Selection State: " + window.selectionState.toString());
+                    
                     let pagecover = document.querySelector('#front');
                     let coverChild = document.querySelector('#childcover');
                     console.log('clicked cover');
@@ -80,9 +86,11 @@ AFRAME.registerComponent('page-flip', {
                     pagecover.setAttribute('position', {x:0, y:0, z:-10.01});
 
                 }else if (window.counter == 1){
-                    if(window.selectionState == true){
+                    /*if(window.selectionState == true){
                         window.selectionState = false;
-                    }
+                    }*/
+                    console.log("Selection State: " + window.selectionState.toString());
+                    
                     console.log('clicked 1');
                     let page1 = document.querySelector('#pageone');
                     let childOne = document.querySelector('#childone');
@@ -92,9 +100,11 @@ AFRAME.registerComponent('page-flip', {
                     page1.setAttribute('position', {x:0, y:0, z:-10.02});
 
                 }else if (window.counter == 2){
-                    if(window.selectionState == true){
+                    /*if(window.selectionState == true){
                         window.selectionState = false;
-                    }
+                    }*/
+                    console.log("Selection State: " + window.selectionState.toString());
+                    
                     console.log('clicked 2');
                     let page2 = document.querySelector('#pagetwo');
                     let childTwo = document.querySelector('#childtwo');
@@ -104,9 +114,11 @@ AFRAME.registerComponent('page-flip', {
                     page2.setAttribute('position', {x:0, y:0, z:-10.03});
 
                 }else if (window.counter == 3){
-                    if(window.selectionState == true){
+                    /*if(window.selectionState == true){
                         window.selectionState = false;
-                    }
+                    }*/
+                    console.log("Selection State: " + window.selectionState.toString());
+                    
                     console.log('clicked 3');
                     let page3 = document.querySelector('#pagethree');
                     let childThree = document.querySelector('#childthree');
@@ -118,6 +130,7 @@ AFRAME.registerComponent('page-flip', {
 
             }else if (object.data.button === 'openClose'){
                 window.selectionState = !window.selectionState;
+                console.log("Selection State: " + window.selectionState.toString());                
 
                 let forwardButton = document.querySelector('#forward');
                 let backButton = document.querySelector('#backward');
@@ -137,6 +150,9 @@ AFRAME.registerComponent('page-flip', {
                         let instructionPage5 = document.querySelector('#step5');                        
 
                         instructionPage1.setAttribute('visible', 'true');
+                        
+                        forwardButton.setAttribute('class', ' ');
+                        backButton.setAttribute('class', ' ');                        
     
                     }else if (window.counter == 2){
                         console.log("Recipe Two");  
@@ -149,6 +165,9 @@ AFRAME.registerComponent('page-flip', {
                         let instructionPage5 = document.querySelector('#step5');
 
                         instructionPage1.setAttribute('visible', 'true');
+
+                        forwardButton.setAttribute('class', ' ');
+                        backButton.setAttribute('class', ' ');                                                                        
     
                     }else if (window.counter == 3){
                         console.log("Recipe Three");   
@@ -160,7 +179,12 @@ AFRAME.registerComponent('page-flip', {
                         let instructionPage4 = document.querySelector('#step4');
                         let instructionPage5 = document.querySelector('#step5');
 
-                        instructionPage11.setAttribute('visible', 'true');
+                        instructionPage1.setAttribute('visible', 'true');
+                        
+                        forwardButton.setAttribute('class', ' ');
+                        backButton.setAttribute('class', ' ');
+                        
+                        console.log(instructionPage1);
 
                     }
                 }else if(window.selectionState == false){
@@ -178,6 +202,9 @@ AFRAME.registerComponent('page-flip', {
                         let instructionPage5 = document.querySelector('#step5');
 
                         instructionPage1.setAttribute('visible', 'false');
+                        
+                        forwardButton.setAttribute('class', 'clickable');
+                        backButton.setAttribute('class', 'clickable');
     
                     }else if (window.counter == 2){
                         console.log("Close Two");
@@ -189,6 +216,9 @@ AFRAME.registerComponent('page-flip', {
                         let instructionPage5 = document.querySelector('#step5');
 
                         instructionPage1.setAttribute('visible', 'false');
+                        
+                        forwardButton.setAttribute('class', 'clickable');
+                        backButton.setAttribute('class', 'clickable');
     
                     }else if (window.counter == 3){
                         console.log("Close Three");
@@ -200,6 +230,9 @@ AFRAME.registerComponent('page-flip', {
                         let instructionPage5 = document.querySelector('#step5');
 
                         instructionPage1.setAttribute('visible', 'false');
+                        
+                        forwardButton.setAttribute('class', 'clickable');
+                        backButton.setAttribute('class', 'clickable');                       
 
                     }
                 }
