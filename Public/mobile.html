@@ -39,17 +39,17 @@
             <!--loaded in camera manually and added wasd controls so you can move around the screen-->
             <a-entity>
                 <a-camera positon="0 3 0">
-                    <a-entity id="timer" text="value: Time Left: ; align: center" position="0 0 -5" visible="false"></a-entity>
+                    <a-entity id="timer" text="value: Time Left: ; align: center" position="-2.8 4 -5" visible="false"></a-entity>
                 </a-camera>
                 <a-entity cursor="fuse:true; fuseTimeout:500; rayOrigin: mouse"></a-entity>
             </a-entity>
 
             <!--The entities that will hold the instruction pages-->
-            <a-entity id='step1' geometry="primitive: plane; width: 8.5; height: 11;" material="src: assets/materials/recipeOne_FULL.png" position="0 5 -9" visible ='false'></a-entity>
-            <a-entity id='step2' geometry="primitive: plane; width: 8.5; height: 11;" material="src: assets/materials/recipeOne_FULL.png" position="0 5 -9" visible ='false'></a-entity>
-            <a-entity id='step3' geometry="primitive: plane; width: 8.5; height: 11;" material="src: assets/materials/recipeOne_FULL.png" position="0 5 -9" visible ='false'></a-entity>
-            <!--<a-entity id='step4' geometry="primitive: plane; width: 8.5; height: 11;" material="src: assets/materials/recipeOne_FULL.png" position="0 5 -9" visible ='false'></a-entity>
-            <a-entity id='step5' geometry="primitive: plane; width: 8.5; height: 11;" material="src: assets/materials/recipeOne_FULL.png" position="0 5 -9" visible ='false'></a-entity>-->                            
+            <a-entity id='step1' geometry="primitive: plane; width: 8.5; height: 11;" material="src: assets/materials/PeperMushStep1.png" position="0 5 -9" visible ='false'></a-entity>
+            <a-entity id='step2' geometry="primitive: plane; width: 8.5; height: 11;" material="src: assets/materials/PeperMushStep2.png" position="0 5 -9" visible ='false'></a-entity>
+            <a-entity id='step3' geometry="primitive: plane; width: 8.5; height: 11;" material="src: assets/materials/PeperMushStep3.png" position="0 5 -9" visible ='false'></a-entity>
+            <a-entity id='step4' geometry="primitive: plane; width: 8.5; height: 11;" material="src: assets/materials/PeperMushStep4.png" position="0 5 -9" visible ='false'></a-entity>
+            <a-entity id='step5' geometry="primitive: plane; width: 8.5; height: 11;" material="src: assets/materials/PeperMushStep5.png" position="0 5 -9" visible ='false'></a-entity>                        
             
             <!--entites that hold the sound so that they can be called upon in the component that controls when the shapes are selected-->
             <a-entity id="buttonSound" sound="src:#button-click"></a-entity>            
@@ -77,15 +77,24 @@
             <!--making a pretty background. Code from Anthony's examples-->
             <a-entity id="background" geometry="primitive:sphere; radius:500" material="shader:flat; src:#backgroundImg; side:back; height:1078; width:1078"></a-entity>
 
-            <a-entity page-flip="button: backward" obj-model="obj: #frontButton" position="-9 5 -10" material="src: #buttonMat">
+            <a-entity id="backward" page-flip="button: backward" obj-model="obj: #frontButton" position="-9 5 -10" material="src: #buttonMat">
                 <!--<a-text value="Forward" color="black" position="-2 2 0" width="20" height="20"></a-text>-->
             </a-entity>
-            <a-entity page-flip="button: forward" obj-model="obj: #backButton" position="8 5 -10" material="src: #buttonMat">
+            <a-entity id="forward" page-flip="button: forward" obj-model="obj: #backButton" position="8 5 -10" material="src: #buttonMat">
                 <!--<a-text value="Backward" color="black" position="-0.5 2 0" width="20" height="20"></a-text>-->
             </a-entity>
+
             <a-entity page-flip="button: openClose" geometry="primitive: box; width: 1; height:1; depth:0.01" position="0 -3 -10" material="color: #740a0a">
                 <a-text value="Open/Close Instructions" color="black" position="-4.6 1 0" width="20" height="20"></a-text>
             </a-entity>
+
+            <a-entity id="backwardInst" page-flip="button: backward" obj-model="obj: #frontButton" position="-4.5 5 -9" material="src: #buttonMat" visible='false'>
+                <!--<a-text value="Forward" color="black" position="-2 2 0" width="20" height="20"></a-text>-->
+            </a-entity>
+            <a-entity id="forwardInst" page-flip="button: forward" obj-model="obj: #backButton" position="4.5 5 -9" material="src: #buttonMat" visible='false'>
+                <!--<a-text value="Backward" color="black" position="-0.5 2 0" width="20" height="20"></a-text>-->
+            </a-entity>
+            
         </a-scene>
     </body>
 </html>
