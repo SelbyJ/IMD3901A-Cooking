@@ -105,7 +105,11 @@ AFRAME.registerComponent('page-flip', {
                     if (window.counter == 1){
                         console.log("Recipe One");
                         let scene = document.querySelector('a-scene');
-                        let instructionPage = document.querySelector('#step1');
+                        let instructionPage1 = document.querySelector('#step1');
+                        let instructionPage2 = document.querySelector('#step2');
+                        let instructionPage3 = document.querySelector('#step3');
+                        let instructionPage4 = document.querySelector('#step4');
+                        let instructionPage5 = document.querySelector('#step5');                        
 
                         instructionPage.setAttribute('visible', 'true');
     
@@ -113,7 +117,11 @@ AFRAME.registerComponent('page-flip', {
                         console.log("Recipe Two");  
                         
                         let scene = document.querySelector('a-scene');
-                        let instructionPage = document.querySelector('#step2');
+                        let instructionPage1 = document.querySelector('#step1');
+                        let instructionPage2 = document.querySelector('#step2');
+                        let instructionPage3 = document.querySelector('#step3');
+                        let instructionPage4 = document.querySelector('#step4');
+                        let instructionPage5 = document.querySelector('#step5');
 
                         instructionPage.setAttribute('visible', 'true');
     
@@ -121,7 +129,11 @@ AFRAME.registerComponent('page-flip', {
                         console.log("Recipe Three");   
                         
                         let scene = document.querySelector('a-scene');
-                        let instructionPage = document.querySelector('#step3');
+                        let instructionPage1 = document.querySelector('#step1');
+                        let instructionPage2 = document.querySelector('#step2');
+                        let instructionPage3 = document.querySelector('#step3');
+                        let instructionPage4 = document.querySelector('#step4');
+                        let instructionPage5 = document.querySelector('#step5');
 
                         instructionPage.setAttribute('visible', 'true');
 
@@ -134,21 +146,33 @@ AFRAME.registerComponent('page-flip', {
                     if (window.counter == 1){
                         console.log("Close One");
                         let scene = document.querySelector('a-scene');
-                        let instructionPage = document.querySelector('#step1');
+                        let instructionPage1 = document.querySelector('#step1');
+                        let instructionPage2 = document.querySelector('#step2');
+                        let instructionPage3 = document.querySelector('#step3');
+                        let instructionPage4 = document.querySelector('#step4');
+                        let instructionPage5 = document.querySelector('#step5');
 
                         instructionPage.setAttribute('visible', 'false');
     
                     }else if (window.counter == 2){
                         console.log("Close Two");
                         let scene = document.querySelector('a-scene');
-                        let instructionPage = document.querySelector('#step2');
+                        let instructionPage1 = document.querySelector('#step1');
+                        let instructionPage2 = document.querySelector('#step2');
+                        let instructionPage3 = document.querySelector('#step3');
+                        let instructionPage4 = document.querySelector('#step4');
+                        let instructionPage5 = document.querySelector('#step5');
 
                         instructionPage.setAttribute('visible', 'false');
     
                     }else if (window.counter == 3){
                         console.log("Close Three");
                         let scene = document.querySelector('a-scene');
-                        let instructionPage = document.querySelector('#step3');
+                        let instructionPage1 = document.querySelector('#step1');
+                        let instructionPage2 = document.querySelector('#step2');
+                        let instructionPage3 = document.querySelector('#step3');
+                        let instructionPage4 = document.querySelector('#step4');
+                        let instructionPage5 = document.querySelector('#step5');
 
                         instructionPage.setAttribute('visible', 'false');
 
