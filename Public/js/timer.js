@@ -18,7 +18,7 @@ AFRAME.registerComponent('timer', {
 
                 let timer = document.querySelector('#timer');
 
-                timer.setAttribute('text', {value: "Time Left: " + data.toString() + " seconds", color: 'pink', width: 10, height: 10, align: 'center'});
+                timer.setAttribute('text', {value: "Time Left: " + data.toString() + " seconds", color: 'pink', width: 5, height: 5, align: 'center'});
                 timer.setAttribute('visible', 'true');
                 
                 /*let camera = document.querySelector('a-camera');
