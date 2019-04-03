@@ -1,6 +1,6 @@
 //Maya ASCII 2018ff08 scene
 //Name: kenviro.ma
-//Last modified: Fri, Mar 29, 2019 04:21:52 PM
+//Last modified: Fri, Mar 29, 2019 04:46:09 PM
 //Codeset: 1252
 requires maya "2018ff08";
 requires -nodeType "aiOptions" -nodeType "aiAOVDriver" -nodeType "aiAOVFilter" -nodeType "aiImage"
@@ -15,8 +15,8 @@ fileInfo "osv" "Microsoft Windows 8 Enterprise Edition, 64-bit  (Build 9200)\n";
 fileInfo "license" "student";
 createNode transform -s -n "persp";
 	rename -uid "3C1FD397-47E5-E502-FAE0-65B4A53BDF7C";
-	setAttr ".t" -type "double3" -2338.121477658925 649.43845298645056 1119.5603218924098 ;
-	setAttr ".r" -type "double3" -10.53835355451549 11452.599999997417 2.0690823529899052e-15 ;
+	setAttr ".t" -type "double3" -2051.2828669891869 1736.9533740308077 -427.24584756786362 ;
+	setAttr ".r" -type "double3" -34.538353554506521 11418.199999997401 0 ;
 createNode camera -s -n "perspShape" -p "persp";
 	rename -uid "18CC24EB-4AD6-3CC7-3F71-D68D4866B3DB";
 	setAttr -k off ".v";
