@@ -97,59 +97,70 @@ AFRAME.registerComponent('page-flip', {
                     if (window.counter == 1){
                         console.log("Recipe One");
                         let scene = document.querySelector('a-scene');
-                        let recipe = document.createElement('a-entity');
+
+
+                        /*let recipe = document.createElement('a-entity');
                         recipe.setAttribute('geometry', {primitive:'plane', width:8.5, height:11});
                         recipe.setAttribute('material', {src:'assets/materials/recipeOne_FULL.png'});
                         recipe.setAttribute('position', {x: 0, y:5, z:-9});     
                         recipe.setAttribute('id', 'instOne');
                         
-                        scene.appendChild(recipe);
+                        scene.appendChild(recipe);*/
     
                     }else if (window.counter == 2){
                         console.log("Recipe Two");  
                         
                         let scene = document.querySelector('a-scene');
-                        let recipe = document.createElement('a-entity');
+
+
+                        /*let recipe = document.createElement('a-entity');
                         recipe.setAttribute('geometry', {primitive:'plane', width:8.5, height:11});
                         recipe.setAttribute('material', {src:'assets/materials/recipeOne_FULL.png'});                        
                         recipe.setAttribute('position', {x: 0, y:5, z:-9});                              
                         recipe.setAttribute('id', 'instTwo');                    
                         
-                        scene.appendChild(recipe);
+                        scene.appendChild(recipe);*/
     
                     }else if (window.counter == 3){
                         console.log("Recipe Three");   
                         
                         let scene = document.querySelector('a-scene');
-                        let recipe = document.createElement('a-entity');
+
+
+                        /*let recipe = document.createElement('a-entity');
                         recipe.setAttribute('geometry', {primitive:'plane', width:8.5, height:11});
                         recipe.setAttribute('material', {src:'assets/materials/recipeOne_FULL.png'});                       
                         recipe.setAttribute('position', {x: 0, y:5, z:-9});                         
                         recipe.setAttribute('id', 'instThree');                    
                         
-                        scene.appendChild(recipe);
+                        scene.appendChild(recipe);*/
                     }
                 }else if(window.selectionState == false){
                     if (window.counter == 1){
                         console.log("Close One");
                         let scene = document.querySelector('a-scene');
-                        let recipe = document.querySelector('#instOne');
+
+
+                        //let recipe = document.querySelector('#instOne');
     
-                        scene.removeChild(recipe);
+                        //scene.removeChild(recipe);
     
                     }else if (window.counter == 2){
                         console.log("Close Two");
                         let scene = document.querySelector('a-scene');
-                        let recipe = document.querySelector('#instTwo');
+
+
+                        //let recipe = document.querySelector('#instTwo');
     
-                        scene.removeChild(recipe);
+                        //scene.removeChild(recipe);
     
                     }else if (window.counter == 3){
                         console.log("Close Three");
                         let scene = document.querySelector('a-scene');
-                        let recipe = document.querySelector('#instThree');
+                        
+                        //let recipe = document.querySelector('#instThree');
     
-                        scene.removeChild(recipe);
+                        //scene.removeChild(recipe);
                     }
                 }
             }
