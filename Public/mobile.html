@@ -44,12 +44,12 @@
                 <a-entity cursor="fuse:true; fuseTimeout:500; rayOrigin: mouse"></a-entity>
             </a-entity>
 
-            <!--The entities that will hold the pages-->
+            <!--The entities that will hold the instruction pages-->
             <a-entity id='step1' geometry="primitive: plane; width: 8.5; height: 11;" material="src: assets/materials/recipeOne_FULL.png" position="0 5 -9" visible ='false'></a-entity>
-            <a-entity id='step2' visible ='false'></a-entity>
-            <a-entity id='step3' visible ='false'></a-entity>
-            <a-entity id='step4' visible ='false'></a-entity>
-            <a-entity id='step5' visible ='false'></a-entity>                            
+            <a-entity id='step2' geometry="primitive: plane; width: 8.5; height: 11;" material="src: assets/materials/recipeOne_FULL.png" position="0 5 -9" visible ='false'></a-entity>
+            <a-entity id='step3' geometry="primitive: plane; width: 8.5; height: 11;" material="src: assets/materials/recipeOne_FULL.png" position="0 5 -9" visible ='false'></a-entity>
+            <!--<a-entity id='step4' geometry="primitive: plane; width: 8.5; height: 11;" material="src: assets/materials/recipeOne_FULL.png" position="0 5 -9" visible ='false'></a-entity>
+            <a-entity id='step5' geometry="primitive: plane; width: 8.5; height: 11;" material="src: assets/materials/recipeOne_FULL.png" position="0 5 -9" visible ='false'></a-entity>-->                            
             
             <!--entites that hold the sound so that they can be called upon in the component that controls when the shapes are selected-->
             <a-entity id="buttonSound" sound="src:#button-click"></a-entity>            

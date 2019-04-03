@@ -97,7 +97,9 @@ AFRAME.registerComponent('page-flip', {
                     if (window.counter == 1){
                         console.log("Recipe One");
                         let scene = document.querySelector('a-scene');
+                        let instructionPage = document.querySelector('#step1');
 
+                        instructionPage.setAttribute('visible', 'true');
 
                         /*let recipe = document.createElement('a-entity');
                         recipe.setAttribute('geometry', {primitive:'plane', width:8.5, height:11});
@@ -111,7 +113,9 @@ AFRAME.registerComponent('page-flip', {
                         console.log("Recipe Two");  
                         
                         let scene = document.querySelector('a-scene');
+                        let instructionPage = document.querySelector('#step2');
 
+                        instructionPage.setAttribute('visible', 'true');
 
                         /*let recipe = document.createElement('a-entity');
                         recipe.setAttribute('geometry', {primitive:'plane', width:8.5, height:11});
@@ -125,7 +129,9 @@ AFRAME.registerComponent('page-flip', {
                         console.log("Recipe Three");   
                         
                         let scene = document.querySelector('a-scene');
+                        let instructionPage = document.querySelector('#step3');
 
+                        instructionPage.setAttribute('visible', 'true');
 
                         /*let recipe = document.createElement('a-entity');
                         recipe.setAttribute('geometry', {primitive:'plane', width:8.5, height:11});
@@ -139,7 +145,9 @@ AFRAME.registerComponent('page-flip', {
                     if (window.counter == 1){
                         console.log("Close One");
                         let scene = document.querySelector('a-scene');
+                        let instructionPage = document.querySelector('#step1');
 
+                        instructionPage.setAttribute('visible', 'false');
 
                         //let recipe = document.querySelector('#instOne');
     
@@ -148,7 +156,9 @@ AFRAME.registerComponent('page-flip', {
                     }else if (window.counter == 2){
                         console.log("Close Two");
                         let scene = document.querySelector('a-scene');
+                        let instructionPage = document.querySelector('#step2');
 
+                        instructionPage.setAttribute('visible', 'false');
 
                         //let recipe = document.querySelector('#instTwo');
     
@@ -157,7 +167,10 @@ AFRAME.registerComponent('page-flip', {
                     }else if (window.counter == 3){
                         console.log("Close Three");
                         let scene = document.querySelector('a-scene');
-                        
+                        let instructionPage = document.querySelector('#step3');
+
+                        instructionPage.setAttribute('visible', 'false');
+
                         //let recipe = document.querySelector('#instThree');
     
                         //scene.removeChild(recipe);
