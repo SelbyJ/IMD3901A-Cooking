@@ -16,10 +16,7 @@ AFRAME.registerComponent('page-flip', {
                 window.counter++;
                 console.log(counter);
                 if (window.counter == 1){
-                    /*if(window.selectionState == true){
-                        window.selectionState = false;
-                    }*/
-                    console.log("Selection State: " + window.selectionState.toString());
+                    
                     let pagecover = document.querySelector('#front');
                     let childCover = document.querySelector('#childcover');
                     console.log('clicked cover');
@@ -29,10 +26,7 @@ AFRAME.registerComponent('page-flip', {
                     pagecover.setAttribute('position', {x:0, y:0, z:-10.04});
 
                 }else if (window.counter == 2){
-                    /*if(window.selectionState == true){
-                        window.selectionState = false;
-                    }*/
-                    console.log("Selection State: " + window.selectionState.toString());                    
+                                        
                     console.log('clicked 1');
                     let page1 = document.querySelector('#pageone');
                     let childOne = document.querySelector('#childone');
@@ -42,11 +36,8 @@ AFRAME.registerComponent('page-flip', {
                     page1.setAttribute('position', {x:0, y:0, z:-10.03});
 
                 }else if (window.counter == 3){
-                    /*if(window.selectionState == true){
-                        window.selectionState = false;
-                    }*/
-                    console.log('clicked 2');
-                    console.log("Selection State: " + window.selectionState.toString());                    
+                    
+                    console.log('clicked 2');                  
                     let page2 = document.querySelector('#pagetwo');
                     let childTwo = document.querySelector('#childtwo');
                     page2.setAttribute('animation', {property: 'rotation', dir: 'alternate', dur: 1000, easing: 'easeInSine', loop: 'false', to: {x:0, y:-180, z:0}});
@@ -55,11 +46,8 @@ AFRAME.registerComponent('page-flip', {
                     page2.setAttribute('position', {x:0, y:0, z:-10.02});
 
                 }else if (window.counter == 4){
-                    /*if(window.selectionState == true){
-                        window.selectionState = false;
-                    }*/
-                    console.log('clicked 3');
-                    console.log("Selection State: " + window.selectionState.toString());                    
+                    
+                    console.log('clicked 3');                    
                     let page3 = document.querySelector('#pagethree');
                     let childThree = document.querySelector('#childthree');
                     page3.setAttribute('animation', {property: 'rotation', dir: 'alternate', dur: 1000, easing: 'easeInSine', loop: 'false', to: {x:0, y:-180, z:0}});
@@ -68,14 +56,12 @@ AFRAME.registerComponent('page-flip', {
                     page3.setAttribute('position', {x:0, y:0, z:-10.01});
                 }
 
-            }else if(object.data.button === 'backward'){
+            }
+            
+            if(object.data.button === 'backward'){
                 window.counter--;
                 console.log(counter);
                 if(window.counter == 0){
-                    /*if(window.selectionState == true){
-                        window.selectionState = false;
-                    }*/
-                    console.log("Selection State: " + window.selectionState.toString());
                     
                     let pagecover = document.querySelector('#front');
                     let coverChild = document.querySelector('#childcover');
@@ -86,10 +72,6 @@ AFRAME.registerComponent('page-flip', {
                     pagecover.setAttribute('position', {x:0, y:0, z:-10.01});
 
                 }else if (window.counter == 1){
-                    /*if(window.selectionState == true){
-                        window.selectionState = false;
-                    }*/
-                    console.log("Selection State: " + window.selectionState.toString());
                     
                     console.log('clicked 1');
                     let page1 = document.querySelector('#pageone');
@@ -100,10 +82,6 @@ AFRAME.registerComponent('page-flip', {
                     page1.setAttribute('position', {x:0, y:0, z:-10.02});
 
                 }else if (window.counter == 2){
-                    /*if(window.selectionState == true){
-                        window.selectionState = false;
-                    }*/
-                    console.log("Selection State: " + window.selectionState.toString());
                     
                     console.log('clicked 2');
                     let page2 = document.querySelector('#pagetwo');
@@ -114,10 +92,6 @@ AFRAME.registerComponent('page-flip', {
                     page2.setAttribute('position', {x:0, y:0, z:-10.03});
 
                 }else if (window.counter == 3){
-                    /*if(window.selectionState == true){
-                        window.selectionState = false;
-                    }*/
-                    console.log("Selection State: " + window.selectionState.toString());
                     
                     console.log('clicked 3');
                     let page3 = document.querySelector('#pagethree');
@@ -128,113 +102,194 @@ AFRAME.registerComponent('page-flip', {
                     page3.setAttribute('position', {x:0, y:0, z:-10.04});
                 }
 
-            }else if (object.data.button === 'openClose'){
-                window.selectionState = !window.selectionState;
-                console.log("Selection State: " + window.selectionState.toString());                
+            }
+            
+            if (object.data.button === 'openClose'){
+                window.selectionState = !window.selectionState;              
 
                 let forwardButton = document.querySelector('#forward');
                 let backButton = document.querySelector('#backward');
+
+                let backInstButton = document.querySelector('#backwardInst');
+                let forwardInstButton = document.querySelector('#forwardInst');
+
+                let instructionPage1 = document.querySelector('#step1');
+                let instructionPage2 = document.querySelector('#step2');
+                let instructionPage3 = document.querySelector('#step3');
+                let instructionPage4 = document.querySelector('#step4');
+                let instructionPage5 = document.querySelector('#step5');
                 
                 if(window.selectionState == true){
 
                     forwardButton.setAttribute('visible', 'false');    
-                    backButton.setAttribute('visible', 'false');                                        
+                    backButton.setAttribute('visible', 'false');  
+                    
+                    forwardButton.setAttribute('class', ' ');
+                    backButton.setAttribute('class', ' ');
+
+                    backInstButton.setAttribute('visible', 'true');
+                    forwardInstButton.setAttribute('visible', 'true');
+
+                    backInstButton.setAttribute('class', 'clickable');
+                    forwardInstButton.setAttribute('class', 'clickable');
 
                     if (window.counter == 1){
-                        console.log("Recipe One");
-                        let scene = document.querySelector('a-scene');
-                        let instructionPage1 = document.querySelector('#step1');
-                        let instructionPage2 = document.querySelector('#step2');
-                        let instructionPage3 = document.querySelector('#step3');
-                        let instructionPage4 = document.querySelector('#step4');
-                        let instructionPage5 = document.querySelector('#step5');                        
+                        console.log("Recipe One");                       
 
                         instructionPage1.setAttribute('visible', 'true');
+                        window.instCounter = 0;
                         
-                        forwardButton.setAttribute('class', ' ');
-                        backButton.setAttribute('class', ' ');                        
-    
                     }else if (window.counter == 2){
                         console.log("Recipe Two");  
-                        
-                        let scene = document.querySelector('a-scene');
-                        let instructionPage1 = document.querySelector('#step1');
-                        let instructionPage2 = document.querySelector('#step2');
-                        let instructionPage3 = document.querySelector('#step3');
-                        let instructionPage4 = document.querySelector('#step4');
-                        let instructionPage5 = document.querySelector('#step5');
 
-                        instructionPage1.setAttribute('visible', 'true');
-
-                        forwardButton.setAttribute('class', ' ');
-                        backButton.setAttribute('class', ' ');                                                                        
+                        instructionPage1.setAttribute('visible', 'true');   
+                        window.instCounter = 0;
     
                     }else if (window.counter == 3){
                         console.log("Recipe Three");   
-                        
-                        let scene = document.querySelector('a-scene');
-                        let instructionPage1 = document.querySelector('#step1');
-                        let instructionPage2 = document.querySelector('#step2');
-                        let instructionPage3 = document.querySelector('#step3');
-                        let instructionPage4 = document.querySelector('#step4');
-                        let instructionPage5 = document.querySelector('#step5');
 
                         instructionPage1.setAttribute('visible', 'true');
-                        
-                        forwardButton.setAttribute('class', ' ');
-                        backButton.setAttribute('class', ' ');
-                        
-                        console.log(instructionPage1);
+                        window.instCounter = 0;
 
                     }
-                }else if(window.selectionState == false){
+                }
+                
+                if(window.selectionState == false){
 
                     forwardButton.setAttribute('visible', 'true');     
-                    backButton.setAttribute('visible', 'true');                                                            
+                    backButton.setAttribute('visible', 'true');  
+                    
+                    forwardButton.setAttribute('class', 'clickable');
+                    backButton.setAttribute('class', 'clickable');
+
+                    backInstButton.setAttribute('visible', 'false');
+                    forwardInstButton.setAttribute('visible', 'false');
+
+                    backInstButton.setAttribute('class', ' ');
+                    forwardInstButton.setAttribute('class', ' ');
 
                     if (window.counter == 1){
                         console.log("Close One");
-                        let scene = document.querySelector('a-scene');
-                        let instructionPage1 = document.querySelector('#step1');
-                        let instructionPage2 = document.querySelector('#step2');
-                        let instructionPage3 = document.querySelector('#step3');
-                        let instructionPage4 = document.querySelector('#step4');
-                        let instructionPage5 = document.querySelector('#step5');
 
                         instructionPage1.setAttribute('visible', 'false');
-                        
-                        forwardButton.setAttribute('class', 'clickable');
-                        backButton.setAttribute('class', 'clickable');
+                        instructionPage2.setAttribute('visible', 'false');
+                        instructionPage3.setAttribute('visible', 'false');
+                        instructionPage4.setAttribute('visible', 'false');
+                        instructionPage5.setAttribute('visible', 'false');
+
     
                     }else if (window.counter == 2){
                         console.log("Close Two");
-                        let scene = document.querySelector('a-scene');
-                        let instructionPage1 = document.querySelector('#step1');
-                        let instructionPage2 = document.querySelector('#step2');
-                        let instructionPage3 = document.querySelector('#step3');
-                        let instructionPage4 = document.querySelector('#step4');
-                        let instructionPage5 = document.querySelector('#step5');
 
                         instructionPage1.setAttribute('visible', 'false');
-                        
-                        forwardButton.setAttribute('class', 'clickable');
-                        backButton.setAttribute('class', 'clickable');
+                        instructionPage2.setAttribute('visible', 'false');
+                        instructionPage3.setAttribute('visible', 'false');
+                        instructionPage4.setAttribute('visible', 'false');
+                        instructionPage5.setAttribute('visible', 'false');
     
                     }else if (window.counter == 3){
                         console.log("Close Three");
-                        let scene = document.querySelector('a-scene');
-                        let instructionPage1 = document.querySelector('#step1');
-                        let instructionPage2 = document.querySelector('#step2');
-                        let instructionPage3 = document.querySelector('#step3');
-                        let instructionPage4 = document.querySelector('#step4');
-                        let instructionPage5 = document.querySelector('#step5');
 
-                        instructionPage1.setAttribute('visible', 'false');
-                        
-                        forwardButton.setAttribute('class', 'clickable');
-                        backButton.setAttribute('class', 'clickable');                       
-
+                        instructionPage1.setAttribute('visible', 'false');                       
+                        instructionPage2.setAttribute('visible', 'false');
+                        instructionPage3.setAttribute('visible', 'false');
+                        instructionPage4.setAttribute('visible', 'false');
+                        instructionPage5.setAttribute('visible', 'false');
                     }
+                }
+            }
+            
+            if (object.data.button === 'instForward'){
+                window.instCounter++;
+                //console.log("Inst Counter " + windows.instCounter.toString());
+
+                let instructionPage1 = document.querySelector('#step1');
+                let instructionPage2 = document.querySelector('#step2');
+                let instructionPage3 = document.querySelector('#step3');
+                let instructionPage4 = document.querySelector('#step4');
+                let instructionPage5 = document.querySelector('#step5');
+
+                if(window.instCounter == 1){
+                    instructionPage1.setAttribute('visible', 'false');                       
+                    instructionPage2.setAttribute('visible', 'true');
+                    instructionPage3.setAttribute('visible', 'false');
+                    instructionPage4.setAttribute('visible', 'false');
+                    instructionPage5.setAttribute('visible', 'false');
+
+                }else if(window.instCounter == 2){
+                    instructionPage1.setAttribute('visible', 'false');                       
+                    instructionPage2.setAttribute('visible', 'false');
+                    instructionPage3.setAttribute('visible', 'true');
+                    instructionPage4.setAttribute('visible', 'false');
+                    instructionPage5.setAttribute('visible', 'false');
+
+                }else if(window.instCounter == 3){
+                    instructionPage1.setAttribute('visible', 'false');                       
+                    instructionPage2.setAttribute('visible', 'false');
+                    instructionPage3.setAttribute('visible', 'false');
+                    instructionPage4.setAttribute('visible', 'true');
+                    instructionPage5.setAttribute('visible', 'false');
+
+                }else if(window.instCounter == 4){
+                    instructionPage1.setAttribute('visible', 'false');                       
+                    instructionPage2.setAttribute('visible', 'false');
+                    instructionPage3.setAttribute('visible', 'false');
+                    instructionPage4.setAttribute('visible', 'true');
+                    instructionPage5.setAttribute('visible', 'false');
+
+                }else if(window.instCounter == 5){
+                    instructionPage1.setAttribute('visible', 'false');                       
+                    instructionPage2.setAttribute('visible', 'false');
+                    instructionPage3.setAttribute('visible', 'false');
+                    instructionPage4.setAttribute('visible', 'false');
+                    instructionPage5.setAttribute('visible', 'true');
+                }
+            }
+            
+            if (object.data.button === 'instBackward'){
+                window.instCounter--;
+                //console.log("Inst Counter " + windows.instCounter.toString());
+
+                let instructionPage1 = document.querySelector('#step1');
+                let instructionPage2 = document.querySelector('#step2');
+                let instructionPage3 = document.querySelector('#step3');
+                let instructionPage4 = document.querySelector('#step4');
+                let instructionPage5 = document.querySelector('#step5');
+
+                if(window.instCounter == 0){
+                    instructionPage1.setAttribute('visible', 'true');                       
+                    instructionPage2.setAttribute('visible', 'false');
+                    instructionPage3.setAttribute('visible', 'false');
+                    instructionPage4.setAttribute('visible', 'false');
+                    instructionPage5.setAttribute('visible', 'false');
+
+                }else if(window.instCounter == 1){
+                    instructionPage1.setAttribute('visible', 'false');                       
+                    instructionPage2.setAttribute('visible', 'false');
+                    instructionPage3.setAttribute('visible', 'true');
+                    instructionPage4.setAttribute('visible', 'false');
+                    instructionPage5.setAttribute('visible', 'false');
+
+                }else if(window.instCounter == 2){
+                    instructionPage1.setAttribute('visible', 'false');                       
+                    instructionPage2.setAttribute('visible', 'false');
+                    instructionPage3.setAttribute('visible', 'false');
+                    instructionPage4.setAttribute('visible', 'true');
+                    instructionPage5.setAttribute('visible', 'false');
+
+                }else if(window.instCounter == 3){
+                    instructionPage1.setAttribute('visible', 'false');                       
+                    instructionPage2.setAttribute('visible', 'false');
+                    instructionPage3.setAttribute('visible', 'false');
+                    instructionPage4.setAttribute('visible', 'true');
+                    instructionPage5.setAttribute('visible', 'false');
+
+                }else if(window.instCounter == 4){
+                    instructionPage1.setAttribute('visible', 'false');                       
+                    instructionPage2.setAttribute('visible', 'false');
+                    instructionPage3.setAttribute('visible', 'false');
+                    instructionPage4.setAttribute('visible', 'false');
+                    instructionPage5.setAttribute('visible', 'true');
                 }
             }
         });
