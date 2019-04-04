@@ -234,15 +234,9 @@ AFRAME.registerComponent('page-flip', {
                     instructionPage1.setAttribute('visible', 'false');                       
                     instructionPage2.setAttribute('visible', 'false');
                     instructionPage3.setAttribute('visible', 'false');
-                    instructionPage4.setAttribute('visible', 'true');
-                    instructionPage5.setAttribute('visible', 'false');
-
-                }else if(window.instCounter == 5){
-                    instructionPage1.setAttribute('visible', 'false');                       
-                    instructionPage2.setAttribute('visible', 'false');
-                    instructionPage3.setAttribute('visible', 'false');
                     instructionPage4.setAttribute('visible', 'false');
                     instructionPage5.setAttribute('visible', 'true');
+
                 }
             }
             
@@ -265,16 +259,16 @@ AFRAME.registerComponent('page-flip', {
 
                 }else if(window.instCounter == 1){
                     instructionPage1.setAttribute('visible', 'false');                       
-                    instructionPage2.setAttribute('visible', 'false');
-                    instructionPage3.setAttribute('visible', 'true');
+                    instructionPage2.setAttribute('visible', 'true');
+                    instructionPage3.setAttribute('visible', 'false');
                     instructionPage4.setAttribute('visible', 'false');
                     instructionPage5.setAttribute('visible', 'false');
 
                 }else if(window.instCounter == 2){
                     instructionPage1.setAttribute('visible', 'false');                       
                     instructionPage2.setAttribute('visible', 'false');
-                    instructionPage3.setAttribute('visible', 'false');
-                    instructionPage4.setAttribute('visible', 'true');
+                    instructionPage3.setAttribute('visible', 'true');
+                    instructionPage4.setAttribute('visible', 'false');
                     instructionPage5.setAttribute('visible', 'false');
 
                 }else if(window.instCounter == 3){
