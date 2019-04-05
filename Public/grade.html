@@ -3,9 +3,17 @@
         <script src="/socket.io/socket.io.js"></script>
         <title>Grade Page</title>
     </head>
+    <style>
+        body{
+            background-color: #d7d7d7;
+            text-align: center;
+            font-family:verdana;
+            font-size: 400px;
+        }
+    </style>
     <body>
         <div id="div1">
-            <p>GRADE</p>
+            
         </div>
         <button onclick="redirect()">Go Back To Start</button>
         <script>
@@ -27,6 +35,7 @@
             socket.on('recieveGrade', function(grade){
                 console.log("grade" + grade);
                 printGrade(grade);
+                //printGrade(100);
             });
 
             function printGrade(grade){
@@ -35,58 +44,71 @@
                 if(grade < 50){
                     console.log("F");
                     letterGrade = "F";
+                    document.getElementById("div1").style.color = '#af5264';
                 }
                 if(grade >= 50 && grade <= 52){
                     console.log("D-");
                     letterGrade = "D-";
+                    document.getElementById("div1").style.color = '#af529a';
                 }
                 if(grade >= 53 && grade <= 56){
                     console.log("D");
                     letterGrade = "D";
+                    document.getElementById("div1").style.color = '#9152af';
                 }
                 if(grade >= 57 && grade <= 59){
                     console.log("D+");
                     letterGrade = "D+";
+                    document.getElementById("div1").style.color = '#7c52af';
                 }
                 if(grade >= 60 && grade <= 62){
                     console.log("C-");
                     letterGrade = "C-";
+                    document.getElementById("div1").style.color = '#5952af';
                 }
                 if(grade >= 63 && grade <= 66){
                     console.log("C");
                     letterGrade = "C";
+                    document.getElementById("div1").style.color = '#525faf';
                 }
                 if(grade >= 67 && grade <= 69){
                     console.log("C+");
                     letterGrade = "C+";
+                    document.getElementById("div1").style.color = '#526aaf';
                 }
                 if(grade >= 70 && grade <= 72){
                     console.log("B-");
                     letterGrade = "B-";
+                    document.getElementById("div1").style.color = '#5296af';
                 }
                 if(grade >= 73 && grade <= 76){
                     console.log("B");
                     letterGrade = "B";
+                    document.getElementById("div1").style.color = '#52a7af';
                 }
                 if(grade >= 77 && grade <= 79){
                     console.log("B+");
                     letterGrade = "B+";
+                    document.getElementById("div1").style.color = '#52af98';
                 }
                 if(grade >= 80 && grade <= 84){
                     console.log("A-");
                     letterGrade = "A-";
+                    document.getElementById("div1").style.color = '#52af82';
                 }
                 if(grade >= 85 && grade <= 89){
                     console.log("A");
                     letterGrade = "A";
+                    document.getElementById("div1").style.color = '#52af75';
                 }
                 if(grade >= 90 && grade <= 100){
                     console.log("A+");
                     letterGrade = "A+";
+                    document.getElementById("div1").style.color = '#52af5a';
                 }
                 console.log(letterGrade);
                 var para = document.createElement("p");
-                var node = document.createTextNode("Your Grade is: " + letterGrade);
+                var node = document.createTextNode(letterGrade);
                 para.appendChild(node);
                 var element = document.getElementById("div1");
                 element.appendChild(para);
