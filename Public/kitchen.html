@@ -246,7 +246,6 @@
                 obj.addEventListener('cook', function(e){
                     //cookingIngredientObj = this;
                     //objData.steps -= 1;
-                    console.log("COOK EVENT(1)");
                     if(objData.cookingStartTime == -1){
                         objData.myVar = setInterval(Context_AF.myCookingTimer(), 1000);
                     }
@@ -271,7 +270,7 @@
             myStopFunction: function(){
                 console.log("Stoping Timer");
                 var objData = this.data;
-                objData.cookingStartTime = -1;
+                //objData.cookingStartTime = -1;
                 //clearInterval(objData.myVar);
                 objData.myVar = null;
             },
@@ -567,7 +566,7 @@
             </a-entity>
             <a-entity id="kitchenWalls-entity" obj-model="obj: #kitchenWalls-obj;" material="src: #kitchen-img" scale ="0.005 0.005 0.005"></a-entity>
             <a-entity id="stoveBase-entity" obj-model="obj: #stoveBase-obj;" material="src: #stove-img" scale ="0.005 0.005 0.005"></a-entity>
-            <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="-0.4 1.2 -0.2" material="color: white" scale ="0.02 0.02 0.02"></a-entity><!--"0.5 1.4 -0.5"-->
+            <a-entity  id="knife-entity" obj-model="obj: #knife-obj;" dynamic-body mixin="objectHold" position="-0.4 1.0 -0.2" material="color: white" scale ="0.02 0.02 0.02"></a-entity><!--"0.5 1.4 -0.5"-->
 
             
             
