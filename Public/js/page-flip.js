@@ -55,7 +55,6 @@ AFRAME.registerComponent('page-flip', {
                     childThree.setAttribute('back-flip', 'backNum: three');
                     page3.setAttribute('position', {x:0, y:0, z:-10.01});
                 }
-
             }
             
             if(object.data.button === 'backward'){
@@ -101,7 +100,6 @@ AFRAME.registerComponent('page-flip', {
                     childThree.setAttribute('front-flip', 'pageNum: three');
                     page3.setAttribute('position', {x:0, y:0, z:-10.04});
                 }
-
             }
             
             if (object.data.button === 'openClose'){
@@ -118,6 +116,18 @@ AFRAME.registerComponent('page-flip', {
                 let instructionPage3 = document.querySelector('#step3');
                 let instructionPage4 = document.querySelector('#step4');
                 let instructionPage5 = document.querySelector('#step5');
+
+                let instructionPage1Cheese = document.querySelector('#step1Cheese');
+                let instructionPage2Cheese = document.querySelector('#step2Cheese');
+                let instructionPage3Cheese = document.querySelector('#step3Cheese');
+                let instructionPage4Cheese = document.querySelector('#step4Cheese');
+                let instructionPage5Cheese = document.querySelector('#step5Cheese');
+
+                let instructionPage1French = document.querySelector('#step1French');
+                let instructionPage2French = document.querySelector('#step2French');
+                let instructionPage3French = document.querySelector('#step3French');
+                let instructionPage4French = document.querySelector('#step4French');
+                let instructionPage5French = document.querySelector('#step5French');
                 
                 if(window.selectionState == true){
 
