@@ -152,13 +152,13 @@ AFRAME.registerComponent('page-flip', {
                     }else if (window.counter == 2){
                         console.log("Recipe Two");  
 
-                        instructionPage1.setAttribute('visible', 'true');   
+                        instructionPage1Cheese.setAttribute('visible', 'true');   
                         window.instCounter = 0;
     
                     }else if (window.counter == 3){
                         console.log("Recipe Three");   
 
-                        instructionPage1.setAttribute('visible', 'true');
+                        instructionPage1French.setAttribute('visible', 'true');
                         window.instCounter = 0;
 
                     }
@@ -191,20 +191,20 @@ AFRAME.registerComponent('page-flip', {
                     }else if (window.counter == 2){
                         console.log("Close Two");
 
-                        instructionPage1.setAttribute('visible', 'false');
-                        instructionPage2.setAttribute('visible', 'false');
-                        instructionPage3.setAttribute('visible', 'false');
-                        instructionPage4.setAttribute('visible', 'false');
-                        instructionPage5.setAttribute('visible', 'false');
+                        instructionPage1Cheese.setAttribute('visible', 'false');
+                        instructionPage2Cheese.setAttribute('visible', 'false');
+                        instructionPage3Cheese.setAttribute('visible', 'false');
+                        instructionPage4Cheese.setAttribute('visible', 'false');
+                        instructionPage5Cheese.setAttribute('visible', 'false');
     
                     }else if (window.counter == 3){
                         console.log("Close Three");
 
-                        instructionPage1.setAttribute('visible', 'false');                       
-                        instructionPage2.setAttribute('visible', 'false');
-                        instructionPage3.setAttribute('visible', 'false');
-                        instructionPage4.setAttribute('visible', 'false');
-                        instructionPage5.setAttribute('visible', 'false');
+                        instructionPage1French.setAttribute('visible', 'false');                       
+                        instructionPage2French.setAttribute('visible', 'false');
+                        instructionPage3French.setAttribute('visible', 'false');
+                        instructionPage4French.setAttribute('visible', 'false');
+                        instructionPage5French.setAttribute('visible', 'false');
                     }
                 }
             }
@@ -259,6 +259,28 @@ AFRAME.registerComponent('page-flip', {
                 let instructionPage3 = document.querySelector('#step3');
                 let instructionPage4 = document.querySelector('#step4');
                 let instructionPage5 = document.querySelector('#step5');
+
+                let instructionPage1Cheese = document.querySelector('#step1Cheese');
+                let instructionPage2Cheese = document.querySelector('#step2Cheese');
+                let instructionPage3Cheese = document.querySelector('#step3Cheese');
+                let instructionPage4Cheese = document.querySelector('#step4Cheese');
+                let instructionPage5Cheese = document.querySelector('#step5Cheese');
+
+                let instructionPage1French = document.querySelector('#step1French');
+                let instructionPage2French = document.querySelector('#step2French');
+                let instructionPage3French = document.querySelector('#step3French');
+                let instructionPage4French = document.querySelector('#step4French');
+                let instructionPage5French = document.querySelector('#step5French');
+
+                if(window.counter == 2){
+
+                }else if(window.counter == 3){
+
+                }else if(window.counter == 4){
+
+                }else if(window.counter == 5){
+
+                }
 
                 if(window.instCounter == 0){
                     instructionPage1.setAttribute('visible', 'true');                       
