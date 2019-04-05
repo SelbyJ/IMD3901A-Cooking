@@ -179,17 +179,27 @@
 
                                         cutOne.setAttribute('material', {src: "#" + this.getAttribute('class') + "Half-img"});
                                         cutTwo.setAttribute('material', {src: "#" + this.getAttribute('class') + "Half-img"});
+
+                                        cutOne.setAttribute('scale', {x: cutObjScale.x, y: cutObjScale.y , z: cutObjScale.z });
+                                        cutTwo.setAttribute('scale', {x: cutObjScale.x, y: cutObjScale.y , z: cutObjScale.z });
                                     }
                                     else{
                                         cutOne.setAttribute('obj-model', {obj: "#eggShell-obj"});
                                         cutTwo.setAttribute('obj-model', {obj: "#eggYolk-obj"});
+
+                                        cutOne.setAttribute('scale', {x: cutObjScale.x, y: cutObjScale.y , z: cutObjScale.z });
+                                        cutTwo.setAttribute('scale', {x: cutObjScale.x/4, y: cutObjScale.y/4 , z: cutObjScale.z/4 });
                                     }
                                     break;
                                 case 0.25:
                                     cutOne.setAttribute('obj-model', {obj: "#" + this.getAttribute('class') + "Quarter-obj"});
                                     cutTwo.setAttribute('obj-model', {obj: "#" + this.getAttribute('class') + "Quarter-obj"});
+
                                     cutOne.setAttribute('material', {src: "#" + this.getAttribute('class') + "Quarter-img"});
                                     cutTwo.setAttribute('material', {src: "#" + this.getAttribute('class') + "Quarter-img"});
+
+                                    cutOne.setAttribute('scale', {x: cutObjScale.x, y: cutObjScale.y , z: cutObjScale.z });
+                                    cutTwo.setAttribute('scale', {x: cutObjScale.x, y: cutObjScale.y , z: cutObjScale.z });
                                     break;
                             }
 
@@ -205,8 +215,6 @@
                             cutOne.setAttribute('mixin', "objectHold");
                             cutTwo.setAttribute('mixin', "objectHold");
 
-                            cutOne.setAttribute('scale', {x: cutObjScale.x, y: cutObjScale.y , z: cutObjScale.z });
-                            cutTwo.setAttribute('scale', {x: cutObjScale.x, y: cutObjScale.y , z: cutObjScale.z });
 
                             
                             let scene = document.getElementById("obj");//document.querySelector('a-scene');
@@ -264,7 +272,7 @@
                 console.log("Stoping Timer");
                 var objData = this.data;
                 objData.cookingStartTime = -1;
-                clearInterval(objData.myVar);
+                //clearInterval(objData.myVar);
                 objData.myVar = null;
             },
 
@@ -436,7 +444,7 @@
   </head>
   <body>
     
-    <a-scene id="scene" physics timer="gamePart: kitchen" light="defaultLightsEnabled: true"><!---->
+    <a-scene id="scene" physics="debug: false" timer="gamePart: kitchen" light="defaultLightsEnabled: true"><!---->
       <a-assets>
         <!--TEXTURES-->
         
@@ -546,7 +554,9 @@
 
         <a-entity id="lighting">
             <a-entity light="type: ambient; color: #CCC"></a-entity>
-            <a-entity light="type: directional; color: #EEE; intensity: 0.5" position="-1 1 0"></a-entity>
+            <a-entity light="type: directional; color: #EEE; intensity: 0.25" position="-1 1 0"></a-entity>
+            
+            <a-entity light="type: directional; color: #EEE; intensity: 0.25" position="1 1 0"></a-entity>
         </a-entity>
 
         <a-entity id="recipe" recipe></a-entity>
@@ -581,7 +591,7 @@
             <a-entity id="plate-entity" obj-model="obj: #plate-obj" static-body position ="0 0.55 -0.2" scale="0.11 0.11 0.11" plate></a-entity>
             <a-entity id="omlette-entity" class="omlette" obj-model="obj: #omlette-obj" position="0 0.55 -0.2" scale="0.01 0.01 0.01" material="src: #omlette-img" visible="false"></a-entity>
         </a-entity>
-        
+        <a-plane static-body visible="false" rotation="-90 0 0" position="0 1.13 0" scale="2.6 2.6 2.6"></a-plane>
         <a-entity id="onionSpawn-entity" spawn class="onion" mixin="objectGrab" obj-model="obj: #onion-obj;" static-body position="0.6 1.22 0.5" scale ="0.05 0.05 0.05" material="src: #onion-img" delete-self ingredient="cookingTemp: 270; cookingTime: 10.0; sizeMin: 0.25; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
         <a-entity id="eggSpawn-entity" spawn class="egg" mixin="objectGrab" obj-model="obj: #egg-obj;" static-body position="-0.1 1.22 0.5" scale ="0.05 0.05 0.05" material="color: white" delete-self ingredient="cookingTemp: 270; cookingTime: 10.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
         <a-entity id="butterSpawn-entity" spawn class="butter" mixin="objectGrab" obj-model="obj: #butter-obj;" static-body position="-0.3 1.3 0.5" scale ="0.01 0.01 0.01" material="color: yellow" delete-self ingredient="cookingTemp: 270; cookingTime: 10.0; sizeMin: 1; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
