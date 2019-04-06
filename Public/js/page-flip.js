@@ -6,7 +6,7 @@ AFRAME.registerComponent('page-flip', {
         const object = this;
         window.counter = 0;
         window.selectionState = false;
-        window.instCounter = 0;
+        window.instCounter = 1;
 
         //this.selectionState = false;
         //document.querySelector("#someEntity").components['page-flip'].selectionState = true;
@@ -111,7 +111,7 @@ AFRAME.registerComponent('page-flip', {
                 let backInstButton = document.querySelector('#backwardInst');
                 let forwardInstButton = document.querySelector('#forwardInst');
 
-                let instructionPage1 = document.querySelector('#step1');
+                /*let instructionPage1 = document.querySelector('#step1');
                 let instructionPage2 = document.querySelector('#step2');
                 let instructionPage3 = document.querySelector('#step3');
                 let instructionPage4 = document.querySelector('#step4');
@@ -127,7 +127,7 @@ AFRAME.registerComponent('page-flip', {
                 let instructionPage2French = document.querySelector('#step2French');
                 let instructionPage3French = document.querySelector('#step3French');
                 let instructionPage4French = document.querySelector('#step4French');
-                let instructionPage5French = document.querySelector('#step5French');
+                let instructionPage5French = document.querySelector('#step5French');*/
                 
                 if(window.selectionState == true){
 
@@ -146,21 +146,24 @@ AFRAME.registerComponent('page-flip', {
                     if (window.counter == 1){
                         console.log("Recipe One");                       
 
-                        instructionPage1.setAttribute('visible', 'true');
+                        //instructionPage1.setAttribute('visible', 'true');
+
+                        this.recipeOneInstructions(1);
                         window.instCounter = 0;
                         
                     }else if (window.counter == 2){
                         console.log("Recipe Two");  
 
-                        instructionPage1Cheese.setAttribute('visible', 'true');   
+                        //instructionPage1Cheese.setAttribute('visible', 'true'); 
+                        this.recipeTwoInstructions(1);
                         window.instCounter = 0;
     
                     }else if (window.counter == 3){
                         console.log("Recipe Three");   
 
-                        instructionPage1French.setAttribute('visible', 'true');
+                        //instructionPage1French.setAttribute('visible', 'true');
+                        this.recipeThreeInstructions(1);
                         window.instCounter = 0;
-
                     }
                 }
                 
@@ -178,34 +181,10 @@ AFRAME.registerComponent('page-flip', {
                     backInstButton.setAttribute('class', ' ');
                     forwardInstButton.setAttribute('class', ' ');
 
-                    if (window.counter == 1){
-                        console.log("Close One");
+                    this.recipeOneInstructions(0);
+                    this.recipeTwoInstructions(0);
+                    this,recipeThreeInstructions(0);
 
-                        instructionPage1.setAttribute('visible', 'false');
-                        instructionPage2.setAttribute('visible', 'false');
-                        instructionPage3.setAttribute('visible', 'false');
-                        instructionPage4.setAttribute('visible', 'false');
-                        instructionPage5.setAttribute('visible', 'false');
-
-    
-                    }else if (window.counter == 2){
-                        console.log("Close Two");
-
-                        instructionPage1Cheese.setAttribute('visible', 'false');
-                        instructionPage2Cheese.setAttribute('visible', 'false');
-                        instructionPage3Cheese.setAttribute('visible', 'false');
-                        instructionPage4Cheese.setAttribute('visible', 'false');
-                        instructionPage5Cheese.setAttribute('visible', 'false');
-    
-                    }else if (window.counter == 3){
-                        console.log("Close Three");
-
-                        instructionPage1French.setAttribute('visible', 'false');                       
-                        instructionPage2French.setAttribute('visible', 'false');
-                        instructionPage3French.setAttribute('visible', 'false');
-                        instructionPage4French.setAttribute('visible', 'false');
-                        instructionPage5French.setAttribute('visible', 'false');
-                    }
                 }
             }
             
@@ -213,7 +192,15 @@ AFRAME.registerComponent('page-flip', {
                 window.instCounter++;
                 //console.log("Inst Counter " + windows.instCounter.toString());
 
-                let instructionPage1 = document.querySelector('#step1');
+                if(window.counter == 1){
+
+                }else if(window.counter == 2){
+
+                }else if(window.counter == 3){
+                    
+                }
+
+                /*let instructionPage1 = document.querySelector('#step1');
                 let instructionPage2 = document.querySelector('#step2');
                 let instructionPage3 = document.querySelector('#step3');
                 let instructionPage4 = document.querySelector('#step4');
@@ -247,14 +234,14 @@ AFRAME.registerComponent('page-flip', {
                     instructionPage4.setAttribute('visible', 'false');
                     instructionPage5.setAttribute('visible', 'true');
 
-                }
+                }*/
             }
             
             if (object.data.button === 'instBackward'){
                 window.instCounter--;
                 //console.log("Inst Counter " + windows.instCounter.toString());
 
-                let instructionPage1 = document.querySelector('#step1');
+                /*let instructionPage1 = document.querySelector('#step1');
                 let instructionPage2 = document.querySelector('#step2');
                 let instructionPage3 = document.querySelector('#step3');
                 let instructionPage4 = document.querySelector('#step4');
@@ -270,19 +257,18 @@ AFRAME.registerComponent('page-flip', {
                 let instructionPage2French = document.querySelector('#step2French');
                 let instructionPage3French = document.querySelector('#step3French');
                 let instructionPage4French = document.querySelector('#step4French');
-                let instructionPage5French = document.querySelector('#step5French');
+                let instructionPage5French = document.querySelector('#step5French');*/
 
-                if(window.counter == 2){
+                if(window.counter == 1){
+
+                }else if(window.counter == 2){
 
                 }else if(window.counter == 3){
 
-                }else if(window.counter == 4){
-
-                }else if(window.counter == 5){
-
                 }
 
-                if(window.instCounter == 0){
+
+                /*if(window.instCounter == 0){
                     instructionPage1.setAttribute('visible', 'true');                       
                     instructionPage2.setAttribute('visible', 'false');
                     instructionPage3.setAttribute('visible', 'false');
@@ -316,9 +302,171 @@ AFRAME.registerComponent('page-flip', {
                     instructionPage3.setAttribute('visible', 'false');
                     instructionPage4.setAttribute('visible', 'false');
                     instructionPage5.setAttribute('visible', 'true');
-                }
+                }*/
             }
         });
+    },
+
+    recipeOneInstructions: function(instState){
+        let instructionPage1 = document.querySelector('#step1');
+        let instructionPage2 = document.querySelector('#step2');
+        let instructionPage3 = document.querySelector('#step3');
+        let instructionPage4 = document.querySelector('#step4');
+        let instructionPage5 = document.querySelector('#step5');
+
+        switch(instState){
+            case 1:
+                instructionPage1.setAttribute('visible', 'true');                       
+                instructionPage2.setAttribute('visible', 'false');
+                instructionPage3.setAttribute('visible', 'false');
+                instructionPage4.setAttribute('visible', 'false');
+                instructionPage5.setAttribute('visible', 'false');
+                break;
+            case 2:
+                instructionPage1.setAttribute('visible', 'false');                       
+                instructionPage2.setAttribute('visible', 'true');
+                instructionPage3.setAttribute('visible', 'false');
+                instructionPage4.setAttribute('visible', 'false');
+                instructionPage5.setAttribute('visible', 'false');
+                break;
+            case 3:
+                instructionPage1.setAttribute('visible', 'false');                       
+                instructionPage2.setAttribute('visible', 'false');
+                instructionPage3.setAttribute('visible', 'true');
+                instructionPage4.setAttribute('visible', 'false');
+                instructionPage5.setAttribute('visible', 'false');
+                break;
+            case 4:
+                instructionPage1.setAttribute('visible', 'false');                       
+                instructionPage2.setAttribute('visible', 'false');
+                instructionPage3.setAttribute('visible', 'false');
+                instructionPage4.setAttribute('visible', 'true');
+                instructionPage5.setAttribute('visible', 'false');
+                break;
+            case 5:
+                instructionPage1.setAttribute('visible', 'false');                       
+                instructionPage2.setAttribute('visible', 'false');
+                instructionPage3.setAttribute('visible', 'false');
+                instructionPage4.setAttribute('visible', 'false');
+                instructionPage5.setAttribute('visible', 'true');
+                break;
+            case 0:
+                instructionPage1.setAttribute('visible', 'false');                       
+                instructionPage2.setAttribute('visible', 'false');
+                instructionPage3.setAttribute('visible', 'false');
+                instructionPage4.setAttribute('visible', 'false');
+                instructionPage5.setAttribute('visible', 'false');
+                break;
+        }
+    },
+
+    recipeTwoIntructions: function(instState){
+
+        instructionPage1.setAttribute('visible', 'false');
+        instructionPage2.setAttribute('visible', 'false');
+        instructionPage3.setAttribute('visible', 'false');
+        instructionPage4.setAttribute('visible', 'false');
+        instructionPage5.setAttribute('visible', 'false');
+
+        switch(instState){
+            case 1:
+                instructionPage1.setAttribute('visible', 'true');                       
+                instructionPage2.setAttribute('visible', 'false');
+                instructionPage3.setAttribute('visible', 'false');
+                instructionPage4.setAttribute('visible', 'false');
+                instructionPage5.setAttribute('visible', 'false');
+                break;
+            case 2:
+                instructionPage1.setAttribute('visible', 'false');                       
+                instructionPage2.setAttribute('visible', 'true');
+                instructionPage3.setAttribute('visible', 'false');
+                instructionPage4.setAttribute('visible', 'false');
+                instructionPage5.setAttribute('visible', 'false');
+                break;
+            case 3:
+                instructionPage1.setAttribute('visible', 'false');                       
+                instructionPage2.setAttribute('visible', 'false');
+                instructionPage3.setAttribute('visible', 'true');
+                instructionPage4.setAttribute('visible', 'false');
+                instructionPage5.setAttribute('visible', 'false');
+                break;
+            case 4:
+                instructionPage1.setAttribute('visible', 'false');                       
+                instructionPage2.setAttribute('visible', 'false');
+                instructionPage3.setAttribute('visible', 'false');
+                instructionPage4.setAttribute('visible', 'true');
+                instructionPage5.setAttribute('visible', 'false');
+                break;
+            case 5:
+                instructionPage1.setAttribute('visible', 'false');                       
+                instructionPage2.setAttribute('visible', 'false');
+                instructionPage3.setAttribute('visible', 'false');
+                instructionPage4.setAttribute('visible', 'false');
+                instructionPage5.setAttribute('visible', 'true');
+                break;
+            case 0:
+                instructionPage1.setAttribute('visible', 'false');                       
+                instructionPage2.setAttribute('visible', 'false');
+                instructionPage3.setAttribute('visible', 'false');
+                instructionPage4.setAttribute('visible', 'false');
+                instructionPage5.setAttribute('visible', 'false');
+                break;
+        }
+
+    },
+
+    recipeThreeInstructions: function(instState){
+
+        instructionPage1.setAttribute('visible', 'false');                       
+        instructionPage2.setAttribute('visible', 'false');
+        instructionPage3.setAttribute('visible', 'false');
+        instructionPage4.setAttribute('visible', 'false');
+        instructionPage5.setAttribute('visible', 'false');
+
+        switch(instState){
+            case 1:
+                instructionPage1.setAttribute('visible', 'true');                       
+                instructionPage2.setAttribute('visible', 'false');
+                instructionPage3.setAttribute('visible', 'false');
+                instructionPage4.setAttribute('visible', 'false');
+                instructionPage5.setAttribute('visible', 'false');
+                break;
+            case 2:
+                instructionPage1.setAttribute('visible', 'false');                       
+                instructionPage2.setAttribute('visible', 'true');
+                instructionPage3.setAttribute('visible', 'false');
+                instructionPage4.setAttribute('visible', 'false');
+                instructionPage5.setAttribute('visible', 'false');
+                break;
+            case 3:
+                instructionPage1.setAttribute('visible', 'false');                       
+                instructionPage2.setAttribute('visible', 'false');
+                instructionPage3.setAttribute('visible', 'true');
+                instructionPage4.setAttribute('visible', 'false');
+                instructionPage5.setAttribute('visible', 'false');
+                break;
+            case 4:
+                instructionPage1.setAttribute('visible', 'false');                       
+                instructionPage2.setAttribute('visible', 'false');
+                instructionPage3.setAttribute('visible', 'false');
+                instructionPage4.setAttribute('visible', 'true');
+                instructionPage5.setAttribute('visible', 'false');
+                break;
+            case 5:
+                instructionPage1.setAttribute('visible', 'false');                       
+                instructionPage2.setAttribute('visible', 'false');
+                instructionPage3.setAttribute('visible', 'false');
+                instructionPage4.setAttribute('visible', 'false');
+                instructionPage5.setAttribute('visible', 'true');
+                break;
+            case 0:
+                instructionPage1.setAttribute('visible', 'false');                       
+                instructionPage2.setAttribute('visible', 'false');
+                instructionPage3.setAttribute('visible', 'false');
+                instructionPage4.setAttribute('visible', 'false');
+                instructionPage5.setAttribute('visible', 'false');
+                break;
+        }
 
     }
 });
