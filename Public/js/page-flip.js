@@ -110,24 +110,6 @@ AFRAME.registerComponent('page-flip', {
 
                 let backInstButton = document.querySelector('#backwardInst');
                 let forwardInstButton = document.querySelector('#forwardInst');
-
-                /*let instructionPage1 = document.querySelector('#step1');
-                let instructionPage2 = document.querySelector('#step2');
-                let instructionPage3 = document.querySelector('#step3');
-                let instructionPage4 = document.querySelector('#step4');
-                let instructionPage5 = document.querySelector('#step5');
-
-                let instructionPage1Cheese = document.querySelector('#step1Cheese');
-                let instructionPage2Cheese = document.querySelector('#step2Cheese');
-                let instructionPage3Cheese = document.querySelector('#step3Cheese');
-                let instructionPage4Cheese = document.querySelector('#step4Cheese');
-                let instructionPage5Cheese = document.querySelector('#step5Cheese');
-
-                let instructionPage1French = document.querySelector('#step1French');
-                let instructionPage2French = document.querySelector('#step2French');
-                let instructionPage3French = document.querySelector('#step3French');
-                let instructionPage4French = document.querySelector('#step4French');
-                let instructionPage5French = document.querySelector('#step5French');*/
                 
                 if(window.selectionState == true){
 
@@ -144,25 +126,21 @@ AFRAME.registerComponent('page-flip', {
                     forwardInstButton.setAttribute('class', 'clickable');
 
                     if (window.counter == 1){
-                        console.log("Recipe One");                       
+                        console.log("Recipe One");
 
-                        //instructionPage1.setAttribute('visible', 'true');
-
-                        this.recipeOneInstructions(1);
+                        object.recipeOneInstructions(1);
                         window.instCounter = 0;
                         
                     }else if (window.counter == 2){
                         console.log("Recipe Two");  
 
-                        //instructionPage1Cheese.setAttribute('visible', 'true'); 
-                        this.recipeTwoInstructions(1);
+                        object.recipeTwoIntructions(1);
                         window.instCounter = 0;
     
                     }else if (window.counter == 3){
                         console.log("Recipe Three");   
 
-                        //instructionPage1French.setAttribute('visible', 'true');
-                        this.recipeThreeInstructions(1);
+                        object.recipeThreeInstructions(1);
                         window.instCounter = 0;
                     }
                 }
@@ -181,10 +159,9 @@ AFRAME.registerComponent('page-flip', {
                     backInstButton.setAttribute('class', ' ');
                     forwardInstButton.setAttribute('class', ' ');
 
-                    this.recipeOneInstructions(0);
-                    this.recipeTwoInstructions(0);
-                    this,recipeThreeInstructions(0);
-
+                    object.recipeOneInstructions(0);
+                    object.recipeTwoIntructions(0);
+                    object.recipeThreeInstructions(0);
                 }
             }
             
@@ -193,116 +170,121 @@ AFRAME.registerComponent('page-flip', {
                 //console.log("Inst Counter " + windows.instCounter.toString());
 
                 if(window.counter == 1){
-
+                    switch(window.instCounter){
+                        case 0:
+                            object.recipeOneInstructions(1);
+                            break;
+                        case 1:
+                            object.recipeOneInstructions(2);
+                            break;
+                        case 2:
+                            object.recipeOneInstructions(3);
+                            break;
+                        case 3:
+                            object.recipeOneInstructions(4);
+                            break;
+                        case 4:
+                            object.recipeOneInstructions(5);
+                            break;
+                    }
                 }else if(window.counter == 2){
-
+                    switch(window.instCounter){
+                        case 0:
+                            object.recipeTwoIntructions(1);
+                            break;
+                        case 1:
+                            object.recipeTwoIntructions(2);
+                            break;
+                        case 2:
+                            object.recipeTwoIntructions(3);
+                            break;
+                        case 3:
+                            object.recipeTwoIntructions(4);
+                            break;
+                        case 4:
+                            object.recipeTwoIntructions(5);
+                            break;
+                    }
                 }else if(window.counter == 3){
-                    
+                    switch(window.instCounter){
+                        case 0:
+                            object.recipeThreeInstructions(1);
+                            break;
+                        case 1:
+                            object.recipeThreeInstructions(2);
+                            break;
+                        case 2:
+                            object.recipeThreeInstructions(3);
+                            break;
+                        case 3:
+                            object.recipeThreeInstructions(4);
+                            break;
+                        case 4:
+                            object.recipeThreeInstructions(5);
+                            break;
+                    }
                 }
-
-                /*let instructionPage1 = document.querySelector('#step1');
-                let instructionPage2 = document.querySelector('#step2');
-                let instructionPage3 = document.querySelector('#step3');
-                let instructionPage4 = document.querySelector('#step4');
-                let instructionPage5 = document.querySelector('#step5');
-
-                if(window.instCounter == 1){
-                    instructionPage1.setAttribute('visible', 'false');                       
-                    instructionPage2.setAttribute('visible', 'true');
-                    instructionPage3.setAttribute('visible', 'false');
-                    instructionPage4.setAttribute('visible', 'false');
-                    instructionPage5.setAttribute('visible', 'false');
-
-                }else if(window.instCounter == 2){
-                    instructionPage1.setAttribute('visible', 'false');                       
-                    instructionPage2.setAttribute('visible', 'false');
-                    instructionPage3.setAttribute('visible', 'true');
-                    instructionPage4.setAttribute('visible', 'false');
-                    instructionPage5.setAttribute('visible', 'false');
-
-                }else if(window.instCounter == 3){
-                    instructionPage1.setAttribute('visible', 'false');                       
-                    instructionPage2.setAttribute('visible', 'false');
-                    instructionPage3.setAttribute('visible', 'false');
-                    instructionPage4.setAttribute('visible', 'true');
-                    instructionPage5.setAttribute('visible', 'false');
-
-                }else if(window.instCounter == 4){
-                    instructionPage1.setAttribute('visible', 'false');                       
-                    instructionPage2.setAttribute('visible', 'false');
-                    instructionPage3.setAttribute('visible', 'false');
-                    instructionPage4.setAttribute('visible', 'false');
-                    instructionPage5.setAttribute('visible', 'true');
-
-                }*/
             }
             
             if (object.data.button === 'instBackward'){
                 window.instCounter--;
                 //console.log("Inst Counter " + windows.instCounter.toString());
 
-                /*let instructionPage1 = document.querySelector('#step1');
-                let instructionPage2 = document.querySelector('#step2');
-                let instructionPage3 = document.querySelector('#step3');
-                let instructionPage4 = document.querySelector('#step4');
-                let instructionPage5 = document.querySelector('#step5');
-
-                let instructionPage1Cheese = document.querySelector('#step1Cheese');
-                let instructionPage2Cheese = document.querySelector('#step2Cheese');
-                let instructionPage3Cheese = document.querySelector('#step3Cheese');
-                let instructionPage4Cheese = document.querySelector('#step4Cheese');
-                let instructionPage5Cheese = document.querySelector('#step5Cheese');
-
-                let instructionPage1French = document.querySelector('#step1French');
-                let instructionPage2French = document.querySelector('#step2French');
-                let instructionPage3French = document.querySelector('#step3French');
-                let instructionPage4French = document.querySelector('#step4French');
-                let instructionPage5French = document.querySelector('#step5French');*/
-
                 if(window.counter == 1){
-
+                    switch(window.instCounter){
+                        case 0:
+                            object.recipeOneInstructions(1);
+                            break;
+                        case 1:
+                            object.recipeOneInstructions(2);
+                            break;
+                        case 2:
+                            object.recipeOneInstructions(3);
+                            break;
+                        case 3:
+                            object.recipeOneInstructions(4);
+                            break;
+                        case 4:
+                            object.recipeOneInstructions(5);
+                            break;
+                    }
                 }else if(window.counter == 2){
-
+                    switch(window.instCounter){
+                        case 0:
+                            object.recipeTwoIntructions(1);
+                            break;
+                        case 1:
+                            object.recipeTwoIntructions(2);
+                            break;
+                        case 2:
+                            object.recipeTwoIntructions(3);
+                            break;
+                        case 3:
+                            object.recipeTwoIntructions(4);
+                            break;
+                        case 4:
+                            object.recipeTwoIntructions(5);
+                            break;
+                    }
                 }else if(window.counter == 3){
-
+                    switch(window.instCounter){
+                        case 0:
+                            object.recipeThreeInstructions(1);
+                            break;
+                        case 1:
+                            object.recipeThreeInstructions(2);
+                            break;
+                        case 2:
+                            object.recipeThreeInstructions(3);
+                            break;
+                        case 3:
+                            object.recipeThreeInstructions(4);
+                            break;
+                        case 4:
+                            object.recipeThreeInstructions(5);
+                            break;
+                    }
                 }
-
-
-                /*if(window.instCounter == 0){
-                    instructionPage1.setAttribute('visible', 'true');                       
-                    instructionPage2.setAttribute('visible', 'false');
-                    instructionPage3.setAttribute('visible', 'false');
-                    instructionPage4.setAttribute('visible', 'false');
-                    instructionPage5.setAttribute('visible', 'false');
-
-                }else if(window.instCounter == 1){
-                    instructionPage1.setAttribute('visible', 'false');                       
-                    instructionPage2.setAttribute('visible', 'true');
-                    instructionPage3.setAttribute('visible', 'false');
-                    instructionPage4.setAttribute('visible', 'false');
-                    instructionPage5.setAttribute('visible', 'false');
-
-                }else if(window.instCounter == 2){
-                    instructionPage1.setAttribute('visible', 'false');                       
-                    instructionPage2.setAttribute('visible', 'false');
-                    instructionPage3.setAttribute('visible', 'true');
-                    instructionPage4.setAttribute('visible', 'false');
-                    instructionPage5.setAttribute('visible', 'false');
-
-                }else if(window.instCounter == 3){
-                    instructionPage1.setAttribute('visible', 'false');                       
-                    instructionPage2.setAttribute('visible', 'false');
-                    instructionPage3.setAttribute('visible', 'false');
-                    instructionPage4.setAttribute('visible', 'true');
-                    instructionPage5.setAttribute('visible', 'false');
-
-                }else if(window.instCounter == 4){
-                    instructionPage1.setAttribute('visible', 'false');                       
-                    instructionPage2.setAttribute('visible', 'false');
-                    instructionPage3.setAttribute('visible', 'false');
-                    instructionPage4.setAttribute('visible', 'false');
-                    instructionPage5.setAttribute('visible', 'true');
-                }*/
             }
         });
     },
@@ -362,11 +344,11 @@ AFRAME.registerComponent('page-flip', {
 
     recipeTwoIntructions: function(instState){
 
-        instructionPage1.setAttribute('visible', 'false');
-        instructionPage2.setAttribute('visible', 'false');
-        instructionPage3.setAttribute('visible', 'false');
-        instructionPage4.setAttribute('visible', 'false');
-        instructionPage5.setAttribute('visible', 'false');
+        let instructionPage1 = document.querySelector('#step1Cheese');
+        let instructionPage2 = document.querySelector('#step2Cheese');
+        let instructionPage3 = document.querySelector('#step3Cheese');
+        let instructionPage4 = document.querySelector('#step4Cheese');
+        let instructionPage5 = document.querySelector('#step5Cheese');
 
         switch(instState){
             case 1:
@@ -417,11 +399,11 @@ AFRAME.registerComponent('page-flip', {
 
     recipeThreeInstructions: function(instState){
 
-        instructionPage1.setAttribute('visible', 'false');                       
-        instructionPage2.setAttribute('visible', 'false');
-        instructionPage3.setAttribute('visible', 'false');
-        instructionPage4.setAttribute('visible', 'false');
-        instructionPage5.setAttribute('visible', 'false');
+        let instructionPage1 = document.querySelector('#step1French');
+        let instructionPage2 = document.querySelector('#step2French');
+        let instructionPage3 = document.querySelector('#step3French');
+        let instructionPage4 = document.querySelector('#step4French');
+        let instructionPage5 = document.querySelector('#step5French');
 
         switch(instState){
             case 1:
