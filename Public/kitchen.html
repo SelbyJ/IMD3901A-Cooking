@@ -189,6 +189,9 @@
 
                                         cutOne.setAttribute('scale', {x: cutObjScale.x, y: cutObjScale.y , z: cutObjScale.z });
                                         cutTwo.setAttribute('scale', {x: cutObjScale.x/4, y: cutObjScale.y/4 , z: cutObjScale.z/4 });
+
+                                        cutOne.setAttribute('material', {color: "white"});
+                                        cutTwo.setAttribute('material', {color: "white"});
                                     }
                                     break;
                                 case 0.25:
@@ -247,7 +250,8 @@
                     //cookingIngredientObj = this;
                     //objData.steps -= 1;
                     if(objData.cookingStartTime == -1){
-                        objData.myVar = setInterval(Context_AF.myCookingTimer(), 1000);
+                        //objData.myVar = setInterval(Context_AF.myCookingTimer(), 1000);
+                        objData.myVar = true;
                     }
                 }, false);
                 obj.addEventListener('stopCooking', function(e){
@@ -273,6 +277,20 @@
                 //objData.cookingStartTime = -1;
                 //clearInterval(objData.myVar);
                 objData.myVar = null;
+            },
+
+            tick: function(){
+                var objData = this.data;
+                if(objData.myVar){
+                    var d = new Date();
+                    var t = d.getSeconds();
+                    var objData = this.data;
+                    if(t - objData.cookingStartTime > 0){
+                        objData.cookingStartTime = t;
+                        objData.cookingTime -= 1;
+                        console.log(objData.cookingTime);
+                    }
+                }
             },
 
             heatObj: function(e){
@@ -305,13 +323,13 @@
                     if(objData.cookingTime > 2){
                         console.log("UNDERCOOKED");
                         //remove points
-                        document.getElementById('recipe').setAttribute('recipe', {points: document.getElementById('recipe').getAttribute('recipe').points - 10})
+                        document.getElementById('recipe').setAttribute('recipe', {points: document.getElementById('recipe').getAttribute('recipe').points - 5})
                         console.log(document.getElementById('recipe').getAttribute('recipe').points);
                     }
                     if(objData.cookingTime < -2){
                         console.log("OVERCOOKED");
                         //remove points
-                        document.getElementById('recipe').setAttribute('recipe', {points: document.getElementById('recipe').getAttribute('recipe').points - 10})
+                        document.getElementById('recipe').setAttribute('recipe', {points: document.getElementById('recipe').getAttribute('recipe').points - 5})
                         console.log(document.getElementById('recipe').getAttribute('recipe').points);
                     }
                     if(objData.sizeStart !== objData.sizeMin){
@@ -435,7 +453,7 @@
 
         socket.on('getPoints', function(){
             let obj = document.getElementById('recipe');
-            obj.setAttribute('recipe', {points: obj.getAttribute('recipe').points - (10 * ((obj.getAttribute('recipe').steps)- document.getElementById('plate-entity').getAttribute('plate').ingerdients))})
+            obj.setAttribute('recipe', {points: obj.getAttribute('recipe').points - (10 * ((obj.getAttribute('recipe').steps) - document.getElementById('plate-entity').getAttribute('plate').ingerdients))})
             var score = obj.getAttribute('recipe').points;
             socket.emit("test", score);
         });
