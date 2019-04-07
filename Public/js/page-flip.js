@@ -54,6 +54,9 @@ AFRAME.registerComponent('page-flip', {
                     childThree.removeAttribute('front-flip');
                     childThree.setAttribute('back-flip', 'backNum: three');
                     page3.setAttribute('position', {x:0, y:0, z:-10.01});
+
+                }else if (window.counter > 4){
+                    window.counter = 4;
                 }
             }
             
@@ -99,6 +102,9 @@ AFRAME.registerComponent('page-flip', {
                     childThree.removeAttribute('back-flip');
                     childThree.setAttribute('front-flip', 'pageNum: three');
                     page3.setAttribute('position', {x:0, y:0, z:-10.04});
+
+                }else if (window.counter < 0){
+                    window.counter = 0;
                 }
             }
             
@@ -167,7 +173,11 @@ AFRAME.registerComponent('page-flip', {
             
             if (object.data.button === 'instForward'){
                 window.instCounter++;
-                //console.log("Inst Counter " + windows.instCounter.toString());
+                console.log("Inst Counter " + window.instCounter.toString());
+
+                if (window.instCounter > 4){
+                    window.instCounter = 4;
+                }
 
                 if(window.counter == 1){
                     switch(window.instCounter){
@@ -228,7 +238,11 @@ AFRAME.registerComponent('page-flip', {
             
             if (object.data.button === 'instBackward'){
                 window.instCounter--;
-                //console.log("Inst Counter " + windows.instCounter.toString());
+                console.log("Inst Counter " + window.instCounter.toString());
+
+                if (window.instCounter < 0){
+                    window.instCounter = 0;
+                }
 
                 if(window.counter == 1){
                     switch(window.instCounter){
