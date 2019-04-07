@@ -461,7 +461,7 @@
   </head>
   <body>
     
-    <a-scene id="scene" physics="debug: false" timer="gamePart: kitchen" light="defaultLightsEnabled: true"><!---->
+    <a-scene id="scene" physics="debug: false" timer="gamePart: kitchen" light="defaultLightsEnabled: true" ><!---->
       <a-assets>
         <!--TEXTURES-->
         
@@ -612,12 +612,14 @@
             <a-entity id="omlette-entity" class="omlette" obj-model="obj: #omlette-obj" position="0 0.55 -0.2" scale="0.01 0.01 0.01" material="src: #omlette-img" visible="false"></a-entity>
         </a-entity>
         <a-plane static-body visible="false" rotation="-90 0 0" position="0 1.13 0" scale="2.6 2.6 2.6"></a-plane>
-        <a-entity id="onionSpawn-entity" spawn class="onion" mixin="objectGrab" obj-model="obj: #onion-obj;" static-body position="1.0 1.35 0.6" scale ="0.05 0.05 0.05" material="src: #onion-img" delete-self ingredient="cookingTemp: 270; cookingTime: 10.0; sizeMin: 0.25; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-        <a-entity id="eggSpawn-entity" spawn class="egg" mixin="objectGrab" obj-model="obj: #egg-obj;" static-body position="1.0 1.33 0.8" scale ="0.05 0.05 0.05" material="src: #egg-img" delete-self ingredient="cookingTemp: 270; cookingTime: 10.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-        <a-entity id="butterSpawn-entity" spawn class="butter" mixin="objectGrab" obj-model="obj: #butter-obj;" static-body position="1.0 1.2 0.6" scale ="0.01 0.01 0.01" material="color: yellow" delete-self ingredient="cookingTemp: 270; cookingTime: 10.0; sizeMin: 1; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-        <a-entity id="mushroomSpawn-entity" spawn class="mushroom" mixin="objectGrab" obj-model="obj: #mushroom-obj;" static-body position="1.0 1.15 0.77" scale ="0.04 0.04 0.04" material="src: #mushroom-img" delete-self ingredient="cookingTemp: 270; cookingTime: 10.0; sizeMin: 0.25; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-        <a-entity id="bellPepperSpawn-entity" spawn class="bellPepper" mixin="objectGrab" obj-model="obj: #bellPepper-obj;" static-body position="1.0 1.55 0.77" scale ="0.02 0.02 0.02" material="src: #bellPepper-img" delete-self ingredient="cookingTemp: 270; cookingTime: 10.0; sizeMin: 0.25; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
-        <a-entity id="timer" text="value: Time Left: ; align: center" rotation="0 -45 0" scale="0.078 0.078 0.078" position="1.0 1.3 -0.7" visible="false"></a-entity>
+        <a-entity position="-0.5 0 0 ">
+            <a-entity id="onionSpawn-entity" spawn class="onion" mixin="objectGrab" obj-model="obj: #onion-obj;" static-body position="1.0 1.35 0.6" scale ="0.05 0.05 0.05" material="src: #onion-img" delete-self ingredient="cookingTemp: 270; cookingTime: 5.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+            <a-entity id="eggSpawn-entity" spawn class="egg" mixin="objectGrab" obj-model="obj: #egg-obj;" static-body position="1.0 1.33 0.8" scale ="0.05 0.05 0.05" material="src: #egg-img" delete-self ingredient="cookingTemp: 270; cookingTime: 5.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+            <a-entity id="butterSpawn-entity" spawn class="butter" mixin="objectGrab" obj-model="obj: #butter-obj;" static-body position="1.0 1.2 0.6" scale ="0.01 0.01 0.01" material="color: yellow" delete-self ingredient="cookingTemp: 270; cookingTime: 5.0; sizeMin: 1; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+            <a-entity id="mushroomSpawn-entity" spawn class="mushroom" mixin="objectGrab" obj-model="obj: #mushroom-obj;" static-body position="1.0 1.15 0.77" scale ="0.04 0.04 0.04" material="src: #mushroom-img" delete-self ingredient="cookingTemp: 270; cookingTime: 5.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+            <a-entity id="bellPepperSpawn-entity" spawn class="bellPepper" mixin="objectGrab" obj-model="obj: #bellPepper-obj;" static-body position="1.0 1.55 0.77" scale ="0.02 0.02 0.02" material="src: #bellPepper-img" delete-self ingredient="cookingTemp: 270; cookingTime: 5.0; sizeMin: 0.5; sizeStart: 1; heatTransfer: 0; cookingImplementID: pan-entity;"></a-entity>
+            <a-entity id="timer" text="value: Time Left: ; align: center" rotation="0 -45 0" scale="0.078 0.078 0.078" position="1.0 1.3 -0.7" visible="false"></a-entity>
+        </a-entity>
     </a-scene>
     <script>
         
