@@ -23,5 +23,6 @@
     "express": "^4.16.4",
     "socket.io": "^2.2.0",
     "super-hands": "^3.0.0"
-  }
+  },
+  "devDependencies": {}
 }
