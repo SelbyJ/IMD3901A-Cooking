@@ -15,10 +15,10 @@
         <script src="js/timer.js"></script>
     </head>
     <body>
+
+        <!--All of the assets needed for the recipe book-->
         <a-scene timer = "gamePart: mobile">
             <a-assets>
-                <!--sound from http://soundbible.com/835-Pen-Clicking.html. Sounds are free to use underthe Creative Commons Attribution 3.0 https://creativecommons.org/licenses/by/3.0/-->
-                <a-audio crossorigin="anonymous" id="button-click" src="/assets/Pen Clicking-SoundBible.com-482574858.mp3(1)"></a-audio>
                 <a-asset-item id="cover-page" src="assets/cover.obj"></a-asset-item>
                 <a-asset-item id="page1" src="assets/pageOne.obj"></a-asset-item>
                 <a-asset-item id="page2" src="assets/pageTwo.obj"></a-asset-item>
@@ -62,10 +62,8 @@
             <a-entity id='step3French' geometry="primitive: plane; width: 8.5; height: 11;" material="src: assets/materials/FrenchStep3.png" position="0 5 -9" visible ='false'></a-entity>
             <a-entity id='step4French' geometry="primitive: plane; width: 8.5; height: 11;" material="src: assets/materials/FrenchStep4.png" position="0 5 -9" visible ='false'></a-entity>
             <a-entity id='step5French' geometry="primitive: plane; width: 8.5; height: 11;" material="src: assets/materials/FrenchStep5.png" position="0 5 -9" visible ='false'></a-entity>
-            
-            <!--entites that hold the sound so that they can be called upon in the component that controls when the shapes are selected-->
-            <a-entity id="buttonSound" sound="src:#button-click"></a-entity>            
-
+                      
+            <!---->
             <a-entity geometry="primitive:plane; width:14; height:1" material="opacity:0" id="front" position="0 0 -10.01">
                 <a-entity obj-model="obj: #cover-page" id="childcover" material="src: #cover-texture" position="3.5 0 0"></a-entity>
                 <!--<a-entity id="childcover" geometry="primitive:plane; width:7; height:10" text="value: Cover Page; color: black" material="src:#cover-pic; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>-->
@@ -85,27 +83,21 @@
                 <a-entity obj-model="obj: #page3" id="childthree" material="src: #page3-pic" position="3.5 0 0"></a-entity>                
                 <!--<a-entity id="childthree" geometry="primitive:plane; width:7; height:10" text="value: Page Three; color: black" material="color:#a0f2ff; side:double" position="3.5 0 0" rotation="0 0 0"></a-entity>-->
             </a-entity> 
-            
-            <!--making a pretty background. Code from Anthony's examples-->
-            <a-entity class="clickable" id="background" geometry="primitive:sphere; radius:500" material="shader:flat; src:#backgroundImg; side:back; height:1078; width:1078"></a-entity>
 
-            <a-entity class="clickable" id="backward" page-flip="button: backward" obj-model="obj: #frontButton" position="-9 5 -10" material="src: #buttonMat">
-                <!--<a-text value="Forward" color="black" position="-2 2 0" width="20" height="20"></a-text>-->
-            </a-entity>
-            <a-entity class="clickable" id="forward" page-flip="button: forward" obj-model="obj: #backButton" position="8 5 -10" material="src: #buttonMat">
-                <!--<a-text value="Backward" color="black" position="-0.5 2 0" width="20" height="20"></a-text>-->
-            </a-entity>
+            <!--Arrow buttons for the recipe book-->
+            <a-entity class="clickable" id="backward" page-flip="button: backward" obj-model="obj: #frontButton" position="-9 5 -10" material="src: #buttonMat"></a-entity>
 
+            <a-entity class="clickable" id="forward" page-flip="button: forward" obj-model="obj: #backButton" position="8 5 -10" material="src: #buttonMat"></a-entity>
+
+            <!--open/close button for recupe instructions-->
             <a-entity class="clickable" page-flip="button: openClose" geometry="primitive: box; width: 1; height:1; depth:0.01" position="0 -3 -10" material="color: #740a0a">
                 <a-text value="Open/Close Instructions" color="black" position="-4.6 1 0" width="20" height="20"></a-text>
             </a-entity>
 
-            <a-entity class="clickable" id="backwardInst" page-flip="button: instBackward" obj-model="obj: #frontButton" position="-5 5 -9" material="src: #buttonMat" visible='false'>
-                <!--<a-text value="Forward" color="black" position="-2 2 0" width="20" height="20"></a-text>-->
-            </a-entity>
-            <a-entity class="clickable" id="forwardInst" page-flip="button: instForward" obj-model="obj: #backButton" position="5 5 -9" material="src: #buttonMat" visible='false'>
-                <!--<a-text value="Backward" color="black" position="-0.5 2 0" width="20" height="20"></a-text>-->
-            </a-entity>
+            <!--Arrow buttons to flip through recipe instructions-->
+            <a-entity class="clickable" id="backwardInst" page-flip="button: instBackward" obj-model="obj: #frontButton" position="-5 5 -9" material="src: #buttonMat" visible='false'></a-entity>
+           
+            <a-entity class="clickable" id="forwardInst" page-flip="button: instForward" obj-model="obj: #backButton" position="5 5 -9" material="src: #buttonMat" visible='false'></a-entity>
             
         </a-scene>
     </body>

@@ -9,12 +9,13 @@
         <!--site was found from https://aframe.io/docs/0.8.0/core/animations.html-->
         <script src="https://unpkg.com/aframe-animation-component@^4.1.2/dist/aframe-animation-component.min.js"></script> 
         
-        <!--Component files loaded in-->
+        <!--socket.io loaded in-->
         <script src="/socket.io/socket.io.js"></script> 
 
     </head>
     <body>
         <a-scene>
+            <!--Assets fro start page-->
             <a-assets>
                 <img id="start-texture" src="assets/materials/gameStartPage.png">
             </a-assets>
@@ -24,12 +25,11 @@
                 <a-entity cursor="fuse:false; fuseTimeout:500; rayOrigin: mouse" raycaster="far:20; interval:500; objects:.clickable"></a-entity>
             </a-entity>        
 
+            <!--Start page image-->
             <a-entity geometry="primitive:plane; width:13.5; height:16" material="src: #start-texture" id="front" position="0 3 -10">
             </a-entity>
-            
-            <!--making a pretty background. Code from Anthony's examples-->
-            <a-entity id="background"  geometry="primitive:sphere; radius:500" material="shader:flat; src:#backgroundImg; side:back; height:1078; width:1078"></a-entity>
 
+            <!--Option buttons for the users to choose from-->
             <a-entity id="vrUser" class="clickable" geometry="primitive: box; width: 4; height:2; depth:0.01" position="0.3 0.6 -10" material="color: #ff8c66; opacity: 0;">
                 <a-text value="VR User" color="black" position="-1.6 0 0.2" width="20" height="20"></a-text>
             </a-entity>
